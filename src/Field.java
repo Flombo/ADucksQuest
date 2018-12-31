@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class Field {
 
     private int x;
@@ -5,39 +7,59 @@ public class Field {
     private int height;
     private int width;
     private String name;
+    private Color fillColor;
+    private Color strokeColor;
 
-    Field(int x, int y, String name){
+    Field(int x, int y, String name, Color fillColor, Color strokeColor){
         this.x = x;
         this.y = y;
         this.height = 30;
         this.width = 30;
         this.name = name;
+        this.fillColor = fillColor;
+        this.strokeColor = strokeColor;
     }
-    public void setX(int x){
+    void setX(int x){
         this.x = x;
     }
 
-    public void setY(int y){
+    void setY(int y){
         this.y = y;
     }
 
-    public int getX(){
+    int getX(){
         return this.x;
     }
 
-    public int getY(){
+    int getY(){
         return this.y;
     }
 
-    public int getHeight(){
+    int getHeight(){
         return this.height;
     }
 
-    public int getWidth(){
+    int getWidth(){
         return  this.width;
     }
 
-    public String getName(){
+    String getName(){
         return this.name;
+    }
+
+    Color getFillColor(){
+        return this.fillColor;
+    }
+
+    Color getStrokeColor(){
+        return this.strokeColor;
+    }
+
+    public void setFillColor(Color fillColor){
+        this.fillColor = fillColor;
+    }
+
+    public void setStrokeColor(Color strokeColor){
+        this.strokeColor = strokeColor;
     }
 }
