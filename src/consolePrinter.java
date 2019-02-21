@@ -14,6 +14,9 @@ class consolePrinter {
 					case "Target":
 						System.out.print("[T]");
 						break;
+					case "Obstacle":
+						System.out.println("[O]");
+						break;
 				}
 			}
 			System.out.println(" ");

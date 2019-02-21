@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Field {
+class Field {
 
     private int x;
     private int y;
@@ -53,13 +53,5 @@ public class Field {
 
     Color getStrokeColor(){
         return this.strokeColor;
-    }
-
-    public void setFillColor(Color fillColor){
-        this.fillColor = fillColor;
-    }
-
-    public void setStrokeColor(Color strokeColor){
-        this.strokeColor = strokeColor;
     }
 }
