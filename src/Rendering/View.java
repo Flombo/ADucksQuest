@@ -1,16 +1,21 @@
+package Rendering;
+
+import GameObjects.Field;
+import GameObjects.Player;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
-class View extends JFrame implements Runnable{
+public class View extends JFrame implements Runnable{
 
 	private Field[][] fields;
 	private boolean isRunning = false;
 	private Thread thread;
 
-	View(Field[][] fields, int xDimension, int yDimension){
+	public View(Field[][] fields){
 		this.fields = fields;
-		Dimension dimension = new Dimension(xDimension * 35, yDimension * 60);
+		Dimension dimension = new Dimension(fields.length * 40, fields.length * 50);
 		this.setSize(dimension);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
@@ -19,12 +24,12 @@ class View extends JFrame implements Runnable{
 	}
 
 	//shows Dialogwindow
-	void setDialog(String txt){
+	public void setDialog(String txt){
 		JOptionPane.showMessageDialog(this, txt);
 	}
 
 	//start Thread
-	synchronized void start(){
+	public synchronized void start(){
 		isRunning = true;
 		thread = new Thread(this, "Thread1");
 		thread.start();
@@ -97,10 +102,7 @@ class View extends JFrame implements Runnable{
 				if(field instanceof Player) {
 					this.renderCounterText(bufferStrategy, (Player) field);
 				}
-				g.setColor(field.getStrokeColor());
-				g.fillRect(field.getX() + 25, field.getY() + 90, field.getWidth(), field.getHeight());
-				g.setColor(field.getFillColor());
-				g.fillRect(field.getX() + 1 + 25, field.getY() + 1 + 90, field.getWidth() - 2, field.getHeight() - 2);
+				g.drawImage(field.getImage(), field.getX() +  getWidth() / 8, field.getY() + 90, field.getHeight(), field.getWidth(), null);
 			}
 		}
 	}
@@ -109,24 +111,24 @@ class View extends JFrame implements Runnable{
 	private void renderCounterPanel(BufferStrategy bufferStrategy){
 		Graphics g = bufferStrategy.getDrawGraphics();
 		g.setColor(Color.BLACK);
-		g.fillRect(0,0,350,600);
+		g.fillRect(0,0,getWidth(),getHeight());
 		g.setColor(Color.white);
-		g.fillRect(25, 33, 300,50);
+		g.fillRect(0, 33, getWidth(),50);
+		g.setColor(Color.BLACK);
+		g.fillRect(getWidth() / 10, 36, getWidth() - getWidth() / 5, 45);
 		g.setColor(Color.lightGray);
-		g.fillRect(30, 40,90, 40);
-		g.fillRect(130, 40, 90, 40);
-		g.fillRect(230, 40, 90, 40);
+		g.fillRect(getWidth() / 8, 38,getWidth() - getWidth() / 4, 40);
 	}
 
 	//render CounterPanel Text
 	private void renderCounterText(BufferStrategy bufferStrategy, Player player){
 		Graphics g = bufferStrategy.getDrawGraphics();
 		g.setColor(Color.BLACK);
-		g.drawString("Züge :" + " " + player.getMoves(), 45, 65);
+		g.drawString("Züge :" + " " + player.getMoves(), getWidth() / 6, 65);
 		g.setColor(Color.BLUE);
-		g.drawString("Score :" + " " + player.getScore(), 145, 65);
+		g.drawString("Score :" + " " + player.getScore(), getWidth() - getHeight() / 2, 65);
 		g.setColor(Color.RED);
-		g.drawString("Lives :" + " " + player.getLives(), 245, 65);
+		g.drawString("Lives :" + " " + player.getLives(), getWidth() - getWidth() / 3, 65);
 	}
 
 }

@@ -1,9 +1,18 @@
-import java.awt.*;
+package GameLogic;
+
+import GameObjects.Field;
+import GameObjects.GameObjectEnums.PlayerPosition;
+import GameObjects.Obstacle;
+import GameObjects.Player;
+import GameObjects.Target;
+import Helper.consolePrinter;
+import Rendering.View;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 
-class GameInit {
+public class GameInit {
 
     private Field[][] fields;
     private int xDimension;
@@ -11,14 +20,12 @@ class GameInit {
     private int playerPosX;
     private int playerPosY;
     private Player player;
-    private static final Color fillColorField = Color.lightGray;
-    private static final Color strokeColorField = Color.white;
     private View view;
     private consolePrinter printer;
     private int amount;
 
     //Constructor takes height and width for JFrame
-    GameInit(int xDimension, int yDimension, int amount){
+    public GameInit(int xDimension, int yDimension, int amount){
         this.xDimension = xDimension;
         this.yDimension = yDimension;
         this.fields = new Field[xDimension][yDimension];
@@ -36,7 +43,7 @@ class GameInit {
         this.playerPosX = playerPosX;
     }
 
-    void init(){
+    public void init(){
         this.initFields();
         this.initTarget();
         this.initPlayer();
@@ -47,15 +54,15 @@ class GameInit {
     }
 
     private void initView(){
-        this.view = new View(this.fields, this.xDimension, this.yDimension);
+        this.view = new View(this.fields);
     }
 
     private void initMovement(){
         this.view.start();
         this.view.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyReleased(KeyEvent e) {
-                super.keyReleased(e);
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
                 changePlayerPos(e);
             }
         });
@@ -65,7 +72,7 @@ class GameInit {
     private void initFields(){
         for(int i = 0; i < this.yDimension; i++){
             for(int j = 0; j < this.xDimension; j++){
-                this.fields[j][i] = new Field(j * 30, i * 30, "Field", fillColorField, strokeColorField);
+                this.fields[j][i] = new Field(j * 30, i * 30, "GameObjects.Field");
             }
         }
     }
@@ -75,7 +82,7 @@ class GameInit {
         return (int) ( 1 * Math.random() * this.fields.length );
     }
 
-    //Initialize Target
+    //Initialize GameObjects.Target
     private void initTarget(){
         int targetPosX = this.randomPos();
         int targetPosY = this.randomPos();
@@ -86,7 +93,7 @@ class GameInit {
         this.fields[targetPosX][targetPosY] = target;
     }
 
-    //Initialize Player
+    //Initialize GameObjects.Player
     private void initPlayer() {
 
         //generate new position until it isn´t target´s position
@@ -148,27 +155,35 @@ class GameInit {
         switch ( keyCode ){
             case KeyEvent.VK_DOWN:
                 this.movePlayer(true, 1);
+                this.player.setPosition(PlayerPosition.PLAYER_DOWN);
                 break;
             case KeyEvent.VK_S:
                 this.movePlayer(true, 1);
+                this.player.setPosition(PlayerPosition.PLAYER_DOWN);
                 break;
             case KeyEvent.VK_UP:
                 this.movePlayer(true, -1);
+                this.player.setPosition(PlayerPosition.PLAYER_UP);
                 break;
             case KeyEvent.VK_W:
                 this.movePlayer(true, -1);
+                this.player.setPosition(PlayerPosition.PLAYER_UP);
                 break;
             case KeyEvent.VK_RIGHT:
                 this.movePlayer(false, 1);
+                this.player.setPosition(PlayerPosition.PLAYER_RIGHT);
                 break;
             case KeyEvent.VK_D:
                 this.movePlayer(false, 1);
+                this.player.setPosition(PlayerPosition.PLAYER_RIGHT);
                 break;
             case KeyEvent.VK_LEFT:
                 this.movePlayer(false, -1);
+                this.player.setPosition(PlayerPosition.PLAYER_LEFT);
                 break;
             case KeyEvent.VK_A:
                 this.movePlayer(false, -1);
+                this.player.setPosition(PlayerPosition.PLAYER_LEFT);
                 break;
             default:
                 this.view.setDialog("You have to press the arrow keys or WASD!");
@@ -189,22 +204,18 @@ class GameInit {
         if(upDown) {
             if (this.playerPosY + newPos >= 0 && this.playerPosY + newPos < yDimension) {
                 if(!(this.fields[this.playerPosX][this.playerPosY + newPos] instanceof Obstacle)) {
-                    this.fields[this.playerPosX][this.playerPosY] = new Field(this.playerPosX * 30, this.playerPosY * 30, "Field", fillColorField, strokeColorField);
+                    this.fields[this.playerPosX][this.playerPosY] = new Field(this.playerPosX * 30, this.playerPosY * 30, "GameObjects.Field");
                     this.setPlayerPosY(this.playerPosY + newPos);
                     this.movePlayerPos();
                 }
-            } else {
-                this.view.setDialog("You reached the end");
             }
         }else {
             if (this.playerPosX + newPos >= 0 && this.playerPosX + newPos < xDimension) {
                 if(!(this.fields[this.playerPosX + newPos][this.playerPosY] instanceof Obstacle)) {
-                    this.fields[this.playerPosX][this.playerPosY] = new Field(this.playerPosX * 30, this.playerPosY * 30, "Field", fillColorField, strokeColorField);
+                    this.fields[this.playerPosX][this.playerPosY] = new Field(this.playerPosX * 30, this.playerPosY * 30, "GameObjects.Field");
                     this.setPlayerPosX(this.playerPosX + newPos);
                     this.movePlayerPos();
                 }
-            } else {
-                this.view.setDialog("You reached the end.");
             }
         }
         printer.printAllFields(yDimension, xDimension, fields);
