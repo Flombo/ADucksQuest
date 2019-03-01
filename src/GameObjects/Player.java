@@ -46,7 +46,7 @@ public class Player extends Field {
 	}
 
 	public void setLives(int lives) {
-		this.lives = Integer.toString(Integer.parseInt(this.getLives() + lives));
+		this.lives = Integer.toString(Integer.parseInt(this.getLives()) + lives);
 	}
 
 	public BufferedImage getImage() {

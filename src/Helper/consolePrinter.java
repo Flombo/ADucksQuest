@@ -10,16 +10,19 @@ public class consolePrinter {
 			for(int j = 0; j < xDimension; j++){
 				switch(fields[j][i].getName()){
 					case "GameObjects.Field":
-						System.out.print("[]");
+						System.out.print("F,");
 						break;
 					case "GameObjects.Player":
-						System.out.print("[P]");
+						System.out.print("P,");
 						break;
 					case "GameObjects.Target":
-						System.out.print("[T]");
+						System.out.print("T,");
 						break;
 					case "GameObjects.Obstacle":
-						System.out.println("[O]");
+						System.out.println("O,");
+						break;
+					case "GameObjects.Hole":
+						System.out.println("H,");
 						break;
 				}
 			}
