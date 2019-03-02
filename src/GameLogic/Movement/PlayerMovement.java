@@ -1,6 +1,6 @@
 package GameLogic.Movement;
 
-import GameLogic.Movement.MovementHelper.GameObjectChecker;
+import GameLogic.Movement.MovementHelper.playerGameObjectChecker;
 import GameObjects.Field;
 import GameObjects.GameObjectEnums.PlayerPosition;
 import GameObjects.Player;
@@ -21,7 +21,7 @@ public class PlayerMovement {
 	private Player player;
 	private int playerPosY;
 	private int playerPosX;
-	private GameObjectChecker gameObjectChecker;
+	private playerGameObjectChecker playerGameObjectChecker;
 
 	public PlayerMovement(consolePrinter consolePrinter , int xDimension, int yDimension, View view, Field[][] fields, int playerPosY, int playerPosX, Player player){
 		this.consolePrinter = consolePrinter;
@@ -126,8 +126,8 @@ public class PlayerMovement {
 	private void movePlayer(boolean upDown,int newPos) {
 		if(upDown) {
 			if (this.playerPosY + newPos >= 0 && this.playerPosY + newPos < yDimension) {
-				this.gameObjectChecker = new GameObjectChecker(this.playerPosX, this.playerPosY, this.playerPosX, this.playerPosY + newPos, fields, player);
-				if(this.gameObjectChecker.checkNextGameObject()) {
+				this.playerGameObjectChecker = new playerGameObjectChecker(this.playerPosX, this.playerPosY + newPos, fields, player);
+				if(this.playerGameObjectChecker.checkNextGameObject()) {
 					this.fields[this.playerPosX][this.playerPosY] = new Field(this.playerPosX * 30, this.playerPosY * 30, "GameObjects.Field");
 					this.setPlayerPosY(this.playerPosY + newPos);
 					this.movePlayerPos();
@@ -136,8 +136,8 @@ public class PlayerMovement {
 			}
 		}else {
 			if (this.playerPosX + newPos >= 0 && this.playerPosX + newPos < xDimension) {
-				this.gameObjectChecker = new GameObjectChecker(this.playerPosX, this.playerPosY, this.playerPosX + newPos, this.playerPosY, fields, player);
-				if(this.gameObjectChecker.checkNextGameObject()) {
+				this.playerGameObjectChecker = new playerGameObjectChecker(this.playerPosX + newPos, this.playerPosY, fields, player);
+				if(this.playerGameObjectChecker.checkNextGameObject()) {
 					this.fields[this.playerPosX][this.playerPosY] = new Field(this.playerPosX * 30, this.playerPosY * 30, "GameObjects.Field");
 					this.setPlayerPosX(this.playerPosX + newPos);
 					this.movePlayerPos();
@@ -145,7 +145,7 @@ public class PlayerMovement {
 				this.checkPlayersLives();
 			}
 		}
-		consolePrinter.printAllFields(yDimension, xDimension, fields);
+//		consolePrinter.printAllFields(yDimension, xDimension, fields);
 	}
 
 }

@@ -1,18 +1,21 @@
 package GameLogic;
 
 import GameLogic.Movement.PlayerMovement;
+import GameLogic.Movement.SkullMovement;
 import GameObjects.*;
 import Helper.consolePrinter;
 import Rendering.View;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class GameInit {
 
     private Field[][] fields;
+    private Skull[] skulls;
     private int xDimension;
     private int yDimension;
     private int playerPosX;
@@ -39,6 +42,8 @@ public class GameInit {
         this.initPlayer();
         this.initObstacle(this.amount);
         this.initHoles();
+        this.initSkulls();
+
         printer.printAllFields(yDimension, xDimension, fields);
         this.initView();
 		PlayerMovement playerMovement = new PlayerMovement(
@@ -52,6 +57,7 @@ public class GameInit {
 				this.player
 		);
         this.initMovement(playerMovement);
+        this.initSkullMovement();
     }
 
     private void initView(){
@@ -68,6 +74,11 @@ public class GameInit {
             }
         });
     }
+
+    private void initSkullMovement(){
+		SkullMovement skullMovement = new SkullMovement(this.fields, this.getSkulls(), this.xDimension, this.player);
+		skullMovement.initMovement();
+	}
 
     //Create Fields
     private void initFields(){
@@ -133,6 +144,27 @@ public class GameInit {
 			Hole hole = new Hole();
 			this.setGameObjectPosition(hole);
 		}
+	}
+
+	private void initSkulls(){
+    	for(int i = 0; i < 2; i++){
+    		Skull skull = new Skull();
+    		this.setGameObjectPosition(skull);
+		}
+	}
+
+	private Skull[] getSkulls(){
+    	this.skulls = new Skull[2];
+    	for(int y = 0; y < this.yDimension; y++){
+    		for(int x = 0; x < this.xDimension; x++){
+				if(this.fields[x][y] instanceof Skull){
+					for (int i = 0; i < this.skulls.length; i++){
+						this.skulls[i] = (Skull) this.fields[x][y];
+					}
+				}
+			}
+		}
+    	return this.skulls;
 	}
 
 	//checks if randomPos of Object isn´t taken by target or Player

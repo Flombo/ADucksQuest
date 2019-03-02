@@ -3,18 +3,14 @@ package GameLogic.Movement.MovementHelper;
 import GameObjects.Field;
 import GameObjects.Player;
 
-public class GameObjectChecker {
+public class playerGameObjectChecker {
 
 	private int newPosX;
 	private int newPosY;
-	private int oldPosX;
-	private int oldPosY;
 	private Field[][] fields;
 	private Player player;
 
-	public GameObjectChecker(int oldPosX, int oldPosY, int newPosX, int newPosY, Field[][] fields, Player player){
-		this.oldPosX = oldPosX;
-		this.oldPosY = oldPosY;
+	public playerGameObjectChecker(int newPosX, int newPosY, Field[][] fields, Player player){
 		this.newPosX = newPosX;
 		this.newPosY = newPosY;
 		this.fields = fields;
@@ -29,10 +25,11 @@ public class GameObjectChecker {
 				break;
 			case "GameObjects.Field":
 				canMove = true;
-				this.fields[this.oldPosX][this.oldPosY] =
-						new Field(this.oldPosX * 30, this.oldPosY * 30, "GameObjects.Field");
 				break;
 			case  "GameObjects.Hole":
+				this.player.setLives(-1);
+				break;
+			case "GameObjects.Skull":
 				this.player.setLives(-1);
 				break;
 		}
