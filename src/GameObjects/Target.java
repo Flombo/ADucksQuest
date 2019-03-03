@@ -16,7 +16,7 @@ public class Target extends Field {
 	}
 
 	@Override
-	public BufferedImage getImage() {
+	public BufferedImage getCurrentImage() {
 		return image;
 	}
 }

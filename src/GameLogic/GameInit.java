@@ -8,14 +8,12 @@ import Rendering.View;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class GameInit {
 
     private Field[][] fields;
-    private Skull[] skulls;
     private int xDimension;
     private int yDimension;
     private int playerPosX;
@@ -56,7 +54,7 @@ public class GameInit {
 				this.playerPosX,
 				this.player
 		);
-        this.initMovement(playerMovement);
+        this.initMovement(playerMovement, this.player);
         this.initSkullMovement();
     }
 
@@ -64,19 +62,20 @@ public class GameInit {
         this.view = new View(this.fields);
     }
 
-    private void initMovement(PlayerMovement playerMovement){
+    private void initMovement(PlayerMovement playerMovement, Player player){
         this.view.start();
         this.view.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
                 playerMovement.changePlayerPos(e);
+                player.walk();
             }
         });
     }
 
     private void initSkullMovement(){
-		SkullMovement skullMovement = new SkullMovement(this.fields, this.getSkulls(), this.xDimension, this.player);
+		SkullMovement skullMovement = new SkullMovement(this.fields, this.getSkull(), this.xDimension, this.player, this.view);
 		skullMovement.initMovement();
 	}
 
@@ -147,24 +146,20 @@ public class GameInit {
 	}
 
 	private void initSkulls(){
-    	for(int i = 0; i < 2; i++){
-    		Skull skull = new Skull();
-    		this.setGameObjectPosition(skull);
-		}
+		Skull skull = new Skull();
+		this.setGameObjectPosition(skull);
 	}
 
-	private Skull[] getSkulls(){
-    	this.skulls = new Skull[2];
+	private Skull getSkull(){
+    	Skull skull = null;
     	for(int y = 0; y < this.yDimension; y++){
     		for(int x = 0; x < this.xDimension; x++){
 				if(this.fields[x][y] instanceof Skull){
-					for (int i = 0; i < this.skulls.length; i++){
-						this.skulls[i] = (Skull) this.fields[x][y];
-					}
+					skull = (Skull) this.fields[x][y];
 				}
 			}
 		}
-    	return this.skulls;
+    	return skull;
 	}
 
 	//checks if randomPos of Object isn´t taken by target or Player

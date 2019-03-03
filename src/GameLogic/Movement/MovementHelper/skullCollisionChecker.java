@@ -3,27 +3,29 @@ package GameLogic.Movement.MovementHelper;
 import GameObjects.Field;
 import GameObjects.Player;
 import GameObjects.Skull;
+import Rendering.View;
 
-public class skullGameObjectChecker {
+public class skullCollisionChecker {
 
 	private Skull skull;
 	private int newPosX;
 	private int newPosY;
 	private Field[][] fields;
 	private Player player;
+	private View view;
 
-	public skullGameObjectChecker(int newPosX, int newPosY, Field[][] fields, Skull skull, Player player){
+	public skullCollisionChecker(int newPosX, int newPosY, Field[][] fields, Skull skull, Player player, View view){
 		this.fields = fields;
 		this.newPosX = newPosX;
 		this.newPosY = newPosY;
 		this.skull = skull;
 		this.player = player;
+		this.view = view;
 	}
 
 	//checks the next GameObject that would collide with player
 	public boolean checkNextGameObject(){
 		boolean canMove = false;
-		System.out.println(this.fields[this.newPosX][this.newPosY].getName());
 		switch (this.fields[this.newPosX][this.newPosY].getName()){
 			case "GameObjects.Obstacle":
 				skull.changePosition();
@@ -36,14 +38,16 @@ public class skullGameObjectChecker {
 				break;
 			case "GameObjects.Player":
 				this.player.setLives(-1);
-				this.player.attacked();
+				this.player.attacked(this.view);
 				skull.changePosition();
 				break;
 			case "GameObjects.Skull":
 				skull.changePosition();
 				break;
+			case "GameObjects.Target":
+				skull.changePosition();
+				break;
 		}
-		System.out.println(canMove);
 		return canMove;
 	}
 

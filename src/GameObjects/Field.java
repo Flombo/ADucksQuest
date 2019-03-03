@@ -53,7 +53,7 @@ public class Field {
         return this.name;
     }
 
-    public BufferedImage getImage() {
+    public BufferedImage getCurrentImage() {
         return image;
     }
 }

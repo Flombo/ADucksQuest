@@ -102,7 +102,7 @@ public class View extends JFrame implements Runnable{
 				if(field instanceof Player) {
 					this.renderCounterText(bufferStrategy, (Player) field);
 				}
-				g.drawImage(field.getImage(), field.getX() +  getWidth() / 8, field.getY() + 90, field.getHeight(), field.getWidth(), null);
+				g.drawImage(field.getCurrentImage(), field.getX() +  getWidth() / 8, field.getY() + 90, field.getHeight(), field.getWidth(), null);
 			}
 		}
 	}

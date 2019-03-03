@@ -1,6 +1,7 @@
 package GameLogic.Movement;
 
-import GameLogic.Movement.MovementHelper.playerGameObjectChecker;
+import GameLogic.Movement.MovementHelper.playerCollisionChecker;
+import GameLogic.Movement.MovementHelper.playerFrameChecker;
 import GameObjects.Field;
 import GameObjects.GameObjectEnums.PlayerPosition;
 import GameObjects.Player;
@@ -21,7 +22,7 @@ public class PlayerMovement {
 	private Player player;
 	private int playerPosY;
 	private int playerPosX;
-	private playerGameObjectChecker playerGameObjectChecker;
+	private playerFrameChecker playerFrameChecker;
 
 	public PlayerMovement(consolePrinter consolePrinter , int xDimension, int yDimension, View view, Field[][] fields, int playerPosY, int playerPosX, Player player){
 		this.consolePrinter = consolePrinter;
@@ -32,6 +33,7 @@ public class PlayerMovement {
 		this.playerPosY = playerPosY;
 		this.playerPosX = playerPosX;
 		this.player = player;
+		this.playerFrameChecker = new playerFrameChecker();
 	}
 
 	private void setPlayerPosY(int playerPosY) {
@@ -40,15 +42,6 @@ public class PlayerMovement {
 
 	private void setPlayerPosX(int playerPosX) {
 		this.playerPosX = playerPosX;
-	}
-
-	//checks if player has enough lives
-	private void checkPlayersLives(){
-		if(this.player.getLives().equals("0")) {
-			this.view.setDialog("You lose ... your moves :" + this.player.getMoves() + " your Score :" + this.player.getScore());
-			this.view.dispatchEvent(new WindowEvent(this.view, WindowEvent.WINDOW_CLOSING));
-			this.player.setMoves(0);
-		}
 	}
 
 	// checks if next playerPos is target and when it isn´t creates new Player
@@ -79,34 +72,42 @@ public class PlayerMovement {
 			case KeyEvent.VK_DOWN:
 				this.movePlayer(true, 1);
 				this.player.setPosition(PlayerPosition.PLAYER_DOWN);
+				this.playerFrameChecker.checkWalkFrameDown(this.player);
 				break;
 			case KeyEvent.VK_S:
 				this.movePlayer(true, 1);
 				this.player.setPosition(PlayerPosition.PLAYER_DOWN);
+				this.playerFrameChecker.checkWalkFrameDown(this.player);
 				break;
 			case KeyEvent.VK_UP:
 				this.movePlayer(true, -1);
 				this.player.setPosition(PlayerPosition.PLAYER_UP);
+				this.playerFrameChecker.checkWalkFrameUp(this.player);
 				break;
 			case KeyEvent.VK_W:
 				this.movePlayer(true, -1);
 				this.player.setPosition(PlayerPosition.PLAYER_UP);
+				this.playerFrameChecker.checkWalkFrameUp(this.player);
 				break;
 			case KeyEvent.VK_RIGHT:
 				this.movePlayer(false, 1);
 				this.player.setPosition(PlayerPosition.PLAYER_RIGHT);
+				this.playerFrameChecker.checkWalkFrameRight(this.player);
 				break;
 			case KeyEvent.VK_D:
 				this.movePlayer(false, 1);
 				this.player.setPosition(PlayerPosition.PLAYER_RIGHT);
+				this.playerFrameChecker.checkWalkFrameRight(this.player);
 				break;
 			case KeyEvent.VK_LEFT:
 				this.movePlayer(false, -1);
 				this.player.setPosition(PlayerPosition.PLAYER_LEFT);
+				this.playerFrameChecker.checkWalkFrameLeft(this.player);
 				break;
 			case KeyEvent.VK_A:
 				this.movePlayer(false, -1);
 				this.player.setPosition(PlayerPosition.PLAYER_LEFT);
+				this.playerFrameChecker.checkWalkFrameLeft(this.player);
 				break;
 			default:
 				this.view.setDialog("You have to press the arrow keys or WASD!");
@@ -124,25 +125,24 @@ public class PlayerMovement {
 
 	//method that checks if down/up is pressed and if player reached the end of field
 	private void movePlayer(boolean upDown,int newPos) {
+		GameLogic.Movement.MovementHelper.playerCollisionChecker playerCollisionChecker;
 		if(upDown) {
 			if (this.playerPosY + newPos >= 0 && this.playerPosY + newPos < yDimension) {
-				this.playerGameObjectChecker = new playerGameObjectChecker(this.playerPosX, this.playerPosY + newPos, fields, player);
-				if(this.playerGameObjectChecker.checkNextGameObject()) {
+				playerCollisionChecker = new playerCollisionChecker(this.playerPosX, this.playerPosY + newPos, fields, player);
+				if(playerCollisionChecker.checkNextGameObject()) {
 					this.fields[this.playerPosX][this.playerPosY] = new Field(this.playerPosX * 30, this.playerPosY * 30, "GameObjects.Field");
 					this.setPlayerPosY(this.playerPosY + newPos);
 					this.movePlayerPos();
 				}
-				this.checkPlayersLives();
 			}
 		}else {
 			if (this.playerPosX + newPos >= 0 && this.playerPosX + newPos < xDimension) {
-				this.playerGameObjectChecker = new playerGameObjectChecker(this.playerPosX + newPos, this.playerPosY, fields, player);
-				if(this.playerGameObjectChecker.checkNextGameObject()) {
+				playerCollisionChecker = new playerCollisionChecker(this.playerPosX + newPos, this.playerPosY, fields, player);
+				if(playerCollisionChecker.checkNextGameObject()) {
 					this.fields[this.playerPosX][this.playerPosY] = new Field(this.playerPosX * 30, this.playerPosY * 30, "GameObjects.Field");
 					this.setPlayerPosX(this.playerPosX + newPos);
 					this.movePlayerPos();
 				}
-				this.checkPlayersLives();
 			}
 		}
 //		consolePrinter.printAllFields(yDimension, xDimension, fields);

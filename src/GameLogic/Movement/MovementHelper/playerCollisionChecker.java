@@ -3,14 +3,14 @@ package GameLogic.Movement.MovementHelper;
 import GameObjects.Field;
 import GameObjects.Player;
 
-public class playerGameObjectChecker {
+public class playerCollisionChecker {
 
 	private int newPosX;
 	private int newPosY;
 	private Field[][] fields;
 	private Player player;
 
-	public playerGameObjectChecker(int newPosX, int newPosY, Field[][] fields, Player player){
+	public playerCollisionChecker(int newPosX, int newPosY, Field[][] fields, Player player){
 		this.newPosX = newPosX;
 		this.newPosY = newPosY;
 		this.fields = fields;
