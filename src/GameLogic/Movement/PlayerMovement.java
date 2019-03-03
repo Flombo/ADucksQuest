@@ -134,6 +134,7 @@ public class PlayerMovement {
 					this.setPlayerPosY(this.playerPosY + newPos);
 					this.movePlayerPos();
 				}
+				this.player.checkPlayersLives(this.view);
 			}
 		}else {
 			if (this.playerPosX + newPos >= 0 && this.playerPosX + newPos < xDimension) {
@@ -143,6 +144,7 @@ public class PlayerMovement {
 					this.setPlayerPosX(this.playerPosX + newPos);
 					this.movePlayerPos();
 				}
+				this.player.checkPlayersLives(this.view);
 			}
 		}
 //		consolePrinter.printAllFields(yDimension, xDimension, fields);
