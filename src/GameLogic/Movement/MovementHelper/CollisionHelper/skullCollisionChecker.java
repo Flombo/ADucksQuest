@@ -1,11 +1,11 @@
-package GameLogic.Movement.MovementHelper;
+package GameLogic.Movement.MovementHelper.CollisionHelper;
 
 import GameObjects.Field;
 import GameObjects.Player;
 import GameObjects.Skull;
 import Rendering.View;
 
-public class skullCollisionChecker {
+public class skullCollisionChecker  {
 
 	private Skull skull;
 	private int newPosX;
@@ -45,6 +45,9 @@ public class skullCollisionChecker {
 				skull.changePosition();
 				break;
 			case "GameObjects.Target":
+				skull.changePosition();
+				break;
+			case "GameObjects.Coin":
 				skull.changePosition();
 				break;
 		}

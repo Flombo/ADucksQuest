@@ -1,6 +1,6 @@
 package GameLogic.Movement;
 
-import GameLogic.Movement.MovementHelper.playerCollisionChecker;
+import GameLogic.Movement.MovementHelper.CollisionHelper.playerCollisionChecker;
 import GameLogic.Movement.MovementHelper.playerFrameChecker;
 import GameObjects.Field;
 import GameObjects.GameObjectEnums.PlayerPosition;
@@ -125,10 +125,16 @@ public class PlayerMovement {
 
 	//method that checks if down/up is pressed and if player reached the end of field
 	private void movePlayer(boolean upDown,int newPos) {
-		GameLogic.Movement.MovementHelper.playerCollisionChecker playerCollisionChecker;
+		playerCollisionChecker playerCollisionChecker;
 		if(upDown) {
 			if (this.playerPosY + newPos >= 0 && this.playerPosY + newPos < yDimension) {
-				playerCollisionChecker = new playerCollisionChecker(this.playerPosX, this.playerPosY + newPos, fields, player);
+				playerCollisionChecker = new playerCollisionChecker(
+						this.playerPosX,
+						this.playerPosY + newPos,
+						fields,
+						player,
+						this.view
+				);
 				if(playerCollisionChecker.checkNextGameObject()) {
 					this.fields[this.playerPosX][this.playerPosY] = new Field(this.playerPosX * 30, this.playerPosY * 30, "GameObjects.Field");
 					this.setPlayerPosY(this.playerPosY + newPos);
@@ -138,7 +144,13 @@ public class PlayerMovement {
 			}
 		}else {
 			if (this.playerPosX + newPos >= 0 && this.playerPosX + newPos < xDimension) {
-				playerCollisionChecker = new playerCollisionChecker(this.playerPosX + newPos, this.playerPosY, fields, player);
+				playerCollisionChecker = new playerCollisionChecker(
+						this.playerPosX + newPos,
+						this.playerPosY,
+						fields,
+						player,
+						this.view
+				);
 				if(playerCollisionChecker.checkNextGameObject()) {
 					this.fields[this.playerPosX][this.playerPosY] = new Field(this.playerPosX * 30, this.playerPosY * 30, "GameObjects.Field");
 					this.setPlayerPosX(this.playerPosX + newPos);

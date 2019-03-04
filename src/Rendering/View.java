@@ -126,7 +126,7 @@ public class View extends JFrame implements Runnable{
 		g.setColor(Color.BLACK);
 		g.drawString("Züge :" + " " + player.getMoves(), getWidth() / 6, 65);
 		g.setColor(Color.BLUE);
-		g.drawString("Score :" + " " + player.getScore(), getWidth() - getHeight() / 2, 65);
+		g.drawString("Coins :" + " " + player.getCoins(), getWidth() - getHeight() / 2, 65);
 		g.setColor(Color.RED);
 		g.drawString("Lives :" + " " + player.getLives(), getWidth() - getWidth() / 3, 65);
 	}

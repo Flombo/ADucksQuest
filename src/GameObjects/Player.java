@@ -16,6 +16,7 @@ public class Player extends Field {
 	private String moves = "0";
 	private String score = "100";
 	private String lives = "3";
+	private String coins = "0";
 	private BufferedImage currentImage;
 	private BufferedImage downImage;
 	private BufferedImage upImage;
@@ -164,5 +165,13 @@ public class Player extends Field {
 			view.setDialog("You lose ... your moves :" + this.getMoves() + " your Score :" + this.getScore());
 			view.dispatchEvent(new WindowEvent(view, WindowEvent.WINDOW_CLOSING));
 		}
+	}
+
+	public String getCoins() {
+		return coins;
+	}
+
+	public void setCoins(int coins) {
+		this.coins = Integer.toString(Integer.parseInt(this.coins) + coins);
 	}
 }

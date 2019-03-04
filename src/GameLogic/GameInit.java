@@ -4,10 +4,12 @@ import GameLogic.Movement.PlayerMovement;
 import GameLogic.Movement.SkullMovement;
 import GameObjects.*;
 import Helper.consolePrinter;
+import Rendering.Animations.CoinAnimations.CoinFlip;
 import Rendering.View;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +21,7 @@ public class GameInit {
     private int playerPosX;
     private int playerPosY;
     private Player player;
+    private Skull[] skulls;
     private View view;
     private consolePrinter printer;
     private int amount;
@@ -40,7 +43,8 @@ public class GameInit {
         this.initPlayer();
         this.initObstacle(this.amount);
         this.initHoles();
-        this.initSkulls();
+        this.initSkulls(2);
+        this.initCoins();
 
         printer.printAllFields(yDimension, xDimension, fields);
         this.initView();
@@ -55,15 +59,16 @@ public class GameInit {
 				this.player
 		);
         this.initMovement(playerMovement, this.player);
-        this.initSkullMovement();
+		this.initSkullMovement();
+		this.initFlipCoins();
     }
 
     private void initView(){
         this.view = new View(this.fields);
+		this.view.start();
     }
 
     private void initMovement(PlayerMovement playerMovement, Player player){
-        this.view.start();
         this.view.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -74,9 +79,28 @@ public class GameInit {
         });
     }
 
+    private void initFlipCoins(){
+		for (Field[] fields: this.fields) {
+			for (Field field: fields) {
+				if(field.getName().equals("GameObjects.Coin")){
+					((Coin) field).flip();
+				}
+			}
+		}
+	}
+
+    private void initCoins(){
+    	for(int i = 0; i < 3; i++) {
+			Coin coin = new Coin();
+			this.setGameObjectPosition(coin);
+		}
+	}
+
     private void initSkullMovement(){
-		SkullMovement skullMovement = new SkullMovement(this.fields, this.getSkull(), this.xDimension, this.player, this.view);
-		skullMovement.initMovement();
+    	for (Skull skull : this.skulls) {
+			SkullMovement skullMovement = new SkullMovement(this.fields, skull, this.xDimension, this.player, this.view);
+			skullMovement.initMovement();
+		}
 	}
 
     //Create Fields
@@ -145,22 +169,28 @@ public class GameInit {
 		}
 	}
 
-	private void initSkulls(){
-		Skull skull = new Skull();
-		this.setGameObjectPosition(skull);
+	private void initSkulls(int amount){
+		this.skulls = new Skull[amount];
+    	for (int i = 0; i < amount; i++) {
+			Skull skull = new Skull();
+			this.setGameObjectPosition(skull);
+			this.skulls[i] = skull;
+		}
 	}
 
-	private Skull getSkull(){
-    	Skull skull = null;
-    	for(int y = 0; y < this.yDimension; y++){
-    		for(int x = 0; x < this.xDimension; x++){
-				if(this.fields[x][y] instanceof Skull){
-					skull = (Skull) this.fields[x][y];
-				}
-			}
-		}
-    	return skull;
-	}
+//	private Skull[] getSkull(){
+//    	Skull skull = null;
+//		ArrayList<Skull> skulls = new ArrayList<>();
+//    	for(int y = 0; y < this.yDimension; y++){
+//    		for(int x = 0; x < this.xDimension; x++){
+//				if(this.fields[x][y] instanceof Skull){
+//					skulls.add((Skull) this.fields[x][y]);
+//				}
+//			}
+//		}
+//    	skulls.toArray();
+//    	return skulls;
+//	}
 
 	//checks if randomPos of Object isn´t taken by target or Player
 	private Map<String, Integer> checkFieldPostions(){

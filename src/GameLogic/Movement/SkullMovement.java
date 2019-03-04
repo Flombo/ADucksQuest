@@ -1,6 +1,6 @@
 package GameLogic.Movement;
 
-import GameLogic.Movement.MovementHelper.skullCollisionChecker;
+import GameLogic.Movement.MovementHelper.CollisionHelper.skullCollisionChecker;
 import GameObjects.Field;
 import GameObjects.GameObjectEnums.SkullPosition;
 import GameObjects.Player;
@@ -99,9 +99,8 @@ public class SkullMovement implements Runnable{
 	//start Thread
 	private synchronized void start(){
 		isRunning = true;
-		thread = new Thread();
+		thread = new Thread(this, "SkullMovement");
 		thread.start();
-		this.run();
 	}
 
 	//stop Thread
