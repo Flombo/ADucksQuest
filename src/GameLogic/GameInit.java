@@ -96,6 +96,7 @@ public class GameInit {
 		}
 	}
 
+	//Initialize SkullMovement
     private void initSkullMovement(){
     	for (Skull skull : this.skulls) {
 			SkullMovement skullMovement = new SkullMovement(this.fields, skull, this.xDimension, this.player, this.view);

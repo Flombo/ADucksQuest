@@ -1,12 +1,13 @@
 package Rendering.Animations.PlayerAnimations;
 
 import GameObjects.Player;
+import Rendering.Animations.AnimationBlueprints.AnimationBlueprint;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class AttackedAnimation {
+public class AttackedAnimation extends AnimationBlueprint {
 
 	private BufferedImage[] frames;
 	private BufferedImage frame1;
@@ -45,15 +46,6 @@ public class AttackedAnimation {
 	}
 
 	public void attacked(Player player){
-		long timer = System.currentTimeMillis();
-		int counter = 0;
-		while (counter < this.frames.length) {
-			if (System.currentTimeMillis() - timer > 1000 / 60) {
-				player.setCurrentImage(this.frames[counter]);
-				counter++;
-				timer += 1000 / 60 / 2;
-			}
-		}
-		player.setImageToDefault();
+		this.animation(player, this.frames);
 	}
 }

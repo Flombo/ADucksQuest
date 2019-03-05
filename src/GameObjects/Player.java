@@ -3,6 +3,7 @@ package GameObjects;
 import GameObjects.GameObjectEnums.PlayerPosition;
 import GameObjects.GameObjectEnums.PlayerWalkFrames;
 import Rendering.Animations.PlayerAnimations.AttackedAnimation;
+import Rendering.Animations.PlayerAnimations.ItemPickedAnimation;
 import Rendering.Animations.PlayerAnimations.WalkAnimation;
 import Rendering.View;
 
@@ -140,6 +141,11 @@ public class Player extends Field {
 		AttackedAnimation attackedAnimation = new AttackedAnimation();
 		attackedAnimation.attacked(this);
 		this.checkPlayersLives(view);
+	}
+
+	public void itemPicked(){
+		ItemPickedAnimation itemPickedAnimation = new ItemPickedAnimation();
+		itemPickedAnimation.animateItemPicked(this);
 	}
 
 	public void setPosition(PlayerPosition position) {

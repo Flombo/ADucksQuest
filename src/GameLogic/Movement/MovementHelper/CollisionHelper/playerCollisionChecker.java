@@ -4,6 +4,8 @@ import GameObjects.Field;
 import GameObjects.Player;
 import Rendering.View;
 
+import java.awt.event.WindowEvent;
+
 public class playerCollisionChecker {
 
 	private int newPosX;
@@ -39,7 +41,13 @@ public class playerCollisionChecker {
 				break;
 			case "GameObjects.Coin":
 				this.player.setCoins(1);
+				this.player.itemPicked();
 				canMove = true;
+				break;
+			case "GameObjects.Target":
+				canMove = true;
+				this.view.setDialog("You won ^^ your score:" + this.player.getScore() + " your Moves :" + this.player.getMoves());
+				this.view.dispatchEvent(new WindowEvent(this.view, WindowEvent.WINDOW_CLOSING));
 				break;
 		}
 		return canMove;

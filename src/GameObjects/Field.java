@@ -11,7 +11,8 @@ public class Field {
     private int height;
     private int width;
     private String name;
-    private BufferedImage image;
+    private BufferedImage currentImage;
+    private BufferedImage defaultImage;
 
     public Field(int x, int y, String name){
         this.x = x;
@@ -20,10 +21,11 @@ public class Field {
         this.width = 30;
         this.name = name;
         try {
-            this.image = ImageIO.read(getClass().getResource("/textures/fieldTexture.png"));
+            this.defaultImage = ImageIO.read(getClass().getResource("/textures/fieldTexture.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.currentImage = this.defaultImage;
     }
     public void setX(int x){
         this.x = x;
@@ -54,6 +56,14 @@ public class Field {
     }
 
     public BufferedImage getCurrentImage() {
-        return image;
+        return currentImage;
+    }
+
+    public void setImageToDefault(){
+        this.currentImage = this.defaultImage;
+    }
+
+    public void setCurrentImage(BufferedImage image){
+        this.currentImage = image;
     }
 }
