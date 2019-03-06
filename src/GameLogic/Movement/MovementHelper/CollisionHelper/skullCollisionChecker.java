@@ -50,6 +50,15 @@ public class skullCollisionChecker  {
 			case "GameObjects.Coin":
 				skull.changePosition();
 				break;
+			case "GameObjects.Heart":
+				skull.changePosition();
+				break;
+			case "GameObjects.Chest":
+				skull.changePosition();
+				break;
+			case "GameObjects.FilledHole":
+				canMove = true;
+				break;
 		}
 		return canMove;
 	}

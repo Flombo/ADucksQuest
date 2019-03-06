@@ -66,4 +66,12 @@ public class Field {
     public void setCurrentImage(BufferedImage image){
         this.currentImage = image;
     }
+
+    public int getXPos(){
+        return this.getX() / 30;
+    }
+
+    public int getYPos(){
+        return this.getY() / 30;
+    }
 }

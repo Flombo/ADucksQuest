@@ -24,6 +24,7 @@ public class Coin extends Field {
 		this.currentImage = defaultImage;
 		this.flipFrame = CoinFlipFrames.Coin_Default;
 		this.coinFlip = new CoinFlip(this);
+		this.flip();
 	}
 
 	@Override
@@ -47,7 +48,7 @@ public class Coin extends Field {
 		this.flipFrame = flipFrame;
 	}
 
-	public void flip(){
+	private void flip(){
 		this.coinFlip.initFlip();
 	}
 }

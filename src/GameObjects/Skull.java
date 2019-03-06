@@ -86,4 +86,5 @@ public class Skull extends Field {
 	public void setWalkFrame(SkullWalkFrames skullWalkFrame) {
 		this.walkFrame = skullWalkFrame;
 	}
+
 }

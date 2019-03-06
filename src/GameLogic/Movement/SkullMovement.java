@@ -25,14 +25,6 @@ public class SkullMovement implements Runnable{
 		this.view = view;
 	}
 
-	private int getSkullX(Skull skull){
-		return skull.getX() / 30;
-	}
-
-	private int getSkullY(Skull skull){
-		return skull.getY() / 30;
-	}
-
 	public void initMovement(){
 		this.start();
 	}
@@ -47,23 +39,23 @@ public class SkullMovement implements Runnable{
 
 	// changes skulls position
 	private void changeSkullPos(Skull skull, int newPos){
-		skull.setX((this.getSkullX(skull) + newPos) * 30);
-		skull.setY(this.getSkullY(skull) * 30);
-		this.fields[this.getSkullX(skull)][this.getSkullY(skull)] = skull;
+		skull.setX((skull.getXPos() + newPos) * 30);
+		skull.setY(skull.getYPos() * 30);
+		this.fields[skull.getXPos()][skull.getYPos()] = skull;
 	}
 
 	// checks if next field is an obstacle
 	private void checkNextField(Skull skull, int newPos){
 		skullCollisionChecker skullCollisionChecker = new skullCollisionChecker(
-				this.getSkullX(skull) + newPos,
-				this.getSkullY(skull),
+				skull.getXPos() + newPos,
+				skull.getYPos(),
 				this.fields,
 				skull,
 				this.player,
 				this.view
 		);
 		if(skullCollisionChecker.checkNextGameObject()) {
-			this.fields[this.getSkullX(skull)][this.getSkullY(skull)] = new Field(this.getSkullX(skull) * 30, this.getSkullY(skull) * 30, "GameObjects.Field");
+			this.fields[skull.getXPos()][skull.getYPos()] = new Field(skull.getXPos() * 30, skull.getYPos() * 30, "GameObjects.Field");
 			this.changeSkullPos(skull, newPos);
 			skull.walk();
 		}
@@ -71,7 +63,7 @@ public class SkullMovement implements Runnable{
 
 	// moves Skull in y-direction
 	private void moveSkullLeft(Skull skull, int newPos){
-		if (this.getSkullX(skull) + newPos >= 0){
+		if (skull.getXPos() + newPos >= 0){
 			this.checkNextField(skull, newPos);
 		} else {
 			skull.changePosition();
@@ -80,7 +72,7 @@ public class SkullMovement implements Runnable{
 
 	// moves Skull in x-direction
 	private void moveSkullRight(Skull skull, int newPos){
-		if (this.getSkullX(skull) + newPos < xDimension) {
+		if (skull.getXPos() + newPos < xDimension) {
 			this.checkNextField(skull, newPos);
 		} else {
 			skull.changePosition();

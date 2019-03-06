@@ -4,7 +4,6 @@ import GameLogic.Movement.PlayerMovement;
 import GameLogic.Movement.SkullMovement;
 import GameObjects.*;
 import Helper.consolePrinter;
-import Rendering.Animations.CoinAnimations.CoinFlip;
 import Rendering.View;
 
 import java.awt.event.KeyAdapter;
@@ -43,8 +42,10 @@ public class GameInit {
         this.initPlayer();
         this.initObstacle(this.amount);
         this.initHoles();
-        this.initSkulls(2);
+        this.initSkulls();
         this.initCoins();
+        this.initHearts();
+        this.initChest();
 
         printer.printAllFields(yDimension, xDimension, fields);
         this.initView();
@@ -60,7 +61,6 @@ public class GameInit {
 		);
         this.initMovement(playerMovement, this.player);
 		this.initSkullMovement();
-		this.initFlipCoins();
     }
 
     private void initView(){
@@ -79,13 +79,27 @@ public class GameInit {
         });
     }
 
-    private void initFlipCoins(){
-		for (Field[] fields: this.fields) {
-			for (Field field: fields) {
-				if(field.getName().equals("GameObjects.Coin")){
-					((Coin) field).flip();
+	private ArrayList<Field> getCertainGameObjectType(String name){
+		ArrayList<Field> gameObjects = new ArrayList<>();
+    	for (Field[] fields : this.fields) {
+    		for ( Field field : fields){
+    			if(field.getName().equals(name)){
+					gameObjects.add(field);
 				}
 			}
+		}
+    	return gameObjects;
+	}
+
+	private void initChest(){
+    	Chest chest = new Chest();
+    	this.setGameObjectPosition(chest);
+	}
+
+	private void initHearts(){
+    	for(int i = 0; i < 3; i++){
+    		Heart heart = new Heart();
+    		this.setGameObjectPosition(heart);
 		}
 	}
 
@@ -170,28 +184,14 @@ public class GameInit {
 		}
 	}
 
-	private void initSkulls(int amount){
-		this.skulls = new Skull[amount];
-    	for (int i = 0; i < amount; i++) {
+	private void initSkulls(){
+		this.skulls = new Skull[2];
+    	for (int i = 0; i < 2; i++) {
 			Skull skull = new Skull();
 			this.setGameObjectPosition(skull);
 			this.skulls[i] = skull;
 		}
 	}
-
-//	private Skull[] getSkull(){
-//    	Skull skull = null;
-//		ArrayList<Skull> skulls = new ArrayList<>();
-//    	for(int y = 0; y < this.yDimension; y++){
-//    		for(int x = 0; x < this.xDimension; x++){
-//				if(this.fields[x][y] instanceof Skull){
-//					skulls.add((Skull) this.fields[x][y]);
-//				}
-//			}
-//		}
-//    	skulls.toArray();
-//    	return skulls;
-//	}
 
 	//checks if randomPos of Object isn´t taken by target or Player
 	private Map<String, Integer> checkFieldPostions(){

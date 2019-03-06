@@ -133,7 +133,11 @@ public class PlayerMovement {
 						this.playerPosY + newPos,
 						fields,
 						player,
-						this.view
+						this.view,
+						upDown,
+						xDimension,
+						yDimension,
+						newPos
 				);
 				if(playerCollisionChecker.checkNextGameObject()) {
 					this.fields[this.playerPosX][this.playerPosY] = new Field(this.playerPosX * 30, this.playerPosY * 30, "GameObjects.Field");
@@ -149,7 +153,11 @@ public class PlayerMovement {
 						this.playerPosY,
 						fields,
 						player,
-						this.view
+						this.view,
+						upDown,
+						xDimension,
+						yDimension,
+						newPos
 				);
 				if(playerCollisionChecker.checkNextGameObject()) {
 					this.fields[this.playerPosX][this.playerPosY] = new Field(this.playerPosX * 30, this.playerPosY * 30, "GameObjects.Field");
