@@ -188,14 +188,6 @@ public class Player extends Field {
 		this.coins = Integer.toString(Integer.parseInt(this.coins) + coins);
 	}
 
-	public boolean getCanMove() {
-		return canMove;
-	}
-
-	public void setCanMove(boolean canMove) {
-		this.canMove = canMove;
-	}
-
 	public BufferedImage getFieldImage() {
 		return fieldImage;
 	}

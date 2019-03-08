@@ -136,7 +136,7 @@ public class PlayerMovement {
 	//moves player in x direction when its allowed
 	private void movePlayerXDirection(int newPos){
 		playerCollisionChecker playerCollisionChecker = this.initPlayerCollisionChecker(false, newPos);
-		if(playerCollisionChecker.checkNextGameObject() && this.player.getCanMove()) {
+		if(playerCollisionChecker.checkNextGameObject()) {
 			this.fields[this.player.getXPos()][this.player.getYPos()] = this.createFieldOnOldPlayerPos();
 			this.player.setX((this.player.getXPos() + newPos) * 30);
 			this.movePlayerPos();
@@ -147,7 +147,7 @@ public class PlayerMovement {
 	//moves player in y direction when its allowed
 	private void movePlayerYDirection(int newPos){
 		playerCollisionChecker playerCollisionChecker = this.initPlayerCollisionChecker(true, newPos);
-		if(playerCollisionChecker.checkNextGameObject() && this.player.getCanMove()) {
+		if(playerCollisionChecker.checkNextGameObject()) {
 			this.fields[this.player.getXPos()][this.player.getYPos()] = this.createFieldOnOldPlayerPos();
 			this.player.setY((this.player.getYPos() + newPos) * 30);
 			this.movePlayerPos();
