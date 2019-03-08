@@ -139,7 +139,7 @@ public class PlayerMovement {
 						yDimension,
 						newPos
 				);
-				if(playerCollisionChecker.checkNextGameObject()) {
+				if(playerCollisionChecker.checkNextGameObject() && this.player.getCanMove()) {
 					this.fields[this.playerPosX][this.playerPosY] = new Field(this.playerPosX * 30, this.playerPosY * 30, "GameObjects.Field");
 					this.setPlayerPosY(this.playerPosY + newPos);
 					this.movePlayerPos();
@@ -159,7 +159,7 @@ public class PlayerMovement {
 						yDimension,
 						newPos
 				);
-				if(playerCollisionChecker.checkNextGameObject()) {
+				if(playerCollisionChecker.checkNextGameObject() && this.player.getCanMove()) {
 					this.fields[this.playerPosX][this.playerPosY] = new Field(this.playerPosX * 30, this.playerPosY * 30, "GameObjects.Field");
 					this.setPlayerPosX(this.playerPosX + newPos);
 					this.movePlayerPos();

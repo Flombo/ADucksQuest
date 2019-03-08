@@ -26,6 +26,8 @@ public class Player extends Field {
 	private PlayerPosition position;
 	private PlayerWalkFrames walkFrame;
 	private WalkAnimation walkAnimation;
+	private boolean canMove = true;
+	private BufferedImage fieldImage;
 
 	public Player(){
 		super(0, 0, "GameObjects.Player");
@@ -34,6 +36,11 @@ public class Player extends Field {
 		this.currentImage = this.downImage;
 		this.walkFrame = PlayerWalkFrames.Player_Default_Down;
 		this.walkAnimation = new WalkAnimation();
+		try {
+			this.fieldImage = ImageIO.read(getClass().getResource("/textures/fieldTexture.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void setImageToDefault() {
@@ -179,5 +186,17 @@ public class Player extends Field {
 
 	public void setCoins(int coins) {
 		this.coins = Integer.toString(Integer.parseInt(this.coins) + coins);
+	}
+
+	public boolean getCanMove() {
+		return canMove;
+	}
+
+	public void setCanMove(boolean canMove) {
+		this.canMove = canMove;
+	}
+
+	public BufferedImage getFieldImage() {
+		return fieldImage;
 	}
 }

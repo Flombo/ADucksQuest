@@ -2,6 +2,7 @@ package GameLogic.Movement.MovementHelper.CollisionHelper;
 
 import GameObjects.Chest;
 import GameObjects.Field;
+import GameObjects.Hole;
 import GameObjects.Player;
 import Rendering.View;
 
@@ -47,6 +48,10 @@ public class playerCollisionChecker {
 				canMove = true;
 				break;
 			case  "GameObjects.Hole":
+				this.player.setCurrentImage(this.player.getFieldImage());
+				((Hole)this.fields[this.newPosX][this.newPosY]).animatePlayerFall();
+				this.player.setLives(-1);
+				this.player.attacked(view);
 				break;
 			case "GameObjects.Skull":
 				this.player.setLives(-1);
