@@ -17,8 +17,6 @@ public class GameInit {
     private Field[][] fields;
     private int xDimension;
     private int yDimension;
-    private int playerPosX;
-    private int playerPosY;
     private Player player;
     private Skull[] skulls;
     private View view;
@@ -30,8 +28,6 @@ public class GameInit {
         this.xDimension = xDimension;
         this.yDimension = yDimension;
         this.fields = new Field[xDimension][yDimension];
-        this.playerPosX = this.randomPos();
-        this.playerPosY = this.randomPos();
         this.printer = new consolePrinter();
         this.amount = amount;
     }
@@ -55,8 +51,6 @@ public class GameInit {
 				this.yDimension,
 				this.view,
 				this.fields,
-				this.playerPosY,
-				this.playerPosX,
 				this.player
 		);
         this.initMovement(playerMovement, this.player);
@@ -145,16 +139,16 @@ public class GameInit {
 
     //Initialize GameObjects.Player
     private void initPlayer() {
+		this.player = new Player();
+		this.player.setX(this.randomPos() * 30);
+		this.player.setY(this.randomPos() * 30);
+		this.fields[this.player.getXPos()][this.player.getYPos()] = this.player;
 
         //generate new position until it isn´t target´s position
-        while(this.fields[this.playerPosX][this.playerPosY] instanceof Target){
-            this.playerPosX = this.randomPos();
-            this.playerPosY = this.randomPos();
+        while(this.fields[this.player.getXPos()][this.player.getYPos()] instanceof Target){
+            this.player.setX(this.randomPos() * 30);
+            this.player.setY(this.randomPos() * 30);
         }
-		this.player = new Player();
-		this.player.setX(this.playerPosX * 30);
-		this.player.setY(this.playerPosY * 30);
-		this.fields[this.playerPosX][this.playerPosY] = this.player;
     }
 
     //set random GameObjectPos

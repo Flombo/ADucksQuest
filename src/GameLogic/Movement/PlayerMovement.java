@@ -5,12 +5,9 @@ import GameLogic.Movement.MovementHelper.playerFrameChecker;
 import GameObjects.Field;
 import GameObjects.GameObjectEnums.PlayerPosition;
 import GameObjects.Player;
-import GameObjects.Target;
 import Helper.consolePrinter;
 import Rendering.View;
-
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
 
 public class PlayerMovement {
 
@@ -20,48 +17,16 @@ public class PlayerMovement {
 	private int xDimension;
 	private Field[][] fields;
 	private Player player;
-	private int playerPosY;
-	private int playerPosX;
 	private playerFrameChecker playerFrameChecker;
 
-	public PlayerMovement(consolePrinter consolePrinter , int xDimension, int yDimension, View view, Field[][] fields, int playerPosY, int playerPosX, Player player){
+	public PlayerMovement(consolePrinter consolePrinter , int xDimension, int yDimension, View view, Field[][] fields, Player player){
 		this.consolePrinter = consolePrinter;
 		this.xDimension = xDimension;
 		this.yDimension = yDimension;
 		this.view = view;
 		this.fields = fields;
-		this.playerPosY = playerPosY;
-		this.playerPosX = playerPosX;
 		this.player = player;
 		this.playerFrameChecker = new playerFrameChecker();
-	}
-
-	private void setPlayerPosY(int playerPosY) {
-		this.playerPosY = playerPosY;
-	}
-
-	private void setPlayerPosX(int playerPosX) {
-		this.playerPosX = playerPosX;
-	}
-
-	// checks if next playerPos is target and when it isn´t creates new Player
-	private void controllPlayer(){
-		if(this.fields[this.playerPosX][this.playerPosY] instanceof Target){
-			this.view.setDialog(
-					"You won your moves :" + " "
-							+ this.player.getMoves()
-							+ " Score : "  + " "
-							+ this.player.getScore()
-							+ " Lives : " + this.player.getLives()
-			);
-			this.view.dispatchEvent(new WindowEvent(this.view, WindowEvent.WINDOW_CLOSING));
-			this.player.setMoves(0);
-		}
-
-		this.player.setY(this.playerPosY * 30);
-		this.player.setX(this.playerPosX * 30);
-
-		this.fields[this.playerPosX][this.playerPosY] = this.player;
 	}
 
 	//keylistener for player-movement
@@ -120,54 +85,78 @@ public class PlayerMovement {
 	//move player pos
 	private void movePlayerPos() {
 		this.player.setMoves(1);
-		this.controllPlayer();
+		this.fields[this.player.getXPos()][this.player.getYPos()] = this.player;
+	}
+
+	//inits playerCollisionChecker
+	private playerCollisionChecker initPlayerCollisionChecker(boolean upDown, int newPos){
+		playerCollisionChecker playerCollisionChecker;
+		if (upDown) {
+			playerCollisionChecker = new playerCollisionChecker(
+					this.player.getXPos(),
+					this.player.getYPos() + newPos,
+					fields,
+					player,
+					this.view,
+					true,
+					xDimension,
+					yDimension,
+					newPos
+			);
+		} else {
+			playerCollisionChecker = new playerCollisionChecker(
+					this.player.getXPos() + newPos,
+					this.player.getYPos(),
+					fields,
+					player,
+					this.view,
+					false,
+					xDimension,
+					yDimension,
+					newPos
+			);
+		}
+		return playerCollisionChecker;
 	}
 
 	//method that checks if down/up is pressed and if player reached the end of field
 	private void movePlayer(boolean upDown,int newPos) {
-		playerCollisionChecker playerCollisionChecker;
 		if(upDown) {
-			if (this.playerPosY + newPos >= 0 && this.playerPosY + newPos < yDimension) {
-				playerCollisionChecker = new playerCollisionChecker(
-						this.playerPosX,
-						this.playerPosY + newPos,
-						fields,
-						player,
-						this.view,
-						upDown,
-						xDimension,
-						yDimension,
-						newPos
-				);
-				if(playerCollisionChecker.checkNextGameObject() && this.player.getCanMove()) {
-					this.fields[this.playerPosX][this.playerPosY] = new Field(this.playerPosX * 30, this.playerPosY * 30, "GameObjects.Field");
-					this.setPlayerPosY(this.playerPosY + newPos);
-					this.movePlayerPos();
-				}
-				this.player.checkPlayersLives(this.view);
+			if (this.player.getYPos() + newPos >= 0 && this.player.getYPos() + newPos < yDimension) {
+				this.movePlayerYDirection(newPos);
 			}
 		}else {
-			if (this.playerPosX + newPos >= 0 && this.playerPosX + newPos < xDimension) {
-				playerCollisionChecker = new playerCollisionChecker(
-						this.playerPosX + newPos,
-						this.playerPosY,
-						fields,
-						player,
-						this.view,
-						upDown,
-						xDimension,
-						yDimension,
-						newPos
-				);
-				if(playerCollisionChecker.checkNextGameObject() && this.player.getCanMove()) {
-					this.fields[this.playerPosX][this.playerPosY] = new Field(this.playerPosX * 30, this.playerPosY * 30, "GameObjects.Field");
-					this.setPlayerPosX(this.playerPosX + newPos);
-					this.movePlayerPos();
-				}
-				this.player.checkPlayersLives(this.view);
+			if (this.player.getXPos() + newPos >= 0 && this.player.getXPos() + newPos < xDimension) {
+				this.movePlayerXDirection(newPos);
 			}
 		}
 //		consolePrinter.printAllFields(yDimension, xDimension, fields);
 	}
 
+	//moves player in x direction when its allowed
+	private void movePlayerXDirection(int newPos){
+		playerCollisionChecker playerCollisionChecker = this.initPlayerCollisionChecker(false, newPos);
+		if(playerCollisionChecker.checkNextGameObject() && this.player.getCanMove()) {
+			this.fields[this.player.getXPos()][this.player.getYPos()] = this.createFieldOnOldPlayerPos();
+			this.player.setX((this.player.getXPos() + newPos) * 30);
+			this.movePlayerPos();
+		}
+		this.player.checkPlayersLives(this.view);
+	}
+
+	//moves player in y direction when its allowed
+	private void movePlayerYDirection(int newPos){
+		playerCollisionChecker playerCollisionChecker = this.initPlayerCollisionChecker(true, newPos);
+		if(playerCollisionChecker.checkNextGameObject() && this.player.getCanMove()) {
+			this.fields[this.player.getXPos()][this.player.getYPos()] = this.createFieldOnOldPlayerPos();
+			this.player.setY((this.player.getYPos() + newPos) * 30);
+			this.movePlayerPos();
+		}
+		this.player.checkPlayersLives(this.view);
+	}
+
+	//creates field on old player postion
+	private Field createFieldOnOldPlayerPos() {
+		return new Field(this.player.getXPos() * 30, this.player.getYPos() * 30, "GameObjects.Field");
+	}
 }

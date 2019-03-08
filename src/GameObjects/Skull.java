@@ -2,6 +2,7 @@ package GameObjects;
 
 import GameObjects.GameObjectEnums.SkullPosition;
 import GameObjects.GameObjectEnums.SkullWalkFrames;
+import Rendering.Animations.SkullAnimations.skullAttackAnimation;
 import Rendering.Animations.SkullAnimations.skullWalkAnimation;
 
 import javax.imageio.ImageIO;
@@ -75,6 +76,21 @@ public class Skull extends Field {
 		return currentImage;
 	}
 
+	@Override
+	public void setCurrentImage(BufferedImage currentImage) {
+		this.currentImage = currentImage;
+	}
+
+	@Override
+	public void setImageToDefault() {
+		if(this.position.equals(SkullPosition.SKULL_RIGHT)){
+			this.currentImage = this.imageRight;
+		} else {
+			this.currentImage = this.imageLeft;
+		}
+	}
+
+	//plays walk animiation
 	public void walk(){
 		this.skullWalkAnimation.walk(this);
 	}
@@ -87,4 +103,9 @@ public class Skull extends Field {
 		this.walkFrame = skullWalkFrame;
 	}
 
+	// plays attack animation
+	public void attack(){
+		skullAttackAnimation skullAttackAnimation = new skullAttackAnimation(this);
+		skullAttackAnimation.animateAttack();
+	}
 }

@@ -37,6 +37,7 @@ public class skullCollisionChecker  {
 				skull.changePosition();
 				break;
 			case "GameObjects.Player":
+				this.skull.attack();
 				this.player.setLives(-1);
 				this.player.attacked(this.view);
 				skull.changePosition();
