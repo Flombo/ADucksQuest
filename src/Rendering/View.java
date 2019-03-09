@@ -1,7 +1,7 @@
 package Rendering;
 
-import GameObjects.Field;
-import GameObjects.Player;
+import GameObjects.Field_like_Objects.Field;
+import GameObjects.Player.Player;
 
 import javax.swing.*;
 import java.awt.*;

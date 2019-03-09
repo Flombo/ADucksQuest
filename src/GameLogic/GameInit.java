@@ -2,7 +2,17 @@ package GameLogic;
 
 import GameLogic.Movement.PlayerMovement;
 import GameLogic.Movement.SkullMovement;
-import GameObjects.*;
+import GameLogic.Movement.ZombieMovement;
+import GameObjects.Collectibles.Coin;
+import GameObjects.Collectibles.Heart;
+import GameObjects.Enemies.Skull;
+import GameObjects.Zombie;
+import GameObjects.Field_like_Objects.Field;
+import GameObjects.Obstacles.Chest;
+import GameObjects.Obstacles.Hole;
+import GameObjects.Obstacles.Obstacle;
+import GameObjects.Player.Player;
+import GameObjects.Target.Target;
 import Helper.consolePrinter;
 import Rendering.View;
 
@@ -19,6 +29,7 @@ public class GameInit {
     private int yDimension;
     private Player player;
     private Skull[] skulls;
+    private Zombie[] zombies;
     private View view;
     private consolePrinter printer;
     private int amount;
@@ -39,6 +50,7 @@ public class GameInit {
         this.initObstacle(this.amount);
         this.initHoles();
         this.initSkulls();
+        this.initZombies();
         this.initCoins();
         this.initHearts();
         this.initChest();
@@ -55,6 +67,7 @@ public class GameInit {
 		);
         this.initMovement(playerMovement, this.player);
 		this.initSkullMovement();
+		this.initZombieMovement();
     }
 
     private void initView(){
@@ -104,6 +117,20 @@ public class GameInit {
 		}
 	}
 
+	private void initZombieMovement(){
+    	for (Zombie zombie : this.zombies) {
+			ZombieMovement zombieMovement = new ZombieMovement(
+					this.fields,
+					zombie,
+					this.xDimension,
+					this.yDimension,
+					this.player,
+					this.view
+			);
+			zombieMovement.initMovement();
+		}
+	}
+
 	//Initialize SkullMovement
     private void initSkullMovement(){
     	for (Skull skull : this.skulls) {
@@ -116,7 +143,7 @@ public class GameInit {
     private void initFields(){
         for(int i = 0; i < this.yDimension; i++){
             for(int j = 0; j < this.xDimension; j++){
-                this.fields[j][i] = new Field(j * 30, i * 30, "GameObjects.Field");
+                this.fields[j][i] = new Field(j * 30, i * 30, "GameObjects.Field_like_Objects.Field");
             }
         }
     }
@@ -126,7 +153,7 @@ public class GameInit {
         return (int) ( 1 * Math.random() * this.fields.length );
     }
 
-    //Initialize GameObjects.Target
+    //Initialize GameObjects.Target.Target
     private void initTarget(){
         int targetPosX = this.randomPos();
         int targetPosY = this.randomPos();
@@ -137,7 +164,7 @@ public class GameInit {
         this.fields[targetPosX][targetPosY] = target;
     }
 
-    //Initialize GameObjects.Player
+    //Initialize GameObjects.Player.Player
     private void initPlayer() {
 		this.player = new Player();
 		this.player.setX(this.randomPos() * 30);
@@ -175,6 +202,15 @@ public class GameInit {
 		for(int i = 0; i <= 3; i++){
 			Hole hole = new Hole();
 			this.setGameObjectPosition(hole);
+		}
+	}
+
+	private void initZombies(){
+    	this.zombies = new Zombie[2];
+    	for (int i = 0; i < 2; i++){
+    		Zombie zombie = new Zombie();
+    		this.setGameObjectPosition(zombie);
+    		this.zombies[i] = zombie;
 		}
 	}
 

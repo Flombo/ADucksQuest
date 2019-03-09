@@ -1,6 +1,6 @@
 package Rendering.Animations.PlayerAnimations;
 
-import GameObjects.Player;
+import GameObjects.Player.Player;
 import Rendering.Animations.AnimationBlueprints.AnimationBlueprint;
 
 import javax.imageio.ImageIO;

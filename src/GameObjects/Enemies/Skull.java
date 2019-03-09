@@ -1,5 +1,6 @@
-package GameObjects;
+package GameObjects.Enemies;
 
+import GameObjects.Field_like_Objects.Field;
 import GameObjects.GameObjectEnums.SkullPosition;
 import GameObjects.GameObjectEnums.SkullWalkFrames;
 import Rendering.Animations.SkullAnimations.skullAttackAnimation;
@@ -18,7 +19,7 @@ public class Skull extends Field {
 	private skullWalkAnimation skullWalkAnimation;
 
 	public Skull() {
-		super(0, 0, "GameObjects.Skull");
+		super(0, 0, "GameObjects.Enemies.Skull");
 		try {
 			this.imageRight = ImageIO.read(getClass().getResource("/textures/skullTextureRight.png"));
 		} catch (IOException e) {

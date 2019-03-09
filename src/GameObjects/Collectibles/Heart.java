@@ -1,5 +1,6 @@
-package GameObjects;
+package GameObjects.Collectibles;
 
+import GameObjects.Field_like_Objects.Field;
 import GameObjects.GameObjectEnums.HeartGrowthFrames;
 import Rendering.Animations.HeartAnimations.HeartGrowth;
 
@@ -14,7 +15,7 @@ public class Heart extends Field {
 	private HeartGrowth heartGrowth;
 
 	public Heart() {
-		super(0, 0, "GameObjects.Heart");
+		super(0, 0, "GameObjects.Collectibles.Heart");
 		try {
 			this.defaultImage = ImageIO.read(getClass().getResource("/textures/HeartAnimation/Heart.png"));
 		} catch (IOException e) {

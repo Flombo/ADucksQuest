@@ -1,7 +1,7 @@
 package Rendering.Animations.SkullAnimations;
 
 import GameObjects.GameObjectEnums.SkullPosition;
-import GameObjects.Skull;
+import GameObjects.Enemies.Skull;
 import Rendering.Animations.AnimationBlueprints.AnimationBlueprint;
 
 import javax.imageio.ImageIO;

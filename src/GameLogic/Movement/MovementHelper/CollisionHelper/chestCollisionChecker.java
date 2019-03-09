@@ -1,8 +1,8 @@
 package GameLogic.Movement.MovementHelper.CollisionHelper;
 
-import GameObjects.Chest;
-import GameObjects.Field;
-import GameObjects.FilledHole;
+import GameObjects.Obstacles.Chest;
+import GameObjects.Field_like_Objects.Field;
+import GameObjects.Field_like_Objects.FilledHole;
 
 class chestCollisionChecker {
 
@@ -65,23 +65,23 @@ class chestCollisionChecker {
 			newPosX = newPos;
 		}
 		switch (this.fields[newPosX][newPosY].getName()){
-			case "GameObjects.Obstacle":
+			case "GameObjects.Obstacles.Obstacle":
 				break;
-			case "GameObjects.Field":
+			case "GameObjects.Field_like_Objects.Field":
 				canMove = true;
 				this.moveChest(chest, newPosX, newPosY);
 				break;
-			case  "GameObjects.Hole":
+			case  "GameObjects.Obstacles.Hole":
 				canMove = true;
 				this.fillHole(chest, newPosX, newPosY);
 				break;
-			case "GameObjects.Skull":
+			case "GameObjects.Enemies.Skull":
 				break;
-			case "GameObjects.Coin":
+			case "GameObjects.Collectibles.Coin":
 				break;
-			case "GameObjects.Heart":
+			case "GameObjects.Collectibles.Heart":
 				break;
-			case "GameObjects.Target":
+			case "GameObjects.Target.Target":
 				break;
 		}
 		return canMove;
@@ -89,7 +89,7 @@ class chestCollisionChecker {
 
 	//changes hole into filledhole
 	private void fillHole(Chest chest, int newPosX, int newPosY){
-		this.fields[chest.getXPos()][chest.getYPos()] = new Field(chest.getX(), chest.getY(), "GameObjects.Field");
+		this.fields[chest.getXPos()][chest.getYPos()] = new Field(chest.getX(), chest.getY(), "GameObjects.Field_like_Objects.Field");
 		FilledHole filledHole = new FilledHole();
 		filledHole.setY(newPosY * 30);
 		filledHole.setX(newPosX * 30);
@@ -98,7 +98,7 @@ class chestCollisionChecker {
 
 	//moves chest
 	private void moveChest(Chest chest, int newPosX, int newPosY){
-		this.fields[chest.getXPos()][chest.getYPos()] = new Field(chest.getX(), chest.getY(), "GameObjects.Field");
+		this.fields[chest.getXPos()][chest.getYPos()] = new Field(chest.getX(), chest.getY(), "GameObjects.Field_like_Objects.Field");
 		chest.setX(newPosX * 30);
 		chest.setY(newPosY * 30);
 		this.fields[chest.getXPos()][chest.getYPos()] = chest;

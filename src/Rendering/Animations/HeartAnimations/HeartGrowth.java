@@ -1,6 +1,6 @@
 package Rendering.Animations.HeartAnimations;
 
-import GameObjects.Heart;
+import GameObjects.Collectibles.Heart;
 import GameObjects.GameObjectEnums.HeartGrowthFrames;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

@@ -1,5 +1,6 @@
-package GameObjects;
+package GameObjects.Collectibles;
 
+import GameObjects.Field_like_Objects.Field;
 import GameObjects.GameObjectEnums.CoinFlipFrames;
 import Rendering.Animations.CoinAnimations.CoinFlip;
 
@@ -15,7 +16,7 @@ public class Coin extends Field {
 	private CoinFlip coinFlip;
 
 	public Coin() {
-		super(0, 0, "GameObjects.Coin");
+		super(0, 0, "GameObjects.Collectibles.Coin");
 		try {
 			this.defaultImage = ImageIO.read(getClass().getResource("/textures/CoinAnimation/Coin.png"));
 		} catch (IOException e) {

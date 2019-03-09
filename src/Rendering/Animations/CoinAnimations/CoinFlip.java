@@ -1,6 +1,6 @@
 package Rendering.Animations.CoinAnimations;
 
-import GameObjects.Coin;
+import GameObjects.Collectibles.Coin;
 import GameObjects.GameObjectEnums.CoinFlipFrames;
 
 import javax.imageio.ImageIO;

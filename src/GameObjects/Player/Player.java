@@ -1,5 +1,6 @@
-package GameObjects;
+package GameObjects.Player;
 
+import GameObjects.Field_like_Objects.Field;
 import GameObjects.GameObjectEnums.PlayerPosition;
 import GameObjects.GameObjectEnums.PlayerWalkFrames;
 import Rendering.Animations.PlayerAnimations.AttackedAnimation;
@@ -29,7 +30,7 @@ public class Player extends Field {
 	private BufferedImage fieldImage;
 
 	public Player(){
-		super(0, 0, "GameObjects.Player");
+		super(0, 0, "GameObjects.Player.Player");
 		this.initDefaultFrames();
 		this.position = PlayerPosition.PLAYER_DOWN;
 		this.currentImage = this.downImage;

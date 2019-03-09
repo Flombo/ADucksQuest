@@ -1,4 +1,4 @@
-package GameObjects;
+package GameObjects.Field_like_Objects;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

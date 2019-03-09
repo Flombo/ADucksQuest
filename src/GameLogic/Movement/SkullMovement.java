@@ -1,10 +1,10 @@
 package GameLogic.Movement;
 
 import GameLogic.Movement.MovementHelper.CollisionHelper.skullCollisionChecker;
-import GameObjects.Field;
+import GameObjects.Field_like_Objects.Field;
 import GameObjects.GameObjectEnums.SkullPosition;
-import GameObjects.Player;
-import GameObjects.Skull;
+import GameObjects.Player.Player;
+import GameObjects.Enemies.Skull;
 import Rendering.View;
 
 public class SkullMovement implements Runnable{
@@ -55,7 +55,7 @@ public class SkullMovement implements Runnable{
 				this.view
 		);
 		if(skullCollisionChecker.checkNextGameObject()) {
-			this.fields[skull.getXPos()][skull.getYPos()] = new Field(skull.getXPos() * 30, skull.getYPos() * 30, "GameObjects.Field");
+			this.fields[skull.getXPos()][skull.getYPos()] = new Field(skull.getXPos() * 30, skull.getYPos() * 30, "GameObjects.Field_like_Objects.Field");
 			this.changeSkullPos(skull, newPos);
 			skull.walk();
 		}

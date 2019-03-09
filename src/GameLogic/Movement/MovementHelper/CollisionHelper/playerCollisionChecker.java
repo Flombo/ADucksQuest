@@ -1,9 +1,9 @@
 package GameLogic.Movement.MovementHelper.CollisionHelper;
 
-import GameObjects.Chest;
-import GameObjects.Field;
-import GameObjects.Hole;
-import GameObjects.Player;
+import GameObjects.Obstacles.Chest;
+import GameObjects.Field_like_Objects.Field;
+import GameObjects.Obstacles.Hole;
+import GameObjects.Player.Player;
 import Rendering.View;
 
 import java.awt.event.WindowEvent;
@@ -42,41 +42,45 @@ public class playerCollisionChecker {
 	public boolean checkNextGameObject(){
 		boolean canMove = false;
 		switch (this.fields[this.newPosX][this.newPosY].getName()){
-			case "GameObjects.Obstacle":
+			case "GameObjects.Obstacles.Obstacle":
 				break;
-			case "GameObjects.Field":
+			case "GameObjects.Field_like_Objects.Field":
 				canMove = true;
 				break;
-			case  "GameObjects.Hole":
+			case  "GameObjects.Obstacles.Hole":
 				this.player.setCurrentImage(this.player.getFieldImage());
 				((Hole)this.fields[this.newPosX][this.newPosY]).animatePlayerFall();
 				this.player.setLives(-1);
 				this.player.attacked(view);
 				break;
-			case "GameObjects.Skull":
+			case "GameObjects.Enemies.Skull":
 				this.player.setLives(-1);
 				this.player.attacked(view);
 				break;
-			case "GameObjects.Coin":
+			case "GameObjects.Collectibles.Coin":
 				this.player.setCoins(1);
 				this.player.itemPicked();
 				canMove = true;
 				break;
-			case "GameObjects.Heart":
+			case "GameObjects.Collectibles.Heart":
 				this.player.setLives(1);
 				this.player.itemPicked();
 				canMove = true;
 				break;
-			case "GameObjects.Target":
+			case "GameObjects.Target.Target":
 				canMove = true;
 				this.view.setDialog("You won ^^ your score:" + this.player.getScore() + " your Moves :" + this.player.getMoves());
 				this.view.dispatchEvent(new WindowEvent(this.view, WindowEvent.WINDOW_CLOSING));
 				break;
-			case "GameObjects.Chest":
+			case "GameObjects.Obstacles.Chest":
 				canMove = this.chestCollisionChecker.checkNextPos((Chest) this.fields[this.newPosX][this.newPosY], this.newPos);
 				break;
-			case "GameObjects.FilledHole":
+			case "GameObjects.Field_like_Objects.FilledHole":
 				canMove = true;
+				break;
+			case "GameObjects.Zombie":
+				this.player.setLives(-2);
+				this.player.attacked(view);
 				break;
 		}
 		return canMove;

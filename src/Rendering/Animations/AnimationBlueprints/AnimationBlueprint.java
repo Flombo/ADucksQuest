@@ -1,7 +1,7 @@
 package Rendering.Animations.AnimationBlueprints;
 
 import java.awt.image.BufferedImage;
-import GameObjects.Field;
+import GameObjects.Field_like_Objects.Field;
 
 public class AnimationBlueprint {
 

@@ -1,5 +1,6 @@
-package GameObjects;
+package GameObjects.Obstacles;
 
+import GameObjects.Field_like_Objects.Field;
 import Rendering.Animations.HoleAnimations.PlayerFallsAnimation;
 
 import javax.imageio.ImageIO;
@@ -12,7 +13,7 @@ public class Hole extends Field {
 	private PlayerFallsAnimation playerFallsAnimation;
 
 	public Hole() {
-		super(0, 0, "GameObjects.Hole");
+		super(0, 0, "GameObjects.Obstacles.Hole");
 		try {
 			this.defaultImage = ImageIO.read(getClass().getResource("/textures/holeTexture.png"));
 		} catch (IOException e) {

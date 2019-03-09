@@ -1,6 +1,6 @@
 package Helper;
 
-import GameObjects.Field;
+import GameObjects.Field_like_Objects.Field;
 
 public class consolePrinter {
 
@@ -9,34 +9,34 @@ public class consolePrinter {
 		for(int i = 0; i < yDimension; i++){
 			for(int j = 0; j < xDimension; j++){
 				switch(fields[j][i].getName()){
-					case "GameObjects.Field":
+					case "GameObjects.Field_like_Objects.Field":
 						System.out.print("[Field]");
 						break;
-					case "GameObjects.Player":
+					case "GameObjects.Player.Player":
 						System.out.print("[Player]");
 						break;
-					case "GameObjects.Target":
+					case "GameObjects.Target.Target":
 						System.out.print("[Target]");
 						break;
-					case "GameObjects.Obstacle":
+					case "GameObjects.Obstacles.Obstacle":
 						System.out.println("[Obstacle]");
 						break;
-					case "GameObjects.Hole":
+					case "GameObjects.Obstacles.Hole":
 						System.out.println("[Hole]");
 						break;
-					case "GameObjects.Skull":
+					case "GameObjects.Enemies.Skull":
 						System.out.println("[Skull]");
 						break;
-					case "GameObjects.Coin":
+					case "GameObjects.Collectibles.Coin":
 						System.out.println("[Coin]");
 						break;
-					case "GameObjects.Heart":
+					case "GameObjects.Collectibles.Heart":
 						System.out.println("[Heart]");
 						break;
-					case "GameObjects.Chest":
+					case "GameObjects.Obstacles.Chest":
 						System.out.println("[Chest]");
 						break;
-					case "GameObjects.FilledHole":
+					case "GameObjects.Field_like_Objects.FilledHole":
 						System.out.println("[FilledHole]");
 						break;
 				}

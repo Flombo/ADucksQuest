@@ -2,9 +2,9 @@ package GameLogic.Movement;
 
 import GameLogic.Movement.MovementHelper.CollisionHelper.playerCollisionChecker;
 import GameLogic.Movement.MovementHelper.playerFrameChecker;
-import GameObjects.Field;
+import GameObjects.Field_like_Objects.Field;
 import GameObjects.GameObjectEnums.PlayerPosition;
-import GameObjects.Player;
+import GameObjects.Player.Player;
 import Helper.consolePrinter;
 import Rendering.View;
 import java.awt.event.KeyEvent;
@@ -157,6 +157,6 @@ public class PlayerMovement {
 
 	//creates field on old player postion
 	private Field createFieldOnOldPlayerPos() {
-		return new Field(this.player.getXPos() * 30, this.player.getYPos() * 30, "GameObjects.Field");
+		return new Field(this.player.getXPos() * 30, this.player.getYPos() * 30, "GameObjects.Field_like_Objects.Field");
 	}
 }

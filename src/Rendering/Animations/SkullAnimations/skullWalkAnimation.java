@@ -2,7 +2,7 @@ package Rendering.Animations.SkullAnimations;
 
 import GameObjects.GameObjectEnums.SkullPosition;
 import GameObjects.GameObjectEnums.SkullWalkFrames;
-import GameObjects.Skull;
+import GameObjects.Enemies.Skull;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

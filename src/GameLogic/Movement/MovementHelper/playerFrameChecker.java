@@ -1,7 +1,7 @@
 package GameLogic.Movement.MovementHelper;
 
 import GameObjects.GameObjectEnums.PlayerWalkFrames;
-import GameObjects.Player;
+import GameObjects.Player.Player;
 
 public class playerFrameChecker {
 

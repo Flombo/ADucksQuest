@@ -1,7 +1,7 @@
 package Rendering.Animations.PlayerAnimations;
 
 import GameObjects.GameObjectEnums.PlayerWalkFrames;
-import GameObjects.Player;
+import GameObjects.Player.Player;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

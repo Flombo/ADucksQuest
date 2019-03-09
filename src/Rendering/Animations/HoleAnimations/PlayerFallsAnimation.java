@@ -1,6 +1,6 @@
 package Rendering.Animations.HoleAnimations;
 
-import GameObjects.Hole;
+import GameObjects.Obstacles.Hole;
 import Rendering.Animations.AnimationBlueprints.AnimationBlueprint;
 
 import javax.imageio.ImageIO;
