@@ -89,7 +89,7 @@ class chestCollisionChecker {
 
 	//changes hole into filledhole
 	private void fillHole(Chest chest, int newPosX, int newPosY){
-		this.fields[chest.getXPos()][chest.getYPos()] = new Field(chest.getXPos(), chest.getYPos(), "GameObjects.Field");
+		this.fields[chest.getXPos()][chest.getYPos()] = new Field(chest.getX(), chest.getY(), "GameObjects.Field");
 		FilledHole filledHole = new FilledHole();
 		filledHole.setY(newPosY * 30);
 		filledHole.setX(newPosX * 30);
