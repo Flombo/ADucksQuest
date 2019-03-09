@@ -60,7 +60,7 @@ public class skullCollisionChecker  {
 			case "GameObjects.Field_like_Objects.FilledHole":
 				canMove = true;
 				break;
-			case "GameObjects.Zombie":
+			case "GameObjects.Enemies.Zombie":
 				skull.changePosition();
 				break;
 		}

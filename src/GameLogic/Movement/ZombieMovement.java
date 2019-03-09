@@ -1,7 +1,7 @@
 package GameLogic.Movement;
 
 import GameLogic.Movement.MovementHelper.CollisionHelper.zombieCollisionChecker;
-import GameObjects.Zombie;
+import GameObjects.Enemies.Zombie;
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.GameObjectEnums.ZombiePostion;
 import GameObjects.Player.Player;

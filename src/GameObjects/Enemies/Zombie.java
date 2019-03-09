@@ -1,4 +1,4 @@
-package GameObjects;
+package GameObjects.Enemies;
 
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.GameObjectEnums.ZombiePostion;
@@ -19,7 +19,7 @@ public class Zombie extends Field {
 	private ZombieWalkFrames zombieWalkFrame;
 
 	public Zombie() {
-		super(0, 0, "GameObjects.Zombie");
+		super(0, 0, "GameObjects.Enemies.Zombie");
 		try {
 			this.downImage = ImageIO.read(getClass().getResource("/textures/zombieTextures/zombie_down.png"));
 		} catch (IOException e) {

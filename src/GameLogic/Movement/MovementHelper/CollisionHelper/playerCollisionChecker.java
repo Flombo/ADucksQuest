@@ -78,7 +78,7 @@ public class playerCollisionChecker {
 			case "GameObjects.Field_like_Objects.FilledHole":
 				canMove = true;
 				break;
-			case "GameObjects.Zombie":
+			case "GameObjects.Enemies.Zombie":
 				this.player.setLives(-2);
 				this.player.attacked(view);
 				break;

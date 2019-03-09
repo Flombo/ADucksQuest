@@ -1,6 +1,6 @@
 package GameLogic.Movement.MovementHelper.CollisionHelper;
 
-import GameObjects.Zombie;
+import GameObjects.Enemies.Zombie;
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.Player.Player;
 import Rendering.View;
@@ -38,7 +38,8 @@ public class zombieCollisionChecker {
 				break;
 			case "GameObjects.Player.Player":
 				this.zombie.attack();
-				this.player.setLives(-1);
+				int livesTaken = Integer.parseInt(this.player.getLives()) >= 2 ? -2 : -1;
+				this.player.setLives(livesTaken);
 				this.player.attacked(this.view);
 				zombie.changePostion();
 				break;
@@ -60,7 +61,7 @@ public class zombieCollisionChecker {
 			case "GameObjects.Field_like_Objects.FilledHole":
 				canMove = true;
 				break;
-			case "GameObjects.Zombie":
+			case "GameObjects.Enemies.Zombie":
 				zombie.changePostion();
 				break;
 		}

@@ -29,62 +29,54 @@ public class SkullMovement implements Runnable{
 		this.start();
 	}
 
-	private void moveSkulls(Skull skull, int newPos){
-		if(newPos == 1) {
-			this.moveSkullRight(skull, newPos);
-		} else {
-			this.moveSkullLeft(skull, newPos);
-		}
-	}
-
 	// changes skulls position
-	private void changeSkullPos(Skull skull, int newPos){
-		skull.setX((skull.getXPos() + newPos) * 30);
-		skull.setY(skull.getYPos() * 30);
-		this.fields[skull.getXPos()][skull.getYPos()] = skull;
+	private void changeSkullPos(int newPos){
+		this.skull.setX((this.skull.getXPos() + newPos) * 30);
+		this.skull.setY(this.skull.getYPos() * 30);
+		this.fields[this.skull.getXPos()][this.skull.getYPos()] = this.skull;
 	}
 
 	// checks if next field is an obstacle
-	private void checkNextField(Skull skull, int newPos){
+	private void checkNextField(int newPos){
 		skullCollisionChecker skullCollisionChecker = new skullCollisionChecker(
-				skull.getXPos() + newPos,
-				skull.getYPos(),
+				this.skull.getXPos() + newPos,
+				this.skull.getYPos(),
 				this.fields,
-				skull,
+				this.skull,
 				this.player,
 				this.view
 		);
 		if(skullCollisionChecker.checkNextGameObject()) {
-			this.fields[skull.getXPos()][skull.getYPos()] = new Field(skull.getXPos() * 30, skull.getYPos() * 30, "GameObjects.Field_like_Objects.Field");
-			this.changeSkullPos(skull, newPos);
-			skull.walk();
+			this.fields[this.skull.getXPos()][this.skull.getYPos()] = new Field(this.skull.getXPos() * 30, this.skull.getYPos() * 30, "GameObjects.Field_like_Objects.Field");
+			this.changeSkullPos(newPos);
+			this.skull.walk();
 		}
 	}
 
 	// moves Skull in y-direction
-	private void moveSkullLeft(Skull skull, int newPos){
-		if (skull.getXPos() + newPos >= 0){
-			this.checkNextField(skull, newPos);
+	private void moveSkullLeft(){
+		if (this.skull.getXPos() - 1 >= 0){
+			this.checkNextField(-1);
 		} else {
-			skull.changePosition();
+			this.skull.changePosition();
 		}
 	}
 
 	// moves Skull in x-direction
-	private void moveSkullRight(Skull skull, int newPos){
-		if (skull.getXPos() + newPos < xDimension) {
-			this.checkNextField(skull, newPos);
+	private void moveSkullRight(){
+		if (this.skull.getXPos() + 1 < xDimension) {
+			this.checkNextField(1);
 		} else {
-			skull.changePosition();
+			this.skull.changePosition();
 		}
 	}
 
 	//calls vor every Skull the moveSkull method
 	private void controllSkulls(){
 		if (this.skull.getPosition().equals(SkullPosition.SKULL_RIGHT)) {
-			this.moveSkulls(this.skull, 1);
+			this.moveSkullRight();
 		} else {
-			this.moveSkulls(this.skull, -1);
+			this.moveSkullLeft();
 		}
 	}
 

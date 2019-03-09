@@ -6,7 +6,7 @@ import GameLogic.Movement.ZombieMovement;
 import GameObjects.Collectibles.Coin;
 import GameObjects.Collectibles.Heart;
 import GameObjects.Enemies.Skull;
-import GameObjects.Zombie;
+import GameObjects.Enemies.Zombie;
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.Obstacles.Chest;
 import GameObjects.Obstacles.Hole;
