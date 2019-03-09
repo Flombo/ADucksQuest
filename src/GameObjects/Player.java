@@ -26,7 +26,6 @@ public class Player extends Field {
 	private PlayerPosition position;
 	private PlayerWalkFrames walkFrame;
 	private WalkAnimation walkAnimation;
-	private boolean canMove = true;
 	private BufferedImage fieldImage;
 
 	public Player(){
