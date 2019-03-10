@@ -3,6 +3,8 @@ package GameObjects.Enemies;
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.GameObjectEnums.ZombiePostion;
 import GameObjects.GameObjectEnums.ZombieWalkFrames;
+import Rendering.Animations.ZombieAnimations.zombieAttackAnimation;
+import Rendering.Animations.ZombieAnimations.zombieWalkAnimation;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -17,32 +19,36 @@ public class Zombie extends Field {
 	private BufferedImage rightImage;
 	private ZombiePostion zombiePostion;
 	private ZombieWalkFrames zombieWalkFrame;
+	private zombieWalkAnimation zombieWalkAnimation;
+	private zombieAttackAnimation zombieAttackAnimation;
 
 	public Zombie() {
 		super(0, 0, "GameObjects.Enemies.Zombie");
 		try {
-			this.downImage = ImageIO.read(getClass().getResource("/textures/zombieTextures/zombie_down.png"));
+			this.downImage = ImageIO.read(getClass().getResource("/textures/zombieTextures/down/zombie_down.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		try {
-			this.upImage = ImageIO.read(getClass().getResource("/textures/zombieTextures/zombie_up.png"));
+			this.upImage = ImageIO.read(getClass().getResource("/textures/zombieTextures/up/zombie_up.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		try {
-			this.leftImage = ImageIO.read(getClass().getResource("/textures/zombieTextures/zombie_left.png"));
+			this.leftImage = ImageIO.read(getClass().getResource("/textures/zombieTextures/left/zombie_left.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		try {
-			this.rightImage = ImageIO.read(getClass().getResource("/textures/zombieTextures/zombie_right.png"));
+			this.rightImage = ImageIO.read(getClass().getResource("/textures/zombieTextures/right/zombie_right.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		this.currentImage = this.downImage;
 		this.zombiePostion = ZombiePostion.Zombie_Down;
 		this.zombieWalkFrame = ZombieWalkFrames.Zombie_Down_Default;
+		this.zombieWalkAnimation = new zombieWalkAnimation();
+		this.zombieAttackAnimation = new zombieAttackAnimation(this);
 	}
 
 	@Override
@@ -119,10 +125,10 @@ public class Zombie extends Field {
 	}
 
 	public void walk(){
-
+		this.zombieWalkAnimation.walk(this);
 	}
 
 	public void attack(){
-
+		this.zombieAttackAnimation.animateAttack();
 	}
 }
