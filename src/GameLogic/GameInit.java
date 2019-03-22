@@ -30,6 +30,9 @@ public class GameInit {
     private Player player;
     private Skull[] skulls;
     private Zombie[] zombies;
+    private PlayerMovement playerMovement;
+    private ArrayList <ZombieMovement> zombieMovement;
+    private ArrayList <SkullMovement> skullMovement;
     private View view;
     private consolePrinter printer;
     private int amount;
@@ -38,26 +41,47 @@ public class GameInit {
     public GameInit(int xDimension, int yDimension, int amount){
         this.xDimension = xDimension;
         this.yDimension = yDimension;
-        this.fields = new Field[xDimension][yDimension];
         this.printer = new consolePrinter();
         this.amount = amount;
     }
 
-    public void init(){
-        this.initFields();
-        this.initTarget();
-        this.initPlayer();
-        this.initObstacle(this.amount);
-        this.initHoles();
-        this.initSkulls();
-        this.initZombies();
-        this.initCoins();
-        this.initHearts();
-        this.initChest();
+    //initialize Level
+    public Field[][] initLevel(){
+		this.initFields();
+		this.initTarget();
+		this.initPlayer();
+		this.initObstacle(this.amount);
+		this.initHoles();
+		this.initSkulls();
+		this.initZombies();
+		this.initCoins();
+		this.initHearts();
+		this.initChest();
+		printer.printAllFields(yDimension, xDimension, fields);
+		return this.fields;
+	}
 
-        printer.printAllFields(yDimension, xDimension, fields);
-        this.initView();
-		PlayerMovement playerMovement = new PlayerMovement(
+	//inits view and shows mainMenu
+    public void initView(){
+        this.view = new View(this);
+		this.view.showMainMenu();
+    }
+
+    public void setGameToDefault(){
+		this.fields = new Field[xDimension][yDimension];
+		this.skulls = null;
+		this.zombies = null;
+		this.player = null;
+
+	}
+
+    public void initMovement(){
+		this.initSkullMovement();
+		this.initZombieMovement();
+    }
+
+    public void intitPlayerMovement(){
+		this.playerMovement = new PlayerMovement(
 				this.printer,
 				this.xDimension,
 				this.yDimension,
@@ -65,26 +89,16 @@ public class GameInit {
 				this.fields,
 				this.player
 		);
-        this.initMovement(playerMovement, this.player);
-		this.initSkullMovement();
-		this.initZombieMovement();
-    }
-
-    private void initView(){
-        this.view = new View(this.fields);
-		this.view.start();
-    }
-
-    private void initMovement(PlayerMovement playerMovement, Player player){
-        this.view.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
-                playerMovement.changePlayerPos(e);
-                player.walk();
-            }
-        });
-    }
+		view.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				super.keyReleased(e);
+				playerMovement.changePlayerPos(e);
+				player.walk();
+			}
+		});
+		view.requestFocusInWindow();
+	}
 
 	private ArrayList<Field> getCertainGameObjectType(String name){
 		ArrayList<Field> gameObjects = new ArrayList<>();
@@ -128,6 +142,7 @@ public class GameInit {
 					this.view
 			);
 			zombieMovement.initMovement();
+//			this.zombieMovement.add(zombieMovement);
 		}
 	}
 
@@ -136,11 +151,13 @@ public class GameInit {
     	for (Skull skull : this.skulls) {
 			SkullMovement skullMovement = new SkullMovement(this.fields, skull, this.xDimension, this.player, this.view);
 			skullMovement.initMovement();
+//			this.skullMovement.add(skullMovement);
 		}
 	}
 
     //Create Fields
     private void initFields(){
+		this.fields = new Field[xDimension][yDimension];
         for(int i = 0; i < this.yDimension; i++){
             for(int j = 0; j < this.xDimension; j++){
                 this.fields[j][i] = new Field(j * 30, i * 30, "GameObjects.Field_like_Objects.Field");

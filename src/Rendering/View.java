@@ -1,26 +1,48 @@
 package Rendering;
 
+import GameLogic.GameInit;
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.Player.Player;
-
+import Rendering.Windows.MainMenu;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
 public class View extends JFrame implements Runnable{
 
-	private Field[][] fields;
 	private boolean isRunning = false;
-	private Thread thread;
+	private boolean isPaused = false;
+	private Thread currentThread;
+	private MainMenu mainMenu;
+	private Field[][] fields;
 
-	public View(Field[][] fields){
-		this.fields = fields;
-		Dimension dimension = new Dimension(fields.length * 40, fields.length * 50);
+	public View(GameInit gameInit){
+		Dimension dimension = new Dimension(15 * 40, 15 * 50);
 		this.setSize(dimension);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setLayout(new GridBagLayout());
+		this.mainMenu = new MainMenu(this, this.getHeight(), this.getWidth(), gameInit);
+		this.add(this.mainMenu);
 		this.setVisible(true);
+	}
+
+	public void showGameMenu(){
+		this.isPaused = true;
+		this.mainMenu.showGameMenu();
+	}
+
+	public boolean isRunning(){
+		return this.isRunning;
+	}
+
+	public void setIsPaused(boolean isPaused){
+		this.isPaused = isPaused;
+	}
+
+	//shows Mainmenu
+	public void showMainMenu(){
+		this.mainMenu.showMainMenu();
 	}
 
 	//shows Dialogwindow
@@ -28,18 +50,20 @@ public class View extends JFrame implements Runnable{
 		JOptionPane.showMessageDialog(this, txt);
 	}
 
-	//start Thread
-	public synchronized void start(){
+	//initLevel Thread
+	public synchronized void initLevel(Field[][] fields){
 		isRunning = true;
-		thread = new Thread(this, "Thread1");
-		thread.start();
+		isPaused = false;
+		this.fields = fields;
+		currentThread = new Thread(this, "Thread1");
+		currentThread.start();
 	}
 
-	// stop thread by closing frame
+	// stop currentThread by closing frame
 	private synchronized void stop(){
 		isRunning = false;
 		try{
-			thread.join();
+			currentThread.join();
 		} catch (InterruptedException e){
 			e.printStackTrace();
 		}
@@ -58,23 +82,25 @@ public class View extends JFrame implements Runnable{
 		double delta = 0;
 
 		while (isRunning){
-			long now = System.nanoTime();
-			delta += (now - frameStart) / nanoSeconds;
-			frameStart = now;
-			if(delta < 0.5){
-				try {
-					Thread.sleep((long) (1000 / framerate));
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+			while (!isPaused) {
+				long now = System.nanoTime();
+				delta += (now - frameStart) / nanoSeconds;
+				frameStart = now;
+				if (delta < 0.5) {
+					try {
+						Thread.sleep((long) (1000 / framerate));
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
-			}
-			initRendering();
-			frames++;
-			delta--;
-			if(System.currentTimeMillis() - timer > 1000){
-				timer += 1000;
-				this.setTitle("FPS:" + frames );
-				frames = 0;
+				initRendering();
+				frames++;
+				delta--;
+				if (System.currentTimeMillis() - timer > 1000) {
+					timer += 1000;
+					this.setTitle("FPS:" + frames);
+					frames = 0;
+				}
 			}
 		}
 		stop();

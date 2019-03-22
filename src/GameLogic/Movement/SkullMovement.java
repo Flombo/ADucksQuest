@@ -25,6 +25,10 @@ public class SkullMovement implements Runnable{
 		this.view = view;
 	}
 
+	public void setIsRunningToFalse(){
+		this.isRunning = false;
+	}
+
 	public void initMovement(){
 		this.start();
 	}

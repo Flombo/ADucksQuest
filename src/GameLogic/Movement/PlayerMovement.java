@@ -74,8 +74,8 @@ public class PlayerMovement {
 				this.player.setPosition(PlayerPosition.PLAYER_LEFT);
 				this.playerFrameChecker.checkWalkFrameLeft(this.player);
 				break;
-			default:
-				this.view.setDialog("You have to press the arrow keys or WASD!");
+			case KeyEvent.VK_ESCAPE:
+				this.view.showGameMenu();
 				break;
 
 		}
