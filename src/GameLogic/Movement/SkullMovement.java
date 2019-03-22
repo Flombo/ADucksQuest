@@ -13,6 +13,7 @@ public class SkullMovement implements Runnable{
 	private Field[][] fields;
 	private Thread thread;
 	private boolean isRunning = false;
+	private boolean allowedToMove = true;
 	private Skull skull;
 	private int xDimension;
 	private Player player;
@@ -25,8 +26,8 @@ public class SkullMovement implements Runnable{
 		this.view = view;
 	}
 
-	public void setIsRunningToFalse(){
-		this.isRunning = false;
+	public void setAllowedToMove(boolean allowedToMove){
+		this.allowedToMove = allowedToMove;
 	}
 
 	public void initMovement(){
@@ -106,14 +107,16 @@ public class SkullMovement implements Runnable{
 	public void run() {
 		long timer = System.currentTimeMillis();
 		while(isRunning) {
-			if (System.currentTimeMillis() - timer >= 1000 / 60) {
-				timer += 4000 / 60;
-				try {
-					Thread.sleep(4500 / 60);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+			if(allowedToMove) {
+				if (System.currentTimeMillis() - timer >= 1000 / 60) {
+					timer += 4000 / 60;
+					try {
+						Thread.sleep(4500 / 60);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					this.controllSkulls();
 				}
-				this.controllSkulls();
 			}
 		}
 		this.stop();

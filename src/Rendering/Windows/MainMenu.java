@@ -2,6 +2,7 @@ package Rendering.Windows;
 
 import GameLogic.GameInit;
 import GameObjects.Field_like_Objects.Field;
+import GameObjects.Player.Player;
 import Rendering.View;
 
 import javax.swing.*;
@@ -18,6 +19,7 @@ public class MainMenu extends JPanel {
 	private Field[][] fields;
 	private JButton[] mainMenuButtons;
 	private JButton[] gameMenuButtons;
+	private Player player;
 
 	public MainMenu (View view, int frameHeight, int frameWidth, GameInit gameInit){
 
@@ -29,7 +31,8 @@ public class MainMenu extends JPanel {
 
 	}
 
-	public void showGameMenu(){
+	public void showGameMenu(Player player){
+		this.player = player;
 		this.removeButtons(this.mainMenuButtons);
 		JButton resumeGame = new JButton("Resume Game");
 		JButton goToMenu = new JButton("Go to Menu");
@@ -73,6 +76,8 @@ public class MainMenu extends JPanel {
 	private void handleMouseClick(MouseEvent e){
 		switch (((JButton)e.getSource()).getText()){
 			case "Resume Game":
+				this.player.setAllowedToMove(true);
+				this.gameInit.switchEnemyMovement(true);
 				this.view.initLevel(this.fields);
 				this.view.requestFocusInWindow();
 				break;

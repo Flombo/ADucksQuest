@@ -31,6 +31,8 @@ public class GameInit {
     private Skull[] skulls;
     private Zombie[] zombies;
     private PlayerMovement playerMovement;
+    private ArrayList <ZombieMovement> zombieMovements;
+    private ArrayList <SkullMovement> skullMovements;
     private KeyAdapter keyAdapter;
     private View view;
     private consolePrinter printer;
@@ -44,6 +46,26 @@ public class GameInit {
         this.amount = amount;
         this.initKeyAdapter();
     }
+
+    //pauses Enemy movement
+    public void switchEnemyMovement(boolean allowedToMove){
+		this.switchSkullMovement(allowedToMove);
+		this.switchZombieMovement(allowedToMove);
+	}
+
+	//pauses zombie movement
+	private void switchZombieMovement(boolean allowedToMove){
+		for (ZombieMovement zombieMovement : this.zombieMovements){
+			zombieMovement.setAllowedToMove(allowedToMove);
+		}
+	}
+
+	//pauses skull movement
+	private void switchSkullMovement(boolean allowedToMove){
+    	for (SkullMovement skullMovement : this.skullMovements){
+    		skullMovement.setAllowedToMove(allowedToMove);
+		}
+	}
 
     //removes KeyListener from view
     private void removeKeyAdapter(){
@@ -139,6 +161,7 @@ public class GameInit {
 	}
 
 	private void initZombieMovement(){
+    	this.zombieMovements = new ArrayList<>();
     	for (Zombie zombie : this.zombies) {
 			ZombieMovement zombieMovement = new ZombieMovement(
 					this.fields,
@@ -149,14 +172,17 @@ public class GameInit {
 					this.view
 			);
 			zombieMovement.initMovement();
+			this.zombieMovements.add(zombieMovement);
 		}
 	}
 
 	//Initialize SkullMovement
     private void initSkullMovement(){
+    	this.skullMovements = new ArrayList<>();
     	for (Skull skull : this.skulls) {
 			SkullMovement skullMovement = new SkullMovement(this.fields, skull, this.xDimension, this.player, this.view);
 			skullMovement.initMovement();
+			this.skullMovements.add(skullMovement);
 		}
 	}
 

@@ -28,6 +28,7 @@ public class Player extends Field {
 	private PlayerWalkFrames walkFrame;
 	private WalkAnimation walkAnimation;
 	private BufferedImage fieldImage;
+	private boolean allowedToMove = true;
 
 	public Player(){
 		super(0, 0, "GameObjects.Player.Player");
@@ -41,6 +42,14 @@ public class Player extends Field {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public boolean getAllowedToMove(){
+		return this.allowedToMove;
+	}
+
+	public void setAllowedToMove(boolean allowedToMove){
+		this.allowedToMove = allowedToMove;
 	}
 
 	public void setImageToDefault() {

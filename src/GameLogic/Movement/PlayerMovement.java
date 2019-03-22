@@ -33,51 +33,53 @@ public class PlayerMovement {
 	public void changePlayerPos(KeyEvent event){
 		int keyCode = event.getKeyCode();
 
-		switch ( keyCode ){
-			case KeyEvent.VK_DOWN:
-				this.movePlayer(true, 1);
-				this.player.setPosition(PlayerPosition.PLAYER_DOWN);
-				this.playerFrameChecker.checkWalkFrameDown(this.player);
-				break;
-			case KeyEvent.VK_S:
-				this.movePlayer(true, 1);
-				this.player.setPosition(PlayerPosition.PLAYER_DOWN);
-				this.playerFrameChecker.checkWalkFrameDown(this.player);
-				break;
-			case KeyEvent.VK_UP:
-				this.movePlayer(true, -1);
-				this.player.setPosition(PlayerPosition.PLAYER_UP);
-				this.playerFrameChecker.checkWalkFrameUp(this.player);
-				break;
-			case KeyEvent.VK_W:
-				this.movePlayer(true, -1);
-				this.player.setPosition(PlayerPosition.PLAYER_UP);
-				this.playerFrameChecker.checkWalkFrameUp(this.player);
-				break;
-			case KeyEvent.VK_RIGHT:
-				this.movePlayer(false, 1);
-				this.player.setPosition(PlayerPosition.PLAYER_RIGHT);
-				this.playerFrameChecker.checkWalkFrameRight(this.player);
-				break;
-			case KeyEvent.VK_D:
-				this.movePlayer(false, 1);
-				this.player.setPosition(PlayerPosition.PLAYER_RIGHT);
-				this.playerFrameChecker.checkWalkFrameRight(this.player);
-				break;
-			case KeyEvent.VK_LEFT:
-				this.movePlayer(false, -1);
-				this.player.setPosition(PlayerPosition.PLAYER_LEFT);
-				this.playerFrameChecker.checkWalkFrameLeft(this.player);
-				break;
-			case KeyEvent.VK_A:
-				this.movePlayer(false, -1);
-				this.player.setPosition(PlayerPosition.PLAYER_LEFT);
-				this.playerFrameChecker.checkWalkFrameLeft(this.player);
-				break;
-			case KeyEvent.VK_ESCAPE:
-				this.view.showGameMenu();
-				break;
+		if (this.player.getAllowedToMove()) {
+			switch ( keyCode ) {
+				case KeyEvent.VK_DOWN:
+					this.movePlayer(true, 1);
+					this.player.setPosition(PlayerPosition.PLAYER_DOWN);
+					this.playerFrameChecker.checkWalkFrameDown(this.player);
+					break;
+				case KeyEvent.VK_S:
+					this.movePlayer(true, 1);
+					this.player.setPosition(PlayerPosition.PLAYER_DOWN);
+					this.playerFrameChecker.checkWalkFrameDown(this.player);
+					break;
+				case KeyEvent.VK_UP:
+					this.movePlayer(true, -1);
+					this.player.setPosition(PlayerPosition.PLAYER_UP);
+					this.playerFrameChecker.checkWalkFrameUp(this.player);
+					break;
+				case KeyEvent.VK_W:
+					this.movePlayer(true, -1);
+					this.player.setPosition(PlayerPosition.PLAYER_UP);
+					this.playerFrameChecker.checkWalkFrameUp(this.player);
+					break;
+				case KeyEvent.VK_RIGHT:
+					this.movePlayer(false, 1);
+					this.player.setPosition(PlayerPosition.PLAYER_RIGHT);
+					this.playerFrameChecker.checkWalkFrameRight(this.player);
+					break;
+				case KeyEvent.VK_D:
+					this.movePlayer(false, 1);
+					this.player.setPosition(PlayerPosition.PLAYER_RIGHT);
+					this.playerFrameChecker.checkWalkFrameRight(this.player);
+					break;
+				case KeyEvent.VK_LEFT:
+					this.movePlayer(false, -1);
+					this.player.setPosition(PlayerPosition.PLAYER_LEFT);
+					this.playerFrameChecker.checkWalkFrameLeft(this.player);
+					break;
+				case KeyEvent.VK_A:
+					this.movePlayer(false, -1);
+					this.player.setPosition(PlayerPosition.PLAYER_LEFT);
+					this.playerFrameChecker.checkWalkFrameLeft(this.player);
+					break;
+				case KeyEvent.VK_ESCAPE:
+					this.view.showGameMenu(this.player);
+					break;
 
+			}
 		}
 
 	}

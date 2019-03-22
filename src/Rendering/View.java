@@ -13,23 +13,27 @@ public class View extends JFrame implements Runnable{
 	private boolean isRunning = false;
 	private boolean isPaused = false;
 	private Thread currentThread;
+	private GameInit gameInit;
 	private MainMenu mainMenu;
 	private Field[][] fields;
 
 	public View(GameInit gameInit){
+		this.gameInit = gameInit;
 		Dimension dimension = new Dimension(15 * 40, 15 * 50);
 		this.setSize(dimension);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setLayout(new GridBagLayout());
-		this.mainMenu = new MainMenu(this, this.getHeight(), this.getWidth(), gameInit);
+		this.mainMenu = new MainMenu(this, this.getHeight(), this.getWidth(), this.gameInit);
 		this.add(this.mainMenu);
 		this.setVisible(true);
 	}
 
-	public void showGameMenu(){
+	public void showGameMenu(Player player){
 		this.isPaused = true;
-		this.mainMenu.showGameMenu();
+		this.gameInit.switchEnemyMovement(false);
+		player.setAllowedToMove(false);
+		this.mainMenu.showGameMenu(player);
 	}
 
 	public boolean isRunning(){

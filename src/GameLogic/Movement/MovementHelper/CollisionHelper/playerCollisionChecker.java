@@ -48,14 +48,18 @@ public class playerCollisionChecker {
 				canMove = true;
 				break;
 			case  "GameObjects.Obstacles.Hole":
+				this.player.setAllowedToMove(false);
 				this.player.setCurrentImage(this.player.getFieldImage());
 				((Hole)this.fields[this.newPosX][this.newPosY]).animatePlayerFall();
 				this.player.setLives(-1);
 				this.player.attacked(view);
+				this.player.setAllowedToMove(true);
 				break;
 			case "GameObjects.Enemies.Skull":
+				this.player.setAllowedToMove(false);
 				this.player.setLives(-1);
 				this.player.attacked(view);
+				this.player.setAllowedToMove(true);
 				break;
 			case "GameObjects.Collectibles.Coin":
 				this.player.setCoins(1);
@@ -63,8 +67,10 @@ public class playerCollisionChecker {
 				canMove = true;
 				break;
 			case "GameObjects.Collectibles.Heart":
+				this.player.setAllowedToMove(false);
 				this.player.setLives(1);
 				this.player.itemPicked();
+				this.player.setAllowedToMove(true);
 				canMove = true;
 				break;
 			case "GameObjects.Target.Target":
@@ -79,8 +85,10 @@ public class playerCollisionChecker {
 				canMove = true;
 				break;
 			case "GameObjects.Enemies.Zombie":
+				this.player.setAllowedToMove(false);
 				this.player.setLives(-2);
 				this.player.attacked(view);
+				this.player.setAllowedToMove(true);
 				break;
 		}
 		return canMove;
