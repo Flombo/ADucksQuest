@@ -85,7 +85,7 @@ public class MainMenu extends JPanel {
 				this.view.initLevel(this.fields);
 				if(this.view.isRunning()) {
 					this.gameInit.intitPlayerMovement();
-					this.gameInit.initMovement();
+					this.gameInit.initEnemyMovement();
 				}
 				break;
 			case "Quit Game":

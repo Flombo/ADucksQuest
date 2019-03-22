@@ -31,8 +31,7 @@ public class GameInit {
     private Skull[] skulls;
     private Zombie[] zombies;
     private PlayerMovement playerMovement;
-    private ArrayList <ZombieMovement> zombieMovement;
-    private ArrayList <SkullMovement> skullMovement;
+    private KeyAdapter keyAdapter;
     private View view;
     private consolePrinter printer;
     private int amount;
@@ -43,7 +42,25 @@ public class GameInit {
         this.yDimension = yDimension;
         this.printer = new consolePrinter();
         this.amount = amount;
+        this.initKeyAdapter();
     }
+
+    //removes KeyListener from view
+    private void removeKeyAdapter(){
+    	this.view.removeKeyListener(this.keyAdapter);
+	}
+
+	//inits KeyAdapter
+    private void initKeyAdapter(){
+		this.keyAdapter = new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				super.keyReleased(e);
+				playerMovement.changePlayerPos(e);
+				player.walk();
+			}
+		};
+	}
 
     //initialize Level
     public Field[][] initLevel(){
@@ -67,15 +84,8 @@ public class GameInit {
 		this.view.showMainMenu();
     }
 
-    public void setGameToDefault(){
-		this.fields = new Field[xDimension][yDimension];
-		this.skulls = null;
-		this.zombies = null;
-		this.player = null;
-
-	}
-
-    public void initMovement(){
+    //inits enemyMovement
+    public void initEnemyMovement(){
 		this.initSkullMovement();
 		this.initZombieMovement();
     }
@@ -89,14 +99,11 @@ public class GameInit {
 				this.fields,
 				this.player
 		);
-		view.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				super.keyReleased(e);
-				playerMovement.changePlayerPos(e);
-				player.walk();
-			}
-		});
+		if(this.keyAdapter != null){
+			this.removeKeyAdapter();
+			this.initKeyAdapter();
+		}
+		view.addKeyListener(this.keyAdapter);
 		view.requestFocusInWindow();
 	}
 
@@ -142,7 +149,6 @@ public class GameInit {
 					this.view
 			);
 			zombieMovement.initMovement();
-//			this.zombieMovement.add(zombieMovement);
 		}
 	}
 
@@ -151,7 +157,6 @@ public class GameInit {
     	for (Skull skull : this.skulls) {
 			SkullMovement skullMovement = new SkullMovement(this.fields, skull, this.xDimension, this.player, this.view);
 			skullMovement.initMovement();
-//			this.skullMovement.add(skullMovement);
 		}
 	}
 
