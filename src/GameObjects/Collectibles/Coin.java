@@ -14,6 +14,7 @@ public class Coin extends Field {
 	private BufferedImage defaultImage;
 	private CoinFlipFrames flipFrame;
 	private CoinFlip coinFlip;
+	private boolean allowedToFlip = true;
 
 	public Coin() {
 		super(0, 0, "GameObjects.Collectibles.Coin");
@@ -51,5 +52,13 @@ public class Coin extends Field {
 
 	private void flip(){
 		this.coinFlip.initFlip();
+	}
+
+	public boolean isAllowedToFlip() {
+		return allowedToFlip;
+	}
+
+	public void setAllowedToFlip(boolean allowedToFlip) {
+		this.allowedToFlip = allowedToFlip;
 	}
 }

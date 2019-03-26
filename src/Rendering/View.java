@@ -32,6 +32,7 @@ public class View extends JFrame implements Runnable{
 	public void showGameMenu(Player player){
 		this.isPaused = true;
 		this.gameInit.switchEnemyMovement(false);
+		this.gameInit.switchCollectiblesAnimation(false);
 		player.setAllowedToMove(false);
 		this.mainMenu.showGameMenu(player);
 	}

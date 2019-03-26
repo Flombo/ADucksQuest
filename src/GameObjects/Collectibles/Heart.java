@@ -13,6 +13,7 @@ public class Heart extends Field {
 	private BufferedImage defaultImage;
 	private HeartGrowthFrames growthFrame;
 	private HeartGrowth heartGrowth;
+	private boolean allowedToGrow = true;
 
 	public Heart() {
 		super(0, 0, "GameObjects.Collectibles.Heart");
@@ -50,5 +51,13 @@ public class Heart extends Field {
 
 	private void growth(){
 		this.heartGrowth.initGrowth();
+	}
+
+	public boolean isAllowedToGrow() {
+		return allowedToGrow;
+	}
+
+	public void setAllowedToGrow(boolean allowedToGrow) {
+		this.allowedToGrow = allowedToGrow;
 	}
 }

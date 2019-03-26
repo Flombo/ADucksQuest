@@ -1,5 +1,6 @@
 package Rendering.Animations.CoinAnimations;
 
+import GameLogic.ThreadHelper.ThreadWaitManager;
 import GameObjects.Collectibles.Coin;
 import GameObjects.GameObjectEnums.CoinFlipFrames;
 
@@ -15,6 +16,7 @@ public class CoinFlip implements Runnable{
 	private Coin coin;
 	private Thread thread;
 	private boolean isRunning = false;
+	private ThreadWaitManager threadWaitManager;
 
 	public CoinFlip(Coin coin){
 		try {
@@ -33,6 +35,7 @@ public class CoinFlip implements Runnable{
 			e.printStackTrace();
 		}
 		this.coin = coin;
+		this.threadWaitManager = new ThreadWaitManager();
 	}
 
 	private synchronized void start(){
@@ -54,16 +57,15 @@ public class CoinFlip implements Runnable{
 	public void run(){
 		long timer = System.currentTimeMillis();
 		while (isRunning){
-			if (System.currentTimeMillis() - timer > 7000 / 60) {
-				this.changeCurrentCoinImage(this.coin);
-				try {
-					Thread.sleep(7000 / 60);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+			if(this.coin.isAllowedToFlip()) {
+				if (System.currentTimeMillis() - timer > 7000 / 60) {
+					this.changeCurrentCoinImage(this.coin);
+					this.threadWaitManager.pauseThread(7000 / 60);
+					timer += 3500 / 60;
 				}
-				timer += 3500 /60;
+			} else {
+				this.threadWaitManager.pauseThread(10000 / 60);
 			}
-			this.coin.setCurrentImageToDefault();
 		}
 		this.stop();
 	}

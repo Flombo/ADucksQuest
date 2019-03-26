@@ -1,5 +1,6 @@
 package Rendering.Animations.HeartAnimations;
 
+import GameLogic.ThreadHelper.ThreadWaitManager;
 import GameObjects.Collectibles.Heart;
 import GameObjects.GameObjectEnums.HeartGrowthFrames;
 import javax.imageio.ImageIO;
@@ -13,6 +14,7 @@ public class HeartGrowth implements Runnable {
 	private Heart heart;
 	private Thread thread;
 	private boolean isRunning = false;
+	private ThreadWaitManager threadWaitManager;
 
 	public HeartGrowth(Heart heart){
 		try {
@@ -26,6 +28,7 @@ public class HeartGrowth implements Runnable {
 			e.printStackTrace();
 		}
 		this.heart = heart;
+		this.threadWaitManager = new ThreadWaitManager();
 	}
 
 	private synchronized void start(){
@@ -47,16 +50,16 @@ public class HeartGrowth implements Runnable {
 	public void run(){
 		long timer = System.currentTimeMillis();
 		while (isRunning){
-			if (System.currentTimeMillis() - timer > 10000 / 60) {
-				this.changeCurrentHeartImage(this.heart);
-				try {
-					Thread.sleep(10000 / 60);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+			if(this.heart.isAllowedToGrow()) {
+				if (System.currentTimeMillis() - timer > 10000 / 60) {
+					this.changeCurrentHeartImage(this.heart);
+					this.threadWaitManager.pauseThread(10000 / 60);
+					timer += 3500 / 60;
 				}
-				timer += 3500 /60;
+				this.heart.setCurrentImageToDefault();
+			} else {
+				this.threadWaitManager.pauseThread(10000 / 60);
 			}
-			this.heart.setCurrentImageToDefault();
 		}
 		this.stop();
 	}

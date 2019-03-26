@@ -1,6 +1,7 @@
 package Rendering.Windows;
 
 import GameLogic.GameInit;
+import GameLogic.ThreadHelper.ThreadWaitManager;
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.Player.Player;
 import Rendering.View;
@@ -19,6 +20,7 @@ public class MainMenu extends JPanel {
 	private Field[][] fields;
 	private JButton[] mainMenuButtons;
 	private JButton[] gameMenuButtons;
+	private ThreadWaitManager threadWaitManager;
 	private Player player;
 
 	public MainMenu (View view, int frameHeight, int frameWidth, GameInit gameInit){
@@ -28,12 +30,16 @@ public class MainMenu extends JPanel {
 		this.frameWidth = frameWidth;
 		this.setSize(new Dimension(this.frameWidth, frameHeight));
 		this.setVisible(true);
+		this.threadWaitManager = new ThreadWaitManager();
 
 	}
 
 	public void showGameMenu(Player player){
 		this.player = player;
 		this.removeButtons(this.mainMenuButtons);
+		if(this.gameMenuButtons != null){
+			this.removeButtons(this.gameMenuButtons);
+		}
 		JButton resumeGame = new JButton("Resume Game");
 		JButton goToMenu = new JButton("Go to Menu");
 		this.gameMenuButtons = new JButton[]{resumeGame, goToMenu};
@@ -41,6 +47,7 @@ public class MainMenu extends JPanel {
 		this.setLayout(this.gameMenuButtons);
 		this.addEventlistener(this.gameMenuButtons);
 		this.setVisible(true);
+		this.revalidate();
 	}
 
 	//builds main menu components
@@ -61,6 +68,7 @@ public class MainMenu extends JPanel {
 		this.styleButtons(this.mainMenuButtons);
 		this.setLayout(this.mainMenuButtons);
 		this.addEventlistener(this.mainMenuButtons);
+		this.view.requestFocusInWindow();
 	}
 
 	//removes jbuttons from panel
@@ -78,11 +86,15 @@ public class MainMenu extends JPanel {
 			case "Resume Game":
 				this.player.setAllowedToMove(true);
 				this.gameInit.switchEnemyMovement(true);
+				this.gameInit.switchCollectiblesAnimation(true);
+				this.removeButtons(this.gameMenuButtons);
 				this.view.initLevel(this.fields);
 				this.view.requestFocusInWindow();
 				break;
 			case "Go to Menu":
-				this.showMainMenu();
+				this.view.dispose();
+				this.gameInit.destroyAllRessources();
+				this.gameInit.initView();
 				break;
 			case "Start Run":
 				this.setVisible(false);

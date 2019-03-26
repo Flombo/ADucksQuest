@@ -1,6 +1,7 @@
 package GameLogic.Movement;
 
 import GameLogic.Movement.MovementHelper.CollisionHelper.zombieCollisionChecker;
+import GameLogic.ThreadHelper.ThreadWaitManager;
 import GameObjects.Enemies.Zombie;
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.GameObjectEnums.ZombiePostion;
@@ -18,6 +19,7 @@ public class ZombieMovement implements Runnable{
 		private int xDimension;
 		private int yDimension;
 		private Player player;
+		private ThreadWaitManager threadWaitManager;
 
 		public ZombieMovement(Field[][] fields, Zombie zombie, int xDimension, int yDimension, Player player, View view){
 			this.fields = fields;
@@ -26,6 +28,7 @@ public class ZombieMovement implements Runnable{
 			this.yDimension = yDimension;
 			this.player = player;
 			this.view = view;
+			this.threadWaitManager = new ThreadWaitManager();
 		}
 
 		public void setAllowedToMove(boolean allowedToMove){
@@ -187,16 +190,14 @@ public class ZombieMovement implements Runnable{
 		public void run() {
 			long timer = System.currentTimeMillis();
 			while(isRunning) {
-				if(this.allowedToMove) {
+				if (this.allowedToMove) {
 					if (System.currentTimeMillis() - timer >= 6000 / 60) {
 						timer += 3000 / 60;
-						try {
-							Thread.sleep(6000 / 60);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
+						this.threadWaitManager.pauseThread(6000 / 60);
 						this.controllZombies();
 					}
+				} else {
+					this.threadWaitManager.pauseThread(10000 / 60);
 				}
 			}
 			this.stop();

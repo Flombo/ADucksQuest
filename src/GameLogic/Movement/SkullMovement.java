@@ -1,6 +1,7 @@
 package GameLogic.Movement;
 
 import GameLogic.Movement.MovementHelper.CollisionHelper.skullCollisionChecker;
+import GameLogic.ThreadHelper.ThreadWaitManager;
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.GameObjectEnums.SkullPosition;
 import GameObjects.Player.Player;
@@ -14,6 +15,7 @@ public class SkullMovement implements Runnable{
 	private Thread thread;
 	private boolean isRunning = false;
 	private boolean allowedToMove = true;
+	private ThreadWaitManager threadWaitManager;
 	private Skull skull;
 	private int xDimension;
 	private Player player;
@@ -24,6 +26,7 @@ public class SkullMovement implements Runnable{
 		this.xDimension = xDimension;
 		this.player = player;
 		this.view = view;
+		this.threadWaitManager = new ThreadWaitManager();
 	}
 
 	public void setAllowedToMove(boolean allowedToMove){
@@ -107,16 +110,14 @@ public class SkullMovement implements Runnable{
 	public void run() {
 		long timer = System.currentTimeMillis();
 		while(isRunning) {
-			if(allowedToMove) {
+			if(this.allowedToMove) {
 				if (System.currentTimeMillis() - timer >= 1000 / 60) {
 					timer += 4000 / 60;
-					try {
-						Thread.sleep(4500 / 60);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					this.threadWaitManager.pauseThread(4500 / 60);
 					this.controllSkulls();
 				}
+			} else {
+				this.threadWaitManager.pauseThread(10000 / 60);
 			}
 		}
 		this.stop();

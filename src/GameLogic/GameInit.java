@@ -33,6 +33,8 @@ public class GameInit {
     private PlayerMovement playerMovement;
     private ArrayList <ZombieMovement> zombieMovements;
     private ArrayList <SkullMovement> skullMovements;
+    private ArrayList <Coin> coins;
+    private ArrayList <Heart> hearts;
     private KeyAdapter keyAdapter;
     private View view;
     private consolePrinter printer;
@@ -46,6 +48,38 @@ public class GameInit {
         this.amount = amount;
         this.initKeyAdapter();
     }
+
+    public void destroyAllRessources(){
+    	this.fields = null;
+    	this.player = null;
+    	this.skulls = null;
+    	this.zombies = null;
+    	this.playerMovement = null;
+    	this.skullMovements = null;
+    	this.zombieMovements = null;
+    	this.coins = null;
+    	this.hearts = null;
+    	this.keyAdapter = null;
+    	this.view = null;
+	}
+
+    //pauses collectible animation
+    public void switchCollectiblesAnimation(boolean allowedToAnimate){
+		this.switchHeartAnimation(allowedToAnimate);
+		this.switchCoinAnimation(allowedToAnimate);
+	}
+
+	private void switchCoinAnimation(boolean allowedToAnimate){
+		for (Coin coin : this.coins){
+			coin.setAllowedToFlip(allowedToAnimate);
+		}
+	}
+
+	private void switchHeartAnimation(boolean allowedToAnimate){
+    	for (Heart heart : this.hearts){
+    		heart.setAllowedToGrow(allowedToAnimate);
+		}
+	}
 
     //pauses Enemy movement
     public void switchEnemyMovement(boolean allowedToMove){
@@ -147,16 +181,20 @@ public class GameInit {
 	}
 
 	private void initHearts(){
+    	this.hearts = new ArrayList<>();
     	for(int i = 0; i < 3; i++){
     		Heart heart = new Heart();
     		this.setGameObjectPosition(heart);
+    		this.hearts.add(heart);
 		}
 	}
 
     private void initCoins(){
+    	this.coins = new ArrayList<>();
     	for(int i = 0; i < 3; i++) {
 			Coin coin = new Coin();
 			this.setGameObjectPosition(coin);
+			this.coins.add(coin);
 		}
 	}
 
