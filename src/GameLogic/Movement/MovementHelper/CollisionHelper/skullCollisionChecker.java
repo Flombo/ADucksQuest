@@ -28,39 +28,23 @@ public class skullCollisionChecker  {
 		boolean canMove = false;
 		switch (this.fields[this.newPosX][this.newPosY].getName()){
 			case "GameObjects.Obstacles.Obstacle":
+			case "GameObjects.Obstacles.Hole":
+			case "GameObjects.Enemies.Skull":
+			case "GameObjects.Target.Target":
+			case "GameObjects.Collectibles.Coin":
+			case "GameObjects.Collectibles.Heart":
+			case "GameObjects.Obstacles.Chest":
+			case "GameObjects.Enemies.Zombie":
 				skull.changePosition();
 				break;
 			case "GameObjects.Field_like_Objects.Field":
+			case "GameObjects.Field_like_Objects.FilledHole":
 				canMove = true;
-				break;
-			case "GameObjects.Obstacles.Hole":
-				skull.changePosition();
 				break;
 			case "GameObjects.Player.Player":
 				this.skull.attack();
 				this.player.setLives(-1);
 				this.player.attacked(this.view);
-				skull.changePosition();
-				break;
-			case "GameObjects.Enemies.Skull":
-				skull.changePosition();
-				break;
-			case "GameObjects.Target.Target":
-				skull.changePosition();
-				break;
-			case "GameObjects.Collectibles.Coin":
-				skull.changePosition();
-				break;
-			case "GameObjects.Collectibles.Heart":
-				skull.changePosition();
-				break;
-			case "GameObjects.Obstacles.Chest":
-				skull.changePosition();
-				break;
-			case "GameObjects.Field_like_Objects.FilledHole":
-				canMove = true;
-				break;
-			case "GameObjects.Enemies.Zombie":
 				skull.changePosition();
 				break;
 		}

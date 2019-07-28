@@ -26,6 +26,7 @@ public class View extends JFrame implements Runnable{
 		this.setLayout(new GridBagLayout());
 		this.mainMenu = new MainMenu(this, this.getHeight(), this.getWidth(), this.gameInit);
 		this.add(this.mainMenu);
+		this.showMainMenu();
 		this.setVisible(true);
 	}
 

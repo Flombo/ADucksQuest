@@ -137,7 +137,6 @@ public class GameInit {
 	//inits view and shows mainMenu
     public void initView(){
         this.view = new View(this);
-		this.view.showMainMenu();
     }
 
     //inits enemyMovement
