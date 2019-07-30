@@ -34,16 +34,13 @@ public class HeartGrowth implements Runnable {
 	private synchronized void start(){
 		this.isRunning = true;
 		this.thread = new Thread(this, "HeartGrowth");
+		this.thread.setDaemon(true);
 		this.thread.start();
 	}
 
 	private synchronized void stop(){
 		isRunning = false;
-		try{
-			thread.join();
-		} catch (InterruptedException e){
-			e.printStackTrace();
-		}
+		this.thread.interrupt();
 	}
 
 	@Override
@@ -58,7 +55,7 @@ public class HeartGrowth implements Runnable {
 				}
 				this.heart.setCurrentImageToDefault();
 			} else {
-				this.threadWaitManager.pauseThread(10000 / 60);
+				isRunning = false;
 			}
 		}
 		this.stop();

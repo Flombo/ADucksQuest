@@ -41,16 +41,13 @@ public class CoinFlip implements Runnable{
 	private synchronized void start(){
 		this.isRunning = true;
 		this.thread = new Thread(this, "CoinFlip");
+		this.thread.setDaemon(true);
 		this.thread.start();
 	}
 
 	private synchronized void stop(){
 		isRunning = false;
-		try{
-			thread.join();
-		} catch (InterruptedException e){
-			e.printStackTrace();
-		}
+		this.thread.interrupt();
 	}
 
 	@Override
@@ -63,8 +60,9 @@ public class CoinFlip implements Runnable{
 					this.threadWaitManager.pauseThread(7000 / 60);
 					timer += 3500 / 60;
 				}
+				this.coin.setCurrentImageToDefault();
 			} else {
-				this.threadWaitManager.pauseThread(10000 / 60);
+				isRunning = false;
 			}
 		}
 		this.stop();

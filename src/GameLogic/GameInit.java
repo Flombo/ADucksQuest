@@ -49,18 +49,22 @@ public class GameInit {
         this.initKeyAdapter();
     }
 
-    public void destroyAllRessources(){
-    	this.fields = null;
-    	this.player = null;
-    	this.skulls = null;
-    	this.zombies = null;
-    	this.playerMovement = null;
-    	this.skullMovements = null;
-    	this.zombieMovements = null;
-    	this.coins = null;
-    	this.hearts = null;
-    	this.keyAdapter = null;
-    	this.view = null;
+    //resumes collectible animations
+    public void resumeCollectibleAnimations(){
+		this.resumeCoinAnimation();
+		this.resumeHeartAnimation();
+	}
+
+	private void resumeHeartAnimation(){
+    	for (Heart heart : this.hearts){
+			heart.startAnimation();
+		}
+	}
+
+	private void resumeCoinAnimation(){
+		for (Coin coin : this.coins) {
+			coin.startAnimation();
+		}
 	}
 
     //pauses collectible animation
@@ -162,6 +166,7 @@ public class GameInit {
 		view.requestFocusInWindow();
 	}
 
+	//gets certain gameObject by name
 	private ArrayList<Field> getCertainGameObjectType(String name){
 		ArrayList<Field> gameObjects = new ArrayList<>();
     	for (Field[] fields : this.fields) {

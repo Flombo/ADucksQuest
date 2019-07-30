@@ -25,6 +25,11 @@ public class Coin extends Field {
 		}
 		this.currentImage = defaultImage;
 		this.flipFrame = CoinFlipFrames.Coin_Default;
+		this.startAnimation();
+	}
+
+	public void startAnimation(){
+		this.allowedToFlip = true;
 		this.coinFlip = new CoinFlip(this);
 		this.flip();
 	}

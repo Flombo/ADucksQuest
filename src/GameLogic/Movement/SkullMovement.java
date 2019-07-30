@@ -92,17 +92,14 @@ public class SkullMovement implements Runnable{
 	private synchronized void start(){
 		isRunning = true;
 		thread = new Thread(this, "SkullMovement");
+		thread.setDaemon(true);
 		thread.start();
 	}
 
 	//stop Thread
 	private synchronized void stop(){
 		isRunning = false;
-		try{
-			thread.join();
-		} catch (InterruptedException e){
-			e.printStackTrace();
-		}
+		this.thread.interrupt();
 	}
 
 	//calls the movement method every second
@@ -117,7 +114,7 @@ public class SkullMovement implements Runnable{
 					this.controllSkulls();
 				}
 			} else {
-				this.threadWaitManager.pauseThread(10000 / 60);
+				isRunning = false;
 			}
 		}
 		this.stop();

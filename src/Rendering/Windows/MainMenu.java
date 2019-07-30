@@ -45,6 +45,7 @@ public class MainMenu extends JPanel {
 		this.gameMenuButtons = new JButton[]{resumeGame, goToMenu};
 		this.styleButtons(this.gameMenuButtons);
 		this.setLayout(this.gameMenuButtons);
+		this.setOpaque(true);
 		this.addEventlistener(this.gameMenuButtons);
 		this.setVisible(true);
 		this.revalidate();
@@ -84,26 +85,26 @@ public class MainMenu extends JPanel {
 	private void handleMouseClick(MouseEvent e){
 		switch (((JButton)e.getSource()).getText()){
 			case "Resume Game":
-				this.player.setAllowedToMove(true);
-				this.gameInit.switchEnemyMovement(true);
-				this.gameInit.switchCollectiblesAnimation(true);
-				this.removeButtons(this.gameMenuButtons);
+				this.view.run();
 				this.view.initLevel(this.fields);
+				this.player.setAllowedToMove(true);
+				this.gameInit.initEnemyMovement();
+				this.gameInit.resumeCollectibleAnimations();
+				this.removeButtons(this.gameMenuButtons);
 				this.view.requestFocusInWindow();
 				break;
 			case "Go to Menu":
-				this.view.dispose();
-				this.gameInit.destroyAllRessources();
+				if (!this.view.isRunning()){
+					this.view.dispose();
+				}
 				this.gameInit.initView();
 				break;
 			case "Start Run":
 				this.setVisible(false);
 				this.fields = this.gameInit.initLevel();
 				this.view.initLevel(this.fields);
-				if(this.view.isRunning()) {
-					this.gameInit.intitPlayerMovement();
-					this.gameInit.initEnemyMovement();
-				}
+				this.gameInit.intitPlayerMovement();
+				this.gameInit.initEnemyMovement();
 				break;
 			case "Quit Game":
 				this.view.dispatchEvent(new WindowEvent(view, WindowEvent.WINDOW_CLOSING));

@@ -56,6 +56,7 @@ public class ZombieMovement implements Runnable{
 			zombieCollisionChecker zombieCollisionChecker = null;
 			switch (this.zombie.getPostion()) {
 				case Zombie_Right:
+				case Zombie_Left:
 					zombieCollisionChecker = new zombieCollisionChecker(
 							this.zombie.getXPos() + newPos,
 							this.zombie.getYPos(),
@@ -66,29 +67,10 @@ public class ZombieMovement implements Runnable{
 					);
 					break;
 				case Zombie_Down:
-					zombieCollisionChecker = new zombieCollisionChecker(
-							this.zombie.getXPos(),
-							this.zombie.getYPos() + newPos,
-							this.fields,
-							this.zombie,
-							this.player,
-							this.view
-					);
-					break;
 				case Zombie_Up:
 					zombieCollisionChecker = new zombieCollisionChecker(
 							this.zombie.getXPos(),
 							this.zombie.getYPos() + newPos,
-							this.fields,
-							this.zombie,
-							this.player,
-							this.view
-					);
-					break;
-				case Zombie_Left:
-					zombieCollisionChecker = new zombieCollisionChecker(
-							this.zombie.getXPos() + newPos,
-							this.zombie.getYPos(),
 							this.fields,
 							this.zombie,
 							this.player,
@@ -172,17 +154,14 @@ public class ZombieMovement implements Runnable{
 		private synchronized void start(){
 			isRunning = true;
 			thread = new Thread(this, "ZombieMovement");
+			thread.setDaemon(true);
 			thread.start();
 		}
 
 		//stop Thread
 		private synchronized void stop(){
 			isRunning = false;
-			try{
-				thread.join();
-			} catch (InterruptedException e){
-				e.printStackTrace();
-			}
+			this.thread.interrupt();
 		}
 
 		//calls the movement method every second
@@ -197,7 +176,7 @@ public class ZombieMovement implements Runnable{
 						this.controllZombies();
 					}
 				} else {
-					this.threadWaitManager.pauseThread(10000 / 60);
+					isRunning = false;
 				}
 			}
 			this.stop();

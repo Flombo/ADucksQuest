@@ -24,6 +24,12 @@ public class Heart extends Field {
 		}
 		this.currentImage = defaultImage;
 		this.growthFrame = HeartGrowthFrames.Heart_Default;
+		this.startAnimation();
+	}
+
+	//starts animation
+	public void startAnimation(){
+		this.allowedToGrow = true;
 		this.heartGrowth = new HeartGrowth(this);
 		this.growth();
 	}

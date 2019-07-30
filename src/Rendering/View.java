@@ -11,7 +11,6 @@ import java.awt.image.BufferStrategy;
 public class View extends JFrame implements Runnable{
 
 	private boolean isRunning = false;
-	private boolean isPaused = false;
 	private Thread currentThread;
 	private GameInit gameInit;
 	private MainMenu mainMenu;
@@ -31,7 +30,7 @@ public class View extends JFrame implements Runnable{
 	}
 
 	public void showGameMenu(Player player){
-		this.isPaused = true;
+		this.isRunning = false;
 		this.gameInit.switchEnemyMovement(false);
 		this.gameInit.switchCollectiblesAnimation(false);
 		player.setAllowedToMove(false);
@@ -42,12 +41,8 @@ public class View extends JFrame implements Runnable{
 		return this.isRunning;
 	}
 
-	public void setIsPaused(boolean isPaused){
-		this.isPaused = isPaused;
-	}
-
 	//shows Mainmenu
-	public void showMainMenu(){
+	private void showMainMenu(){
 		this.mainMenu.showMainMenu();
 	}
 
@@ -59,7 +54,6 @@ public class View extends JFrame implements Runnable{
 	//initLevel Thread
 	public synchronized void initLevel(Field[][] fields){
 		isRunning = true;
-		isPaused = false;
 		this.fields = fields;
 		currentThread = new Thread(this, "Thread1");
 		currentThread.start();
@@ -68,11 +62,7 @@ public class View extends JFrame implements Runnable{
 	// stop currentThread by closing frame
 	private synchronized void stop(){
 		isRunning = false;
-		try{
-			currentThread.join();
-		} catch (InterruptedException e){
-			e.printStackTrace();
-		}
+		currentThread.interrupt();
 	}
 
 	/** if deltaTime is less than 0.5 seconds render the gamefield
@@ -88,25 +78,23 @@ public class View extends JFrame implements Runnable{
 		double delta = 0;
 
 		while (isRunning){
-			while (!isPaused) {
-				long now = System.nanoTime();
-				delta += (now - frameStart) / nanoSeconds;
-				frameStart = now;
-				if (delta < 0.5) {
-					try {
-						Thread.sleep((long) (1000 / framerate));
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+			long now = System.nanoTime();
+			delta += (now - frameStart) / nanoSeconds;
+			frameStart = now;
+			if (delta < 0.5) {
+				try {
+					Thread.sleep((long) (1000 / framerate));
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
-				initRendering();
-				frames++;
-				delta--;
-				if (System.currentTimeMillis() - timer > 1000) {
-					timer += 1000;
-					this.setTitle("FPS:" + frames);
-					frames = 0;
-				}
+			}
+			initRendering();
+			frames++;
+			delta--;
+			if (System.currentTimeMillis() - timer > 1000) {
+				timer += 1000;
+				this.setTitle("FPS:" + frames);
+				frames = 0;
 			}
 		}
 		stop();
