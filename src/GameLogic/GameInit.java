@@ -114,8 +114,8 @@ public class GameInit {
     private void initKeyAdapter(){
 		this.keyAdapter = new KeyAdapter() {
 			@Override
-			public void keyReleased(KeyEvent e) {
-				super.keyReleased(e);
+			public void keyPressed(KeyEvent e) {
+				super.keyPressed(e);
 				playerMovement.changePlayerPos(e);
 				player.walk();
 			}
