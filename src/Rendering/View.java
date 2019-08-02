@@ -4,9 +4,12 @@ import GameLogic.GameInit;
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.Player.Player;
 import Rendering.Windows.MainMenu;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class View extends JFrame implements Runnable{
 
@@ -15,9 +18,15 @@ public class View extends JFrame implements Runnable{
 	private GameInit gameInit;
 	private MainMenu mainMenu;
 	private Field[][] fields;
+	private BufferedImage backgroundImage;
 
 	public View(GameInit gameInit){
 		this.gameInit = gameInit;
+		try {
+			this.backgroundImage = ImageIO.read(getClass().getResource("/textures/fieldTexture.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		Dimension dimension = new Dimension(15 * 40, 15 * 50);
 		this.setSize(dimension);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,11 +39,14 @@ public class View extends JFrame implements Runnable{
 	}
 
 	public void showGameMenu(Player player){
-		this.isRunning = false;
+		while (this.currentThread.isAlive()){
+			this.isRunning = false;
+		}
 		this.gameInit.switchEnemyMovement(false);
 		this.gameInit.switchCollectiblesAnimation(false);
 		player.setAllowedToMove(false);
 		this.mainMenu.showGameMenu(player);
+		repaint();
 	}
 
 	public boolean isRunning(){
@@ -61,7 +73,6 @@ public class View extends JFrame implements Runnable{
 
 	// stop currentThread by closing frame
 	private synchronized void stop(){
-		isRunning = false;
 		currentThread.interrupt();
 	}
 
@@ -130,7 +141,7 @@ public class View extends JFrame implements Runnable{
 	//render CounterPanel Boxes
 	private void renderCounterPanel(BufferStrategy bufferStrategy){
 		Graphics g = bufferStrategy.getDrawGraphics();
-		g.setColor(Color.BLACK);
+		g.drawImage(this.backgroundImage, 0, 0, this.getHeight(), this.getWidth(), null);
 		g.fillRect(0,0,getWidth(),getHeight());
 		g.setColor(Color.white);
 		g.fillRect(0, 33, getWidth(),50);

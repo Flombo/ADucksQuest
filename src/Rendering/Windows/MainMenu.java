@@ -1,7 +1,6 @@
 package Rendering.Windows;
 
 import GameLogic.GameInit;
-import GameLogic.ThreadHelper.ThreadWaitManager;
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.Player.Player;
 import Rendering.View;
@@ -20,7 +19,6 @@ public class MainMenu extends JPanel {
 	private Field[][] fields;
 	private JButton[] mainMenuButtons;
 	private JButton[] gameMenuButtons;
-	private ThreadWaitManager threadWaitManager;
 	private Player player;
 
 	public MainMenu (View view, int frameHeight, int frameWidth, GameInit gameInit){
@@ -30,8 +28,6 @@ public class MainMenu extends JPanel {
 		this.frameWidth = frameWidth;
 		this.setSize(new Dimension(this.frameWidth, frameHeight));
 		this.setVisible(true);
-		this.threadWaitManager = new ThreadWaitManager();
-
 	}
 
 	public void showGameMenu(Player player){
@@ -45,8 +41,8 @@ public class MainMenu extends JPanel {
 		this.gameMenuButtons = new JButton[]{resumeGame, goToMenu};
 		this.styleButtons(this.gameMenuButtons);
 		this.setLayout(this.gameMenuButtons);
-		this.setOpaque(true);
 		this.addEventlistener(this.gameMenuButtons);
+		this.setOpaque(true);
 		this.setVisible(true);
 		this.revalidate();
 	}
@@ -136,16 +132,17 @@ public class MainMenu extends JPanel {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.fill = GridBagConstraints.VERTICAL;
-		int counter = 100;
+		constraints.insets = new Insets(5,5,5,5);
 		this.setLayout(gridBagLayout);
+		int counter = 0;
 		for(JButton jButton : jButtons){
 			this.setConstraintsToDefault(constraints);
 			constraints.ipady = 20;
 			constraints.ipadx = 200;
 			constraints.gridx = this.frameWidth / 2;
 			constraints.gridy = counter;
+			counter += 50;
 			this.add(jButton, constraints);
-			counter += 150;
 		}
 	}
 
@@ -154,7 +151,8 @@ public class MainMenu extends JPanel {
 		for(JButton jButton : jButtons){
 			jButton.setBackground(Color.DARK_GRAY);
 			jButton.setForeground(Color.white);
-			jButton.setSize(100, 100);
+			Dimension dimension = new Dimension(75,40);
+			jButton.setPreferredSize(dimension);
 		}
 	}
 }
