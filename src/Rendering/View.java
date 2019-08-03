@@ -3,13 +3,12 @@ package Rendering;
 import GameLogic.GameInit;
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.Player.Player;
+import Rendering.Buttons.MenuButton;
+import Rendering.Colors.GameUIColors;
 import Rendering.Windows.MainMenu;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class View extends JFrame implements Runnable{
 
@@ -18,24 +17,52 @@ public class View extends JFrame implements Runnable{
 	private GameInit gameInit;
 	private MainMenu mainMenu;
 	private Field[][] fields;
-	private BufferedImage backgroundImage;
+	private Color backgroundbarColor;
+	private Color innerbarColor;
+	private Color backgroundColor;
+	private MenuButton menuButton;
 
 	public View(GameInit gameInit){
 		this.gameInit = gameInit;
-		try {
-			this.backgroundImage = ImageIO.read(getClass().getResource("/textures/fieldTexture.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Dimension dimension = new Dimension(15 * 40, 15 * 50);
-		this.setSize(dimension);
+		this.menuButton = new MenuButton(this);
+		this.setLayout(new GridBagLayout());
+		this.setMenuButton();
+		GameUIColors gameUIColors = new GameUIColors();
+		this.backgroundbarColor = gameUIColors.getBackgroundbarColor();
+		this.innerbarColor = gameUIColors.getInnerBarColor();
+		this.backgroundColor = gameUIColors.getBackgroundColor();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
-		this.setLayout(new GridBagLayout());
 		this.mainMenu = new MainMenu(this, this.getHeight(), this.getWidth(), this.gameInit);
 		this.add(this.mainMenu);
 		this.showMainMenu();
 		this.setVisible(true);
+		this.pack();
+	}
+
+	//needed for pack() to get the preferd size
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(15 * 40, 15 * 50);
+	}
+
+	//sets postion of menubutton and adds it to view
+	private void setMenuButton() {
+		GridBagConstraints gc = new GridBagConstraints();
+		gc.insets = new Insets(0, 0,648,460);
+		this.add(this.menuButton, gc);
+	}
+
+	public Player getPlayer() {
+		Player player = null;
+		for(Field[] fields : this.fields){
+			for(Field field : fields){
+				if(field.getName().equals("GameObjects.Player.Player")){
+					player = (Player) field;
+				}
+			}
+		}
+		return player;
 	}
 
 	public void showGameMenu(Player player){
@@ -45,6 +72,7 @@ public class View extends JFrame implements Runnable{
 		this.gameInit.switchEnemyMovement(false);
 		this.gameInit.switchCollectiblesAnimation(false);
 		player.setAllowedToMove(false);
+		this.menuButton.setVisible(false);
 		this.mainMenu.showGameMenu(player);
 		repaint();
 	}
@@ -69,6 +97,9 @@ public class View extends JFrame implements Runnable{
 		this.fields = fields;
 		currentThread = new Thread(this, "Thread1");
 		currentThread.start();
+		this.menuButton.setMenuButtonClickhandler();
+		this.menuButton.setVisible(true);
+		this.pack();
 	}
 
 	// stop currentThread by closing frame
@@ -118,48 +149,79 @@ public class View extends JFrame implements Runnable{
 			createBufferStrategy(3);
 			return;
 		}
+		this.renderBackgroundAndCounterbarbackground();
 		this.renderGamefield(bufferStrategy);
 		Graphics graphics = bufferStrategy.getDrawGraphics();
 		graphics.dispose();
+		this.menuButton.repaint();
 		bufferStrategy.show();
 	}
 
 	//render Gamefield
 	private void renderGamefield(BufferStrategy bufferStrategy){
 		Graphics g = bufferStrategy.getDrawGraphics();
-		this.renderCounterPanel(bufferStrategy);
+		this.renderCounterbarBox(bufferStrategy);
 		for (Field[] fields : this.fields) {
 			for(Field field : fields){
 				if(field instanceof Player) {
 					this.renderCounterText(bufferStrategy, (Player) field);
+					this.renderSkillbar(bufferStrategy);
 				}
 				g.drawImage(field.getCurrentImage(), field.getX() +  getWidth() / 8, field.getY() + 90, field.getHeight(), field.getWidth(), null);
 			}
 		}
 	}
 
-	//render CounterPanel Boxes
-	private void renderCounterPanel(BufferStrategy bufferStrategy){
-		Graphics g = bufferStrategy.getDrawGraphics();
-		g.drawImage(this.backgroundImage, 0, 0, this.getHeight(), this.getWidth(), null);
-		g.fillRect(0,0,getWidth(),getHeight());
-		g.setColor(Color.white);
-		g.fillRect(0, 33, getWidth(),50);
-		g.setColor(Color.BLACK);
-		g.fillRect(getWidth() / 10, 36, getWidth() - getWidth() / 5, 45);
-		g.setColor(Color.lightGray);
-		g.fillRect(getWidth() / 8, 38,getWidth() - getWidth() / 4, 40);
+	//renders objects that need to render only one time
+	private void renderBackgroundAndCounterbarbackground(){
+		BufferStrategy bufferStrategy = getBufferStrategy();
+		if(bufferStrategy == null){
+			createBufferStrategy(3);
+			return;
+		}
+		this.renderBackground(bufferStrategy);
+		this.renderCounterbarBackground(bufferStrategy);
 	}
 
-	//render CounterPanel Text
+	//renders background
+	private void renderBackground(BufferStrategy bufferStrategy) {
+		Graphics g = bufferStrategy.getDrawGraphics();
+		g.setColor(this.backgroundColor);
+		g.fillRect(0,0,getWidth(), getHeight());
+	}
+
+	//render skillbar
+	private void renderSkillbar(BufferStrategy bufferStrategy){
+		Graphics g = bufferStrategy.getDrawGraphics();
+		g.setColor(this.backgroundbarColor);
+		g.fillRect(0, 15 * 36, this.getWidth(), this.getHeight() / 3);
+		g.setColor(this.innerbarColor);
+		g.fillRect(getWidth() / 30, getHeight() - 200, getWidth() - getWidth() / 14,  getHeight() - 570);
+	}
+
+	//renders counterbarbackground one time
+	private void renderCounterbarBackground(BufferStrategy bufferStrategy){
+		Graphics g = bufferStrategy.getDrawGraphics();
+		g.setColor(this.backgroundbarColor);
+		g.fillRect(0, 31, getWidth(),59);
+	}
+
+	//render Counterbar
+	private void renderCounterbarBox(BufferStrategy bufferStrategy){
+		Graphics g = bufferStrategy.getDrawGraphics();
+		g.setColor(this.innerbarColor);
+		g.fillRect(getWidth() - 465, 41, getWidth() - getWidth() / 4, 40);
+	}
+
+	//render Counterbar text
 	private void renderCounterText(BufferStrategy bufferStrategy, Player player){
 		Graphics g = bufferStrategy.getDrawGraphics();
 		g.setColor(Color.BLACK);
-		g.drawString("Züge :" + " " + player.getMoves(), getWidth() / 6, 65);
+		g.drawString("Züge :" + " " + player.getMoves(), 175, 65);
 		g.setColor(Color.BLUE);
-		g.drawString("Coins :" + " " + player.getCoins(), getWidth() - getHeight() / 2, 65);
+		g.drawString("Coins :" + " " + player.getCoins(), 325, 65);
 		g.setColor(Color.RED);
-		g.drawString("Lives :" + " " + player.getLives(), getWidth() - getWidth() / 3, 65);
+		g.drawString("Lives :" + " " + player.getLives(), 500, 65);
 	}
 
 }
