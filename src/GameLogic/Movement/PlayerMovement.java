@@ -60,7 +60,7 @@ public class PlayerMovement {
 					this.playerFrameChecker.checkWalkFrameLeft(this.player);
 					break;
 				case KeyEvent.VK_ESCAPE:
-					this.view.showGameMenu(this.player);
+					this.view.showGameMenu();
 					break;
 
 			}

@@ -14,7 +14,6 @@ public class ZombieMovement implements Runnable{
 		private Field[][] fields;
 		private Thread thread;
 		private boolean isRunning = false;
-		private boolean allowedToMove = true;
 		private Zombie zombie;
 		private int xDimension;
 		private int yDimension;
@@ -31,8 +30,8 @@ public class ZombieMovement implements Runnable{
 			this.threadWaitManager = new ThreadWaitManager();
 		}
 
-		public void setAllowedToMove(boolean allowedToMove){
-			this.allowedToMove = allowedToMove;
+		public void setIsRunning(boolean isRunning){
+			this.isRunning = isRunning;
 		}
 
 		public void initMovement(){
@@ -169,14 +168,10 @@ public class ZombieMovement implements Runnable{
 		public void run() {
 			long timer = System.currentTimeMillis();
 			while(isRunning) {
-				if (this.allowedToMove) {
-					if (System.currentTimeMillis() - timer >= 6000 / 60) {
-						timer += 3000 / 60;
-						this.threadWaitManager.pauseThread(6000 / 60);
-						this.controllZombies();
-					}
-				} else {
-					isRunning = false;
+				if (System.currentTimeMillis() - timer >= 6000 / 60) {
+					timer += 3000 / 60;
+					this.threadWaitManager.pauseThread(6000 / 60);
+					this.controllZombies();
 				}
 			}
 			this.stop();

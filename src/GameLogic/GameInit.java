@@ -94,14 +94,14 @@ public class GameInit {
 	//pauses zombie movement
 	private void switchZombieMovement(boolean allowedToMove){
 		for (ZombieMovement zombieMovement : this.zombieMovements){
-			zombieMovement.setAllowedToMove(allowedToMove);
+			zombieMovement.setIsRunning(allowedToMove);
 		}
 	}
 
 	//pauses skull movement
 	private void switchSkullMovement(boolean allowedToMove){
     	for (SkullMovement skullMovement : this.skullMovements){
-    		skullMovement.setAllowedToMove(allowedToMove);
+    		skullMovement.setIsRunning(allowedToMove);
 		}
 	}
 

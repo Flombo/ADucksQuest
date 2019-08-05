@@ -186,6 +186,7 @@ public class Player extends Field {
 	//checks if player has enough lives
 	public void checkPlayersLives(View view){
 		if(Integer.parseInt(this.getLives()) == 0) {
+			view.setIsRunning(false);
 			view.setDialog("You lose ... your moves :" + this.getMoves() + " your Score :" + this.getScore());
 			view.dispatchEvent(new WindowEvent(view, WindowEvent.WINDOW_CLOSING));
 		}

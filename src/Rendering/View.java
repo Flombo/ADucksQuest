@@ -5,7 +5,8 @@ import GameObjects.Field_like_Objects.Field;
 import GameObjects.Player.Player;
 import Rendering.Buttons.MenuButton;
 import Rendering.Colors.GameUIColors;
-import Rendering.Windows.MainMenu;
+import Rendering.Menus.IngameMenu;
+import Rendering.Menus.MainMenu;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -16,6 +17,7 @@ public class View extends JFrame implements Runnable{
 	private Thread currentThread;
 	private GameInit gameInit;
 	private MainMenu mainMenu;
+	private IngameMenu gameMenu;
 	private Field[][] fields;
 	private Color backgroundbarColor;
 	private Color innerbarColor;
@@ -38,12 +40,17 @@ public class View extends JFrame implements Runnable{
 				this.getHeight(),
 				this.getWidth(),
 				this.gameInit,
-				this.backgroundbarColor
+				this.backgroundbarColor,
+				null
 		);
 		this.add(this.mainMenu);
 		this.showMainMenu();
 		this.setVisible(true);
 		this.pack();
+	}
+
+	public void setIsRunning(boolean isRunning){
+		this.isRunning = isRunning;
 	}
 
 	//needed for pack() to get the preferd size
@@ -71,15 +78,28 @@ public class View extends JFrame implements Runnable{
 		return player;
 	}
 
-	public void showGameMenu(Player player){
+	public void showGameMenu(){
+		Player player = this.getPlayer();
+		if(this.gameMenu == null) {
+			this.gameMenu = new IngameMenu(
+					this,
+					getHeight(),
+					getWidth(),
+					this.gameInit,
+					this.backgroundbarColor,
+					player,
+					this.fields
+			);
+			this.add(this.gameMenu);
+		}
+		this.gameMenu.showGameMenu();
 		while (this.currentThread.isAlive()){
-			this.isRunning = false;
+			this.setIsRunning(false);
 		}
 		this.gameInit.switchEnemyMovement(false);
 		this.gameInit.switchCollectiblesAnimation(false);
 		player.setAllowedToMove(false);
 		this.menuButton.setVisible(false);
-		this.mainMenu.showGameMenu(player);
 		repaint();
 	}
 

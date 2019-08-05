@@ -14,7 +14,6 @@ public class SkullMovement implements Runnable{
 	private Field[][] fields;
 	private Thread thread;
 	private boolean isRunning = false;
-	private boolean allowedToMove = true;
 	private ThreadWaitManager threadWaitManager;
 	private Skull skull;
 	private int xDimension;
@@ -29,8 +28,8 @@ public class SkullMovement implements Runnable{
 		this.threadWaitManager = new ThreadWaitManager();
 	}
 
-	public void setAllowedToMove(boolean allowedToMove){
-		this.allowedToMove = allowedToMove;
+	public void setIsRunning(boolean isRunning){
+		this.isRunning = isRunning;
 	}
 
 	public void initMovement(){
@@ -107,14 +106,10 @@ public class SkullMovement implements Runnable{
 	public void run() {
 		long timer = System.currentTimeMillis();
 		while(isRunning) {
-			if(this.allowedToMove) {
-				if (System.currentTimeMillis() - timer >= 1000 / 60) {
-					timer += 4000 / 60;
-					this.threadWaitManager.pauseThread(4500 / 60);
-					this.controllSkulls();
-				}
-			} else {
-				isRunning = false;
+			if (System.currentTimeMillis() - timer >= 1000 / 60) {
+				timer += 4000 / 60;
+				this.threadWaitManager.pauseThread(4500 / 60);
+				this.controllSkulls();
 			}
 		}
 		this.stop();

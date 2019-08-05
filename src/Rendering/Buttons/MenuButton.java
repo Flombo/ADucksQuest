@@ -35,12 +35,11 @@ public class MenuButton extends JPanel {
     //sets menubutton clickhandler
     public void setMenuButtonClickhandler(){
         View view = this.view;
-        Player player = this.view.getPlayer();
         this.menuButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                view.showGameMenu(player);
+                view.showGameMenu();
             }
         });
     }
