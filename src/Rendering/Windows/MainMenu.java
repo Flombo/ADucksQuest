@@ -4,7 +4,6 @@ import GameLogic.GameInit;
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.Player.Player;
 import Rendering.View;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -20,11 +19,13 @@ public class MainMenu extends JPanel {
 	private JButton[] mainMenuButtons;
 	private JButton[] gameMenuButtons;
 	private Player player;
+	private Color backgoundColor;
 
-	public MainMenu (View view, int frameHeight, int frameWidth, GameInit gameInit){
+	public MainMenu (View view, int frameHeight, int frameWidth, GameInit gameInit, Color backgoundColor){
 
 		this.gameInit = gameInit;
 		this.view = view;
+		this.backgoundColor = backgoundColor;
 		this.frameWidth = frameWidth;
 		this.setSize(new Dimension(this.frameWidth, frameHeight));
 		this.setVisible(true);
@@ -149,7 +150,7 @@ public class MainMenu extends JPanel {
 	//style buttons
 	private void styleButtons(JButton[] jButtons){
 		for(JButton jButton : jButtons){
-			jButton.setBackground(Color.DARK_GRAY);
+			jButton.setBackground(this.backgoundColor);
 			jButton.setForeground(Color.white);
 			Dimension dimension = new Dimension(75,40);
 			jButton.setPreferredSize(dimension);

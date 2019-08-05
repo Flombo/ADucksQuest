@@ -33,7 +33,13 @@ public class View extends JFrame implements Runnable{
 		this.backgroundColor = gameUIColors.getBackgroundColor();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
-		this.mainMenu = new MainMenu(this, this.getHeight(), this.getWidth(), this.gameInit);
+		this.mainMenu = new MainMenu(
+				this,
+				this.getHeight(),
+				this.getWidth(),
+				this.gameInit,
+				this.backgroundbarColor
+		);
 		this.add(this.mainMenu);
 		this.showMainMenu();
 		this.setVisible(true);
