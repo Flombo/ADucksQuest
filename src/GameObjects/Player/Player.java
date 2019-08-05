@@ -28,6 +28,8 @@ public class Player extends Field {
 	private PlayerWalkFrames walkFrame;
 	private WalkAnimation walkAnimation;
 	private BufferedImage fieldImage;
+	private AttackedAnimation attackedAnimation;
+	private ItemPickedAnimation itemPickedAnimation;
 	private boolean allowedToMove = true;
 
 	public Player(){
@@ -37,6 +39,8 @@ public class Player extends Field {
 		this.currentImage = this.downImage;
 		this.walkFrame = PlayerWalkFrames.Player_Default_Down;
 		this.walkAnimation = new WalkAnimation();
+		this.attackedAnimation = new AttackedAnimation();
+		this.itemPickedAnimation = new ItemPickedAnimation();
 		try {
 			this.fieldImage = ImageIO.read(getClass().getResource("/textures/fieldTexture.png"));
 		} catch (IOException e) {
@@ -154,14 +158,12 @@ public class Player extends Field {
 	}
 
 	public void attacked(View view){
-		AttackedAnimation attackedAnimation = new AttackedAnimation();
-		attackedAnimation.attacked(this);
+		this.attackedAnimation.attacked(this);
 		this.checkPlayersLives(view);
 	}
 
 	public void itemPicked(){
-		ItemPickedAnimation itemPickedAnimation = new ItemPickedAnimation();
-		itemPickedAnimation.animateItemPicked(this);
+		this.itemPickedAnimation.animateItemPicked(this);
 	}
 
 	public void setPosition(PlayerPosition position) {
