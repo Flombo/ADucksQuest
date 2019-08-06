@@ -31,6 +31,10 @@ public class HeartGrowth implements Runnable {
 		this.threadWaitManager = new ThreadWaitManager();
 	}
 
+	public void setIsRunning(boolean isRunning){
+		this.isRunning = isRunning;
+	}
+
 	private synchronized void start(){
 		this.isRunning = true;
 		this.thread = new Thread(this, "HeartGrowth");
@@ -47,16 +51,12 @@ public class HeartGrowth implements Runnable {
 	public void run(){
 		long timer = System.currentTimeMillis();
 		while (isRunning){
-			if(this.heart.isAllowedToGrow()) {
-				if (System.currentTimeMillis() - timer > 10000 / 60) {
-					this.changeCurrentHeartImage(this.heart);
-					this.threadWaitManager.pauseThread(10000 / 60);
-					timer += 3500 / 60;
-				}
-				this.heart.setCurrentImageToDefault();
-			} else {
-				isRunning = false;
+			if (System.currentTimeMillis() - timer > 10000 / 60) {
+				this.changeCurrentHeartImage(this.heart);
+				this.threadWaitManager.pauseThread(10000 / 60);
+				timer += 3500 / 60;
 			}
+			this.heart.setCurrentImageToDefault();
 		}
 		this.stop();
 	}

@@ -59,11 +59,7 @@ public class Heart extends Field {
 		this.heartGrowth.initGrowth();
 	}
 
-	public boolean isAllowedToGrow() {
-		return allowedToGrow;
-	}
-
 	public void setAllowedToGrow(boolean allowedToGrow) {
-		this.allowedToGrow = allowedToGrow;
+		this.heartGrowth.setIsRunning(allowedToGrow);
 	}
 }

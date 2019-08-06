@@ -30,11 +30,12 @@ public class Player extends Field {
 	private BufferedImage fieldImage;
 	private AttackedAnimation attackedAnimation;
 	private ItemPickedAnimation itemPickedAnimation;
-	private boolean allowedToMove = true;
+	private boolean allowedToMove;
 
 	public Player(){
 		super(0, 0, "GameObjects.Player.Player");
 		this.initDefaultFrames();
+		this.allowedToMove = true;
 		this.position = PlayerPosition.PLAYER_DOWN;
 		this.currentImage = this.downImage;
 		this.walkFrame = PlayerWalkFrames.Player_Default_Down;
@@ -185,10 +186,9 @@ public class Player extends Field {
 
 	//checks if player has enough lives
 	public void checkPlayersLives(View view){
-		if(Integer.parseInt(this.getLives()) == 0) {
+		if(Integer.parseInt(this.getLives()) <= 0) {
 			view.setIsRunning(false);
-			view.setDialog("You lose ... your moves :" + this.getMoves() + " your Score :" + this.getScore());
-			view.dispatchEvent(new WindowEvent(view, WindowEvent.WINDOW_CLOSING));
+			view.showDeathMenu();
 		}
 	}
 

@@ -1,8 +1,7 @@
 package Rendering.Buttons;
 
-import GameObjects.Player.Player;
+import Rendering.Colors.GameUIColors;
 import Rendering.View;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +16,7 @@ public class MenuButton extends JPanel {
     private ImageIcon menuButtonIcon;
     private BufferedImage menuButtonBG;
     private View view;
+    private Color backgroundcolor;
 
     public MenuButton(View view){
         this.view = view;
@@ -24,6 +24,8 @@ public class MenuButton extends JPanel {
         GridBagLayout gridBagLayout = new GridBagLayout();
         this.setLayout(gridBagLayout);
         this.initButton();
+        GameUIColors gameUIColors = new GameUIColors();
+        this.backgroundcolor = gameUIColors.getBackgroundbarColor();
     }
 
     private void initButton(){
@@ -45,12 +47,15 @@ public class MenuButton extends JPanel {
     }
 
     private void styleButton(){
-        Dimension buttonDimension = new Dimension(70, 40);
         this.menuButton.setOpaque(true);
-        this.menuButton.setPreferredSize(buttonDimension);
         this.loadButtonIcon();
         this.setVisible(false);
         this.add(this.menuButton);
+    }
+
+    public void resetButtonSize(){
+        this.menuButton.setPreferredSize(new Dimension(70,40));
+        this.setBackground(this.backgroundcolor);
     }
 
     private void loadButtonIcon(){
@@ -64,6 +69,7 @@ public class MenuButton extends JPanel {
             Image img = icon.getImage();
             Image scaledInstance = img.getScaledInstance( 70, 40,  java.awt.Image.SCALE_SMOOTH );
             this.menuButtonIcon = new ImageIcon(scaledInstance);
+            this.resetButtonSize();
         }
         this.menuButton.setIcon(this.menuButtonIcon);
     }

@@ -5,8 +5,11 @@ import GameObjects.Field_like_Objects.Field;
 import GameObjects.Player.Player;
 import Rendering.Buttons.MenuButton;
 import Rendering.Colors.GameUIColors;
+import Rendering.Menus.DeathMenu;
 import Rendering.Menus.IngameMenu;
 import Rendering.Menus.MainMenu;
+import Rendering.Menus.PlayerValuePanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -18,6 +21,8 @@ public class View extends JFrame implements Runnable{
 	private GameInit gameInit;
 	private MainMenu mainMenu;
 	private IngameMenu gameMenu;
+	private DeathMenu deathMenu;
+	private PlayerValuePanel playerValuePanel;
 	private Field[][] fields;
 	private Color backgroundbarColor;
 	private Color innerbarColor;
@@ -78,6 +83,56 @@ public class View extends JFrame implements Runnable{
 		return player;
 	}
 
+	private void buildDeathpanel(GridBagConstraints gc, Player player){
+		if (this.playerValuePanel == null) {
+			gc.gridx = 0;
+			gc.gridy = 0;
+			gc.gridheight = 50;
+			gc.gridwidth = 50;
+			gc.ipadx = 250;
+			gc.ipady = 475;
+			gc.insets = new Insets(5,0,0,0);
+			this.playerValuePanel = new PlayerValuePanel(player, this.backgroundbarColor);
+			this.add(this.playerValuePanel, gc);
+		}
+	}
+
+	private void buildDeathbuttons(GridBagConstraints gc, Player player){
+		if(this.deathMenu == null){
+			gc.gridy = 50;
+			gc.gridheight = 0;
+			gc.ipadx = 0;
+			gc.ipady = 0;
+			gc.insets = new Insets(25, 0,0, 0);
+			this.deathMenu = new DeathMenu(
+					this,
+					getHeight(),
+					getWidth(),
+					this.gameInit,
+					this.backgroundbarColor,
+					player
+			);
+			this.add(this.deathMenu, gc);
+		}
+	}
+
+	public void showDeathMenu(){
+		Player player = this.getPlayer();
+		GridBagConstraints gc = new GridBagConstraints();
+		this.buildDeathpanel(gc, player);
+		this.buildDeathbuttons(gc, player);
+		this.deathMenu.showDeathMenu();
+		while (this.currentThread.isAlive()){
+			this.setIsRunning(false);
+		}
+		this.gameInit.switchEnemyMovement(false);
+		this.gameInit.switchCollectiblesAnimation(false);
+		player.setAllowedToMove(false);
+		this.menuButton.setVisible(false);
+		this.pack();
+		repaint();
+	}
+
 	public void showGameMenu(){
 		Player player = this.getPlayer();
 		if(this.gameMenu == null) {
@@ -124,8 +179,17 @@ public class View extends JFrame implements Runnable{
 		currentThread = new Thread(this, "Thread1");
 		currentThread.start();
 		this.menuButton.setMenuButtonClickhandler();
+		this.menuButton.resetButtonSize();
 		this.menuButton.setVisible(true);
+		this.resetPlayerValuePanel();
 		this.pack();
+	}
+
+	private void resetPlayerValuePanel() {
+		if (this.playerValuePanel != null){
+			this.remove(this.playerValuePanel);
+			this.playerValuePanel = null;
+		}
 	}
 
 	// stop currentThread by closing frame
