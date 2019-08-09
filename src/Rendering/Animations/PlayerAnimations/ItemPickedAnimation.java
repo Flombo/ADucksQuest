@@ -1,37 +1,22 @@
 package Rendering.Animations.PlayerAnimations;
 
 import GameObjects.Player.Player;
+import Helper.ImageLoader;
 import Rendering.Animations.AnimationBlueprints.AnimationBlueprint;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import javafx.scene.image.Image;
 
 public class ItemPickedAnimation extends AnimationBlueprint {
 
-	private BufferedImage[] frames;
-	private BufferedImage frame1;
-	private BufferedImage frame2;
-	private BufferedImage frame3;
+	private Image[] frames;
 
 	public ItemPickedAnimation() {
-		try {
-			this.frame1 = ImageIO.read(getClass().getResource("/textures/playerAnimation/itemPickAnimation/playerItemPick1.png"));
-		} catch (
-				IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.frame2 = ImageIO.read(getClass().getResource("/textures/playerAnimation/itemPickAnimation/playerItemPick2.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.frame3 = ImageIO.read(getClass().getResource("/textures/playerAnimation/itemPickAnimation/playerItemPick3.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		this.frames = new BufferedImage[60];
+		ImageLoader imageLoader = new ImageLoader();
+		Image frame1 = imageLoader.loadImage("/textures/playerAnimation/itemPickAnimation/playerItemPick1.png");
+		Image frame2 = imageLoader.loadImage("/textures/playerAnimation/itemPickAnimation/playerItemPick2.png");
+		Image frame3 = imageLoader.loadImage("/textures/playerAnimation/itemPickAnimation/playerItemPick3.png");
+
+		this.frames = new Image[60];
+
 		for (int i = 0; i < 60 - 2; i += 2) {
 			this.frames[i] = frame1;
 			this.frames[i + 1] = frame2;

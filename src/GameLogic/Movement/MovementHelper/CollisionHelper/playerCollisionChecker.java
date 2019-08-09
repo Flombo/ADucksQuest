@@ -6,8 +6,6 @@ import GameObjects.Obstacles.Hole;
 import GameObjects.Player.Player;
 import Rendering.View;
 
-import java.awt.event.WindowEvent;
-
 public class playerCollisionChecker {
 
 	private int newPosX;
@@ -75,8 +73,8 @@ public class playerCollisionChecker {
 				break;
 			case "GameObjects.Target.Target":
 				canMove = true;
-				this.view.setDialog("You won ^^ your score:" + this.player.getScore() + " your Moves :" + this.player.getMoves());
-				this.view.dispatchEvent(new WindowEvent(this.view, WindowEvent.WINDOW_CLOSING));
+				//this.view.setDialog("You won ^^ your score:" + this.player.getScore() + " your Moves :" + this.player.getMoves());
+				this.view.closeGame();
 				break;
 			case "GameObjects.Obstacles.Chest":
 				canMove = this.chestCollisionChecker.checkNextPos((Chest) this.fields[this.newPosX][this.newPosY], this.newPos);

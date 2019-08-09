@@ -2,29 +2,22 @@ package GameObjects.Obstacles;
 
 import GameObjects.Field_like_Objects.Field;
 import Rendering.Animations.HoleAnimations.PlayerFallsAnimation;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import javafx.scene.image.Image;
 
 public class Hole extends Field {
-	private BufferedImage currentImage;
-	private BufferedImage defaultImage;
+	private Image currentImage;
+	private Image defaultImage;
 	private PlayerFallsAnimation playerFallsAnimation;
 
 	public Hole() {
 		super(0, 0, "GameObjects.Obstacles.Hole");
-		try {
-			this.defaultImage = ImageIO.read(getClass().getResource("/textures/holeTexture.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.defaultImage = this.loadImage("/textures/holeTexture.png");
 		this.currentImage = defaultImage;
 		this.playerFallsAnimation = new PlayerFallsAnimation();
 	}
 
 	@Override
-	public BufferedImage getCurrentImage() {
+	public Image getCurrentImage() {
 		return currentImage;
 	}
 
@@ -38,7 +31,7 @@ public class Hole extends Field {
 	}
 
 	@Override
-	public void setCurrentImage(BufferedImage currentImage) {
+	public void setCurrentImage(Image currentImage) {
 		this.currentImage = currentImage;
 	}
 }

@@ -1,52 +1,28 @@
 package Rendering.Animations.ZombieAnimations;
 
 import GameObjects.Enemies.Zombie;
-import GameObjects.GameObjectEnums.ZombiePostion;
 import GameObjects.GameObjectEnums.ZombieWalkFrames;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import Helper.ImageLoader;
+import javafx.scene.image.Image;
+
 
 public class zombieWalkAnimation {
 
-	private BufferedImage leftFrame1;
-	private BufferedImage leftFrame2;
-	private BufferedImage rightFrame1;
-	private BufferedImage rightFrame2;
-	private BufferedImage downFrame1;
-	private BufferedImage downFrame2;
+	private Image leftFrame1;
+	private Image leftFrame2;
+	private Image rightFrame1;
+	private Image rightFrame2;
+	private Image downFrame1;
+	private Image downFrame2;
 
 	public zombieWalkAnimation() {
-		try {
-			this.leftFrame1 = ImageIO.read(getClass().getResource("/textures/zombieAnimation/left/zombie_walk_left1.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.leftFrame2 = ImageIO.read(getClass().getResource("/textures/zombieAnimation/left/zombie_walk_left2.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.rightFrame1 = ImageIO.read(getClass().getResource("/textures/zombieAnimation/right/zombie_walk_right1.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.rightFrame2 = ImageIO.read(getClass().getResource("/textures/zombieAnimation/right/zombie_walk_right2.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.downFrame1 = ImageIO.read(getClass().getResource("/textures/zombieAnimation/down/zombie_walk_down1.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.downFrame2 = ImageIO.read(getClass().getResource("/textures/zombieAnimation/down/zombie_walk_down2.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		ImageLoader imageLoader = new ImageLoader();
+		this.leftFrame1 = imageLoader.loadImage("/textures/zombieAnimation/left/zombie_walk_left1.png");
+		this.leftFrame2 = imageLoader.loadImage("/textures/zombieAnimation/left/zombie_walk_left2.png");
+		this.rightFrame1 = imageLoader.loadImage("/textures/zombieAnimation/right/zombie_walk_right1.png");
+		this.rightFrame2 = imageLoader.loadImage("/textures/zombieAnimation/right/zombie_walk_right2.png");
+		this.downFrame1 = imageLoader.loadImage("/textures/zombieAnimation/down/zombie_walk_down1.png");
+		this.downFrame2 = imageLoader.loadImage("/textures/zombieAnimation/down/zombie_walk_down2.png");
 	}
 
 	private void walkRight(Zombie zombie){

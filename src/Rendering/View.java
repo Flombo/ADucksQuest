@@ -2,316 +2,152 @@ package Rendering;
 
 import GameLogic.GameInit;
 import GameObjects.Field_like_Objects.Field;
-import GameObjects.Player.Player;
-import Rendering.Buttons.MenuButton;
-import Rendering.Colors.GameUIColors;
-import Rendering.Menus.DeathMenu;
-import Rendering.Menus.IngameMenu;
-import Rendering.Menus.MainMenu;
-import Rendering.Menus.PlayerValuePanel;
+import Rendering.Windows.Controller.RenderViewController;
+import Rendering.Windows.Scenes.*;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.stage.Stage;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferStrategy;
+import java.io.IOException;
 
-public class View extends JFrame implements Runnable{
+public class View extends Application {
 
-	private boolean isRunning = false;
-	private Thread currentThread;
+	private Stage stage;
 	private GameInit gameInit;
-	private MainMenu mainMenu;
-	private IngameMenu gameMenu;
-	private DeathMenu deathMenu;
-	private PlayerValuePanel playerValuePanel;
+	private RenderViewScene renderViewScene;
+	private RenderViewController renderViewController;
+	private MainMenuScene mainMenuScene;
+	private IngameMenuScene ingameMenuScene;
+	private StartScreenScene startScreenScene;
+	private DeathScene deathScene;
 	private Field[][] fields;
-	private Color backgroundbarColor;
-	private Color innerbarColor;
-	private Color backgroundColor;
-	private MenuButton menuButton;
+	private double height;
+	private double width;
 
-	public View(GameInit gameInit){
-		this.gameInit = gameInit;
-		this.menuButton = new MenuButton(this);
-		this.setLayout(new GridBagLayout());
-		this.setMenuButton();
-		GameUIColors gameUIColors = new GameUIColors();
-		this.backgroundbarColor = gameUIColors.getBackgroundbarColor();
-		this.innerbarColor = gameUIColors.getInnerBarColor();
-		this.backgroundColor = gameUIColors.getBackgroundColor();
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setResizable(false);
-		this.mainMenu = new MainMenu(
-				this,
-				this.getHeight(),
-				this.getWidth(),
-				this.gameInit,
-				this.backgroundbarColor,
-				null
-		);
-		this.add(this.mainMenu);
-		this.showMainMenu();
-		this.setVisible(true);
-		this.pack();
-	}
+    public View(){
+        this.height = 750;
+        this.width = 600;
+    }
 
 	public void setIsRunning(boolean isRunning){
-		this.isRunning = isRunning;
+        this.gameInit.switchEnemyMovement(isRunning);
+        this.gameInit.switchCollectiblesAnimation(isRunning);
+		this.renderViewScene.setIsRunning(isRunning);
 	}
 
-	//needed for pack() to get the preferd size
+	private FXMLLoader getFxmlloader(String path){
+			return new FXMLLoader(getClass().getResource(path));
+	}
+
+    public void showGameMenu(){
+        this.stage.setScene(this.deathScene);
+    }
+
+    private void loadScenes(){
+	    this.initStartScene();
+	    this.initMainMenuScene();
+	    this.initIngameMenuScene();
+        this.initRenderScene();
+        this.initDeathScene();
+    }
+
+    private void initDeathScene(){
+        FXMLLoader loader = this.getFxmlloader("Windows/Fxml/DeathMenu.fxml");
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (root != null) {
+            this.deathScene = new DeathScene(root, this.height, this.width);
+        }
+    }
+
+    private void initIngameMenuScene(){
+        FXMLLoader loader = this.getFxmlloader("Windows/Fxml/IngameMenu.fxml");
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (root != null) {
+            this.ingameMenuScene = new IngameMenuScene(root, this.width, this.height);
+        }
+    }
+
+    private void initMainMenuScene(){
+        FXMLLoader loader = this.getFxmlloader("Windows/Fxml/MainMenu.fxml");
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (root != null) {
+            this.mainMenuScene = new MainMenuScene(root, this.width, this.height, this);
+        }
+    }
+
+    private void initStartScene(){
+        FXMLLoader loader = this.getFxmlloader("Windows/Fxml/StartScreen.fxml");
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (root != null) {
+            this.startScreenScene = new StartScreenScene(root, 600, 750, this);
+        }
+    }
+
+    public void setMainMenu(){
+	    this.stage.setScene(this.mainMenuScene);
+    }
+
+    private void initRenderScene(){
+        this.fields = this.gameInit.initLevel();
+        FXMLLoader loader = this.getFxmlloader("Windows/Fxml/RenderView.fxml");
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (root != null) {
+            this.renderViewController = loader.getController();
+            this.renderViewScene = new RenderViewScene(fields, this.stage, root, 600, 750);
+        }
+    }
+
+    public void closeGame(){
+        Platform.exit();
+    }
+
+    public void showDeathMenu(){
+
+    }
+
+    public void initLevel(){
+        this.renderViewScene.initLevel(fields, this.renderViewController, this.gameInit);
+        this.stage.setScene(this.renderViewScene);
+    }
+
 	@Override
-	public Dimension getPreferredSize() {
-		return new Dimension(15 * 40, 15 * 50);
+	public void start(Stage stage) {
+		this.stage = stage;
+		this.gameInit = new GameInit(15, 15, 20, this);
+        this.loadScenes();
+        this.stage.setScene(this.startScreenScene);
+        this.stage.show();
 	}
 
-	//sets postion of menubutton and adds it to view
-	private void setMenuButton() {
-		GridBagConstraints gc = new GridBagConstraints();
-		gc.insets = new Insets(0, 0,648,460);
-		this.add(this.menuButton, gc);
-	}
-
-	public Player getPlayer() {
-		Player player = null;
-		for(Field[] fields : this.fields){
-			for(Field field : fields){
-				if(field.getName().equals("GameObjects.Player.Player")){
-					player = (Player) field;
-				}
-			}
-		}
-		return player;
-	}
-
-	private void buildDeathpanel(GridBagConstraints gc, Player player){
-		if (this.playerValuePanel == null) {
-			gc.gridx = 0;
-			gc.gridy = 0;
-			gc.gridheight = 50;
-			gc.gridwidth = 50;
-			gc.ipadx = 250;
-			gc.ipady = 475;
-			gc.insets = new Insets(5,0,0,0);
-			this.playerValuePanel = new PlayerValuePanel(player, this.backgroundbarColor);
-			this.add(this.playerValuePanel, gc);
-		}
-	}
-
-	private void buildDeathbuttons(GridBagConstraints gc, Player player){
-		if(this.deathMenu == null){
-			gc.gridy = 50;
-			gc.gridheight = 0;
-			gc.ipadx = 0;
-			gc.ipady = 0;
-			gc.insets = new Insets(25, 0,0, 0);
-			this.deathMenu = new DeathMenu(
-					this,
-					getHeight(),
-					getWidth(),
-					this.gameInit,
-					this.backgroundbarColor,
-					player
-			);
-			this.add(this.deathMenu, gc);
-		}
-	}
-
-	public void showDeathMenu(){
-		Player player = this.getPlayer();
-		GridBagConstraints gc = new GridBagConstraints();
-		this.buildDeathpanel(gc, player);
-		this.buildDeathbuttons(gc, player);
-		this.deathMenu.showDeathMenu();
-		while (this.currentThread.isAlive()){
-			this.setIsRunning(false);
-		}
-		this.gameInit.switchEnemyMovement(false);
-		this.gameInit.switchCollectiblesAnimation(false);
-		player.setAllowedToMove(false);
-		this.menuButton.setVisible(false);
-		this.pack();
-		repaint();
-	}
-
-	public void showGameMenu(){
-		Player player = this.getPlayer();
-		if(this.gameMenu == null) {
-			this.gameMenu = new IngameMenu(
-					this,
-					getHeight(),
-					getWidth(),
-					this.gameInit,
-					this.backgroundbarColor,
-					player,
-					this.fields
-			);
-			this.add(this.gameMenu);
-		}
-		this.gameMenu.showGameMenu();
-		while (this.currentThread.isAlive()){
-			this.setIsRunning(false);
-		}
-		this.gameInit.switchEnemyMovement(false);
-		this.gameInit.switchCollectiblesAnimation(false);
-		player.setAllowedToMove(false);
-		this.menuButton.setVisible(false);
-		repaint();
-	}
-
-	public boolean isRunning(){
-		return this.isRunning;
-	}
-
-	//shows Mainmenu
-	private void showMainMenu(){
-		this.mainMenu.showMainMenu();
-	}
-
-	//shows Dialogwindow
-	public void setDialog(String txt){
-		JOptionPane.showMessageDialog(this, txt);
-	}
-
-	//initLevel Thread
-	public synchronized void initLevel(Field[][] fields){
-		isRunning = true;
-		this.fields = fields;
-		currentThread = new Thread(this, "Thread1");
-		currentThread.start();
-		this.menuButton.setMenuButtonClickhandler();
-		this.menuButton.resetButtonSize();
-		this.menuButton.setVisible(true);
-		this.resetPlayerValuePanel();
-		this.pack();
-	}
-
-	private void resetPlayerValuePanel() {
-		if (this.playerValuePanel != null){
-			this.remove(this.playerValuePanel);
-			this.playerValuePanel = null;
-		}
-	}
-
-	// stop currentThread by closing frame
-	private synchronized void stop(){
-		currentThread.interrupt();
-	}
-
-	/** if deltaTime is less than 0.5 seconds render the gamefield
-	 * and prints the framerate into title
-	 * */
-	@Override
-	public void run() {
-		int frames = 0;
-		long timer = System.currentTimeMillis();
-		final double framerate =  60.0;
-		long frameStart = System.nanoTime();
-		double nanoSeconds = 1000000000 / framerate;
-		double delta = 0;
-
-		while (isRunning){
-			long now = System.nanoTime();
-			delta += (now - frameStart) / nanoSeconds;
-			frameStart = now;
-			if (delta < 0.5) {
-				try {
-					Thread.sleep((long) (1000 / framerate));
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-			initRendering();
-			frames++;
-			delta--;
-			if (System.currentTimeMillis() - timer > 1000) {
-				timer += 1000;
-				this.setTitle("FPS:" + frames);
-				frames = 0;
-			}
-		}
-		stop();
-	}
-
-	//render Gamefield and Counterpanel
-	private void initRendering(){
-		BufferStrategy bufferStrategy = getBufferStrategy();
-		if(bufferStrategy == null){
-			createBufferStrategy(3);
-			return;
-		}
-		this.renderBackgroundAndCounterbarbackground();
-		this.renderGamefield(bufferStrategy);
-		Graphics graphics = bufferStrategy.getDrawGraphics();
-		graphics.dispose();
-		this.menuButton.repaint();
-		bufferStrategy.show();
-	}
-
-	//render Gamefield
-	private void renderGamefield(BufferStrategy bufferStrategy){
-		Graphics g = bufferStrategy.getDrawGraphics();
-		this.renderCounterbarBox(bufferStrategy);
-		for (Field[] fields : this.fields) {
-			for(Field field : fields){
-				if(field instanceof Player) {
-					this.renderCounterText(bufferStrategy, (Player) field);
-					this.renderSkillbar(bufferStrategy);
-				}
-				g.drawImage(field.getCurrentImage(), field.getX() +  getWidth() / 8, field.getY() + 90, field.getHeight(), field.getWidth(), null);
-			}
-		}
-	}
-
-	//renders objects that need to render only one time
-	private void renderBackgroundAndCounterbarbackground(){
-		BufferStrategy bufferStrategy = getBufferStrategy();
-		if(bufferStrategy == null){
-			createBufferStrategy(3);
-			return;
-		}
-		this.renderBackground(bufferStrategy);
-		this.renderCounterbarBackground(bufferStrategy);
-	}
-
-	//renders background
-	private void renderBackground(BufferStrategy bufferStrategy) {
-		Graphics g = bufferStrategy.getDrawGraphics();
-		g.setColor(this.backgroundColor);
-		g.fillRect(0,0,getWidth(), getHeight());
-	}
-
-	//render skillbar
-	private void renderSkillbar(BufferStrategy bufferStrategy){
-		Graphics g = bufferStrategy.getDrawGraphics();
-		g.setColor(this.backgroundbarColor);
-		g.fillRect(0, 15 * 36, this.getWidth(), this.getHeight() / 3);
-		g.setColor(this.innerbarColor);
-		g.fillRect(getWidth() / 30, getHeight() - 200, getWidth() - getWidth() / 14,  getHeight() - 570);
-	}
-
-	//renders counterbarbackground one time
-	private void renderCounterbarBackground(BufferStrategy bufferStrategy){
-		Graphics g = bufferStrategy.getDrawGraphics();
-		g.setColor(this.backgroundbarColor);
-		g.fillRect(0, 31, getWidth(),59);
-	}
-
-	//render Counterbar
-	private void renderCounterbarBox(BufferStrategy bufferStrategy){
-		Graphics g = bufferStrategy.getDrawGraphics();
-		g.setColor(this.innerbarColor);
-		g.fillRect(getWidth() - 465, 41, getWidth() - getWidth() / 4, 40);
-	}
-
-	//render Counterbar text
-	private void renderCounterText(BufferStrategy bufferStrategy, Player player){
-		Graphics g = bufferStrategy.getDrawGraphics();
-		g.setColor(Color.BLACK);
-		g.drawString("Züge :" + " " + player.getMoves(), 175, 65);
-		g.setColor(Color.BLUE);
-		g.drawString("Coins :" + " " + player.getCoins(), 325, 65);
-		g.setColor(Color.RED);
-		g.drawString("Lives :" + " " + player.getLives(), 500, 65);
+	public static void main(String[] args) {
+		launch(args);
 	}
 
 }

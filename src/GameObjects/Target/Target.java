@@ -1,24 +1,19 @@
 package GameObjects.Target;
 
 import GameObjects.Field_like_Objects.Field;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import javafx.scene.image.Image;
 
 public class Target extends Field {
-	private BufferedImage image;
+
+	private Image image;
+
 	public Target(){
 		super(0, 0, "GameObjects.Target.Target");
-		try {
-			this.image = ImageIO.read(getClass().getResource("/textures/targetTexture.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.image = this.loadImage("/textures/targetTexture.png");
 	}
 
 	@Override
-	public BufferedImage getCurrentImage() {
+	public Image getCurrentImage() {
 		return image;
 	}
 }

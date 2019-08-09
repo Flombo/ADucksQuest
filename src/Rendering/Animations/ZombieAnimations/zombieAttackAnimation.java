@@ -2,16 +2,14 @@ package Rendering.Animations.ZombieAnimations;
 
 import GameObjects.Enemies.Zombie;
 import Rendering.Animations.AnimationBlueprints.AnimationBlueprint;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import javafx.scene.image.Image;
 
 public class zombieAttackAnimation extends AnimationBlueprint {
 
-	private BufferedImage[] frames;
-	private BufferedImage frame1;
-	private BufferedImage frame2;
-	private BufferedImage frame3;
+	private Image[] frames;
+	private Image frame1;
+	private Image frame2;
+	private Image frame3;
 	private Zombie zombie;
 
 	public zombieAttackAnimation(Zombie zombie){
@@ -28,66 +26,26 @@ public class zombieAttackAnimation extends AnimationBlueprint {
 	private void initFrames(){
 		switch (this.zombie.getPostion()) {
 			case Zombie_Right:
-				try {
-					this.frame1 = ImageIO.read(getClass().getResource("/textures/zombieTextures/right/zombie_right.png"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				try {
-					this.frame2 = ImageIO.read(getClass().getResource("/textures/zombieAnimation/attackAnimation/right/zombie_right_1.png"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				try {
-					this.frame3 = ImageIO.read(getClass().getResource("/textures/zombieAnimation/attackAnimation/right/zombie_right_2.png"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				this.frame1 = this.zombie.loadImage("/textures/zombieTextures/right/zombie_right.png");
+				this.frame2 = this.zombie.loadImage("/textures/zombieAnimation/attackAnimation/right/zombie_right_1.png");
+				this.frame3 = this.zombie.loadImage("/textures/zombieAnimation/attackAnimation/right/zombie_right_2.png");
 				break;
 			case Zombie_Down:
-				try {
-					this.frame1 = ImageIO.read(getClass().getResource("/textures/zombieTextures/down/zombie_down.png"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				try {
-					this.frame2 = ImageIO.read(getClass().getResource("/textures/zombieAnimation/attackAnimation/down/zombie_down1.png"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				try {
-					this.frame3 = ImageIO.read(getClass().getResource("/textures/zombieAnimation/attackAnimation/down/zombie_down2.png"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				this.frame1 = this.zombie.loadImage("/textures/zombieTextures/down/zombie_down.png");
+				this.frame2 = this.zombie.loadImage("/textures/zombieAnimation/attackAnimation/down/zombie_down1.png");
+				this.frame3 = this.zombie.loadImage("/textures/zombieAnimation/attackAnimation/down/zombie_down2.png");
 				break;
 			case Zombie_Left:
-				try {
-					this.frame1 = ImageIO.read(getClass().getResource("/textures/zombieTextures/left/zombie_left.png"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				try {
-					this.frame2 = ImageIO.read(getClass().getResource("/textures/zombieAnimation/attackAnimation/left/zombie_left_1.png"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				try {
-					this.frame3 = ImageIO.read(getClass().getResource("/textures/zombieAnimation/attackAnimation/left/zombie_left_2.png"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				this.frame1 = this.zombie.loadImage("/textures/zombieTextures/left/zombie_left.png");
+				this.frame2 = this.zombie.loadImage("/textures/zombieAnimation/attackAnimation/left/zombie_left_1.png");
+				this.frame3 = this.zombie.loadImage("/textures/zombieAnimation/attackAnimation/left/zombie_left_2.png");
 				break;
 			case Zombie_Up:
-				try {
-					this.frame1 = ImageIO.read(getClass().getResource("/textures/zombieTextures/up/zombie_up.png"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				this.frame1 = this.zombie.loadImage("/textures/zombieTextures/up/zombie_up.png");
 				this.frame2 = this.frame3 = this.frame1;
 				break;
 		}
-		this.frames = new BufferedImage[60];
+		this.frames = new Image[60];
 		for(int i = 0; i < this.frames.length - 3; i += 3){
 			this.frames[i] = this.frame1;
 			this.frames[i + 1] = this.frame2;

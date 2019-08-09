@@ -15,9 +15,8 @@ import GameObjects.Player.Player;
 import GameObjects.Target.Target;
 import Helper.consolePrinter;
 import Rendering.View;
+import javafx.scene.input.KeyEvent;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,18 +34,18 @@ public class GameInit {
     private ArrayList <SkullMovement> skullMovements;
     private ArrayList <Coin> coins;
     private ArrayList <Heart> hearts;
-    private KeyAdapter keyAdapter;
     private View view;
     private consolePrinter printer;
     private int amount;
 
 	//Constructor takes height and width for JFrame
-    public GameInit(int xDimension, int yDimension, int amount){
+    public GameInit(int xDimension, int yDimension, int amount, View view){
         this.xDimension = xDimension;
         this.yDimension = yDimension;
         this.printer = new consolePrinter();
         this.amount = amount;
-        this.initKeyAdapter();
+        this.view = view;
+        //this.initKeyAdapter();
     }
 
     //resumes collectible animations
@@ -105,21 +104,10 @@ public class GameInit {
 		}
 	}
 
-    //removes KeyListener from view
-    private void removeKeyAdapter(){
-    	this.view.removeKeyListener(this.keyAdapter);
-	}
-
-	//inits KeyAdapter
-    private void initKeyAdapter(){
-		this.keyAdapter = new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				super.keyReleased(e);
-				playerMovement.changePlayerPos(e);
-				player.walk();
-			}
-		};
+	//inits KeyHandler
+	public void handle(KeyEvent e) {
+		playerMovement.changePlayerPos(e);
+		player.walk();
 	}
 
     //initialize Level
@@ -138,11 +126,6 @@ public class GameInit {
 		return this.fields;
 	}
 
-	//inits view and shows mainMenu
-    public void initView(){
-        this.view = new View(this);
-    }
-
     //inits enemyMovement
     public void initEnemyMovement(){
 		this.initSkullMovement();
@@ -158,12 +141,6 @@ public class GameInit {
 				this.fields,
 				this.player
 		);
-		if(this.keyAdapter != null){
-			this.removeKeyAdapter();
-			this.initKeyAdapter();
-		}
-		view.addKeyListener(this.keyAdapter);
-		view.requestFocusInWindow();
 	}
 
 	//gets certain gameObject by name

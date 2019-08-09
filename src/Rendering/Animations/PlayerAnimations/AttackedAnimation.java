@@ -1,42 +1,21 @@
 package Rendering.Animations.PlayerAnimations;
 
 import GameObjects.Player.Player;
+import Helper.ImageLoader;
 import Rendering.Animations.AnimationBlueprints.AnimationBlueprint;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import javafx.scene.image.Image;
 
 public class AttackedAnimation extends AnimationBlueprint {
 
-	private BufferedImage[] frames;
-	private BufferedImage frame1;
-	private BufferedImage frame2;
-	private BufferedImage frame3;
-	private BufferedImage frame4;
+	private Image[] frames;
 
 	public AttackedAnimation(){
-		try {
-			this.frame1 = ImageIO.read(getClass().getResource("/textures/playerAnimation/playerDownTextureAttacked1.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.frame2 = ImageIO.read(getClass().getResource("/textures/playerAnimation/playerDownTextureAttacked2.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.frame3 = ImageIO.read(getClass().getResource("/textures/playerAnimation/playerDownTextureAttacked3.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.frame4 = ImageIO.read(getClass().getResource("/textures/playerDownTexture.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		this.frames = new BufferedImage[60];
+		ImageLoader imageLoader = new ImageLoader();
+		Image frame1 = imageLoader.loadImage("/textures/playerAnimation/playerDownTextureAttacked1.png");
+		Image frame2 = imageLoader.loadImage("/textures/playerAnimation/playerDownTextureAttacked2.png");
+		Image frame3 = imageLoader.loadImage("/textures/playerAnimation/playerDownTextureAttacked3.png");
+		Image frame4 = imageLoader.loadImage("/textures/playerDownTexture.png");
+		this.frames = new Image[60];
 		for(int i = 0; i < 60 - 3; i += 3){
 			this.frames[i] = frame1;
 			this.frames[i + 1] = frame2;

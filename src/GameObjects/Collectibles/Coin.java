@@ -3,26 +3,19 @@ package GameObjects.Collectibles;
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.GameObjectEnums.CoinFlipFrames;
 import Rendering.Animations.CoinAnimations.CoinFlip;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import javafx.scene.image.Image;
 
 public class Coin extends Field {
 
-	private BufferedImage currentImage;
-	private BufferedImage defaultImage;
+	private Image currentImage;
+	private Image defaultImage;
 	private CoinFlipFrames flipFrame;
 	private CoinFlip coinFlip;
 	private boolean allowedToFlip = true;
 
 	public Coin() {
 		super(0, 0, "GameObjects.Collectibles.Coin");
-		try {
-			this.defaultImage = ImageIO.read(getClass().getResource("/textures/CoinAnimation/Coin.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.defaultImage = this.loadImage("/textures/CoinAnimation/Coin.png");
 		this.currentImage = defaultImage;
 		this.flipFrame = CoinFlipFrames.Coin_Default;
 		this.startAnimation();
@@ -35,11 +28,11 @@ public class Coin extends Field {
 	}
 
 	@Override
-	public BufferedImage getCurrentImage() {
+	public Image getCurrentImage() {
 		return currentImage;
 	}
 
-	public void setCurrentImage(BufferedImage currentImage) {
+	public void setCurrentImage(Image currentImage) {
 		this.currentImage = currentImage;
 	}
 

@@ -1,8 +1,7 @@
 package GameObjects.Field_like_Objects;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import Helper.ImageLoader;
+import javafx.scene.image.Image;
 
 public class Field {
 
@@ -11,8 +10,8 @@ public class Field {
     private int height;
     private int width;
     private String name;
-    private BufferedImage currentImage;
-    private BufferedImage defaultImage;
+    private Image currentImage;
+    private Image defaultImage;
 
     public Field(int x, int y, String name){
         this.x = x;
@@ -20,13 +19,15 @@ public class Field {
         this.height = 30;
         this.width = 30;
         this.name = name;
-        try {
-            this.defaultImage = ImageIO.read(getClass().getResource("/textures/fieldTexture.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.defaultImage = this.loadImage("/textures/fieldTexture.png");
         this.currentImage = this.defaultImage;
     }
+
+    public Image loadImage(String path){
+        ImageLoader imageLoader = new ImageLoader();
+        return imageLoader.loadImage(path);
+    }
+
     public void setX(int x){
         this.x = x;
     }
@@ -55,7 +56,7 @@ public class Field {
         return this.name;
     }
 
-    public BufferedImage getCurrentImage() {
+    public Image getCurrentImage() {
         return currentImage;
     }
 
@@ -63,7 +64,7 @@ public class Field {
         this.currentImage = this.defaultImage;
     }
 
-    public void setCurrentImage(BufferedImage image){
+    public void setCurrentImage(Image image){
         this.currentImage = image;
     }
 

@@ -7,27 +7,24 @@ import Rendering.Animations.PlayerAnimations.AttackedAnimation;
 import Rendering.Animations.PlayerAnimations.ItemPickedAnimation;
 import Rendering.Animations.PlayerAnimations.WalkAnimation;
 import Rendering.View;
-
-import javax.imageio.ImageIO;
-import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.image.Image;
 
 public class Player extends Field {
 
-	private String moves = "0";
-	private String score = "100";
-	private String lives = "3";
-	private String coins = "0";
-	private BufferedImage currentImage;
-	private BufferedImage downImage;
-	private BufferedImage upImage;
-	private BufferedImage leftImage;
-	private BufferedImage rightImage;
+	private SimpleStringProperty moves;
+	private SimpleStringProperty score;
+	private SimpleStringProperty lives;
+	private SimpleStringProperty coins;
+	private Image currentImage;
+	private Image downImage;
+	private Image upImage;
+	private Image leftImage;
+	private Image rightImage;
 	private PlayerPosition position;
 	private PlayerWalkFrames walkFrame;
 	private WalkAnimation walkAnimation;
-	private BufferedImage fieldImage;
+	private Image fieldImage;
 	private AttackedAnimation attackedAnimation;
 	private ItemPickedAnimation itemPickedAnimation;
 	private boolean allowedToMove;
@@ -35,6 +32,10 @@ public class Player extends Field {
 	public Player(){
 		super(0, 0, "GameObjects.Player.Player");
 		this.initDefaultFrames();
+		this.moves = new SimpleStringProperty("0");
+		this.lives = new SimpleStringProperty("3");
+		this.coins = new SimpleStringProperty("0");
+		this.score = new SimpleStringProperty("100");
 		this.allowedToMove = true;
 		this.position = PlayerPosition.PLAYER_DOWN;
 		this.currentImage = this.downImage;
@@ -42,11 +43,7 @@ public class Player extends Field {
 		this.walkAnimation = new WalkAnimation();
 		this.attackedAnimation = new AttackedAnimation();
 		this.itemPickedAnimation = new ItemPickedAnimation();
-		try {
-			this.fieldImage = ImageIO.read(getClass().getResource("/textures/fieldTexture.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.fieldImage = this.loadImage("/textures/fieldTexture.png");
 	}
 
 	public boolean getAllowedToMove(){
@@ -80,58 +77,42 @@ public class Player extends Field {
 
 	//init the defaultFrames for every Up,Down,Left,Right
 	private void initDefaultFrames(){
-		try {
-			this.downImage = ImageIO.read(getClass().getResource("/textures/playerDownTexture.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.upImage = ImageIO.read(getClass().getResource("/textures/playerUpTexture.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.leftImage = ImageIO.read(getClass().getResource("/textures/playerLeftTexture.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.rightImage = ImageIO.read(getClass().getResource("/textures/playerRightTexture.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.downImage = this.loadImage("/textures/playerDownTexture.png");
+		this.upImage = this.loadImage("/textures/playerUpTexture.png");
+		this.leftImage = this.loadImage("/textures/playerLeftTexture.png");
+		this.rightImage = this.loadImage("/textures/playerRightTexture.png");
 	}
 
-	public String getMoves() {
+	public SimpleStringProperty getMoves() {
 		return moves;
 	}
 
 	public void setMoves(int moves) {
-		this.moves = Integer.toString(Integer.parseInt(this.getMoves()) + moves);
+		this.moves.setValue(Integer.toString(Integer.parseInt(this.getMoves().getValue()) + moves));
 		this.setScore();
 	}
 
-	public String getScore() {
+	public SimpleStringProperty getScore() {
 		return score;
 	}
 
 	private void setScore() {
-		this.score = Integer.toString(Integer.parseInt(this.score) - Integer.parseInt(this.getMoves()) / 2);
+		this.score.setValue(Integer.toString(Integer.parseInt(this.score.getValue()) - Integer.parseInt(this.getMoves().getValue()) / 2));
 	}
 
-	public String getLives(){
+	public SimpleStringProperty getLives(){
 		return lives;
 	}
 
 	public void setLives(int lives) {
-		this.lives = Integer.toString(Integer.parseInt(this.getLives()) + lives);
+		this.lives.setValue(Integer.toString(Integer.parseInt(this.getLives().getValue()) + lives));
 	}
 
-	public BufferedImage getCurrentImage() {
+	public Image getCurrentImage() {
 		return currentImage;
 	}
 
-	public void setCurrentImage(BufferedImage currentImage) {
+	public void setCurrentImage(Image currentImage) {
 		this.currentImage = currentImage;
 	}
 
@@ -140,7 +121,7 @@ public class Player extends Field {
 	}
 
 	//gets Texture By Postion
-	private BufferedImage getPlayerTextureByPosition(PlayerPosition position){
+	private Image getPlayerTextureByPosition(PlayerPosition position){
 		switch (position){
 			case PLAYER_DOWN:
 				this.currentImage = this.downImage;
@@ -186,21 +167,21 @@ public class Player extends Field {
 
 	//checks if player has enough lives
 	public void checkPlayersLives(View view){
-		if(Integer.parseInt(this.getLives()) <= 0) {
+		if(Integer.parseInt(this.getLives().getValue()) <= 0) {
 			view.setIsRunning(false);
 			view.showDeathMenu();
 		}
 	}
 
-	public String getCoins() {
+	public SimpleStringProperty getCoins() {
 		return coins;
 	}
 
 	public void setCoins(int coins) {
-		this.coins = Integer.toString(Integer.parseInt(this.coins) + coins);
+		this.coins.setValue(Integer.toString(Integer.parseInt(this.coins.getValue()) + coins));
 	}
 
-	public BufferedImage getFieldImage() {
+	public Image getFieldImage() {
 		return fieldImage;
 	}
 }

@@ -5,18 +5,15 @@ import GameObjects.GameObjectEnums.ZombiePostion;
 import GameObjects.GameObjectEnums.ZombieWalkFrames;
 import Rendering.Animations.ZombieAnimations.zombieAttackAnimation;
 import Rendering.Animations.ZombieAnimations.zombieWalkAnimation;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import javafx.scene.image.Image;
 
 public class Zombie extends Field {
 
-	private BufferedImage currentImage;
-	private BufferedImage upImage;
-	private BufferedImage downImage;
-	private BufferedImage leftImage;
-	private BufferedImage rightImage;
+	private Image currentImage;
+	private Image upImage;
+	private Image downImage;
+	private Image leftImage;
+	private Image rightImage;
 	private ZombiePostion zombiePostion;
 	private ZombieWalkFrames zombieWalkFrame;
 	private zombieWalkAnimation zombieWalkAnimation;
@@ -24,26 +21,10 @@ public class Zombie extends Field {
 
 	public Zombie() {
 		super(0, 0, "GameObjects.Enemies.Zombie");
-		try {
-			this.downImage = ImageIO.read(getClass().getResource("/textures/zombieTextures/down/zombie_down.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.upImage = ImageIO.read(getClass().getResource("/textures/zombieTextures/up/zombie_up.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.leftImage = ImageIO.read(getClass().getResource("/textures/zombieTextures/left/zombie_left.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.rightImage = ImageIO.read(getClass().getResource("/textures/zombieTextures/right/zombie_right.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.downImage = this.loadImage("/textures/zombieTextures/down/zombie_down.png");
+		this.upImage = this.loadImage("/textures/zombieTextures/up/zombie_up.png");
+		this.leftImage = this.loadImage("/textures/zombieTextures/left/zombie_left.png");
+		this.rightImage = this.loadImage("/textures/zombieTextures/right/zombie_right.png");
 		this.currentImage = this.downImage;
 		this.zombiePostion = ZombiePostion.Zombie_Down;
 		this.zombieWalkFrame = ZombieWalkFrames.Zombie_Down_Default;
@@ -52,7 +33,7 @@ public class Zombie extends Field {
 	}
 
 	@Override
-	public void setCurrentImage(BufferedImage currentImage) {
+	public void setCurrentImage(Image currentImage) {
 		this.currentImage = currentImage;
 	}
 
@@ -75,7 +56,7 @@ public class Zombie extends Field {
 	}
 
 	@Override
-	public BufferedImage getCurrentImage() {
+	public Image getCurrentImage() {
 		return currentImage;
 	}
 

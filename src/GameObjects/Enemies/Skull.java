@@ -5,31 +5,20 @@ import GameObjects.GameObjectEnums.SkullPosition;
 import GameObjects.GameObjectEnums.SkullWalkFrames;
 import Rendering.Animations.SkullAnimations.skullAttackAnimation;
 import Rendering.Animations.SkullAnimations.skullWalkAnimation;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import javafx.scene.image.Image;
 
 public class Skull extends Field {
 	private SkullPosition position;
 	private SkullWalkFrames walkFrame;
-	private BufferedImage currentImage;
-	private BufferedImage imageRight;
-	private BufferedImage imageLeft;
+	private Image currentImage;
+	private Image imageRight;
+	private Image imageLeft;
 	private skullWalkAnimation skullWalkAnimation;
 
 	public Skull() {
 		super(0, 0, "GameObjects.Enemies.Skull");
-		try {
-			this.imageRight = ImageIO.read(getClass().getResource("/textures/skullTextureRight.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.imageLeft = ImageIO.read(getClass().getResource("/textures/skullTextureLeft.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.imageRight = this.loadImage("/textures/skullTextureRight.png");
+		this.imageLeft = this.loadImage("/textures/skullTextureLeft.png");
 		this.currentImage = imageRight;
 		this.walkFrame = SkullWalkFrames.Skull_Right_Default;
 		this.position = SkullPosition.SKULL_RIGHT;
@@ -73,12 +62,12 @@ public class Skull extends Field {
 	}
 
 	@Override
-	public BufferedImage getCurrentImage() {
+	public Image getCurrentImage() {
 		return currentImage;
 	}
 
 	@Override
-	public void setCurrentImage(BufferedImage currentImage) {
+	public void setCurrentImage(Image currentImage) {
 		this.currentImage = currentImage;
 	}
 
@@ -96,7 +85,7 @@ public class Skull extends Field {
 		this.skullWalkAnimation.walk(this);
 	}
 
-	public void setImage(BufferedImage image){
+	public void setImage(Image image){
 		this.currentImage = image;
 	}
 

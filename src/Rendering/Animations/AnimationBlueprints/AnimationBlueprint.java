@@ -1,11 +1,11 @@
 package Rendering.Animations.AnimationBlueprints;
 
-import java.awt.image.BufferedImage;
 import GameObjects.Field_like_Objects.Field;
+import javafx.scene.image.Image;
 
 public class AnimationBlueprint {
 
-	protected void animation(Field field, BufferedImage[] frames){
+	protected void animation(Field field, Image[] frames){
 		long timer = System.currentTimeMillis();
 		int counter = 0;
 		while (counter < frames.length) {

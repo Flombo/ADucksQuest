@@ -2,63 +2,30 @@ package Rendering.Animations.PlayerAnimations;
 
 import GameObjects.GameObjectEnums.PlayerWalkFrames;
 import GameObjects.Player.Player;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import Helper.ImageLoader;
+import javafx.scene.image.Image;
 
 public class WalkAnimation {
 
-	private BufferedImage leftFrame1;
-	private BufferedImage leftFrame2;
-	private BufferedImage rightFrame1;
-	private BufferedImage rightFrame2;
-	private BufferedImage upFrame1;
-	private BufferedImage upFrame2;
-	private BufferedImage downFrame1;
-	private BufferedImage downFrame2;
+	private Image leftFrame1;
+	private Image leftFrame2;
+	private Image rightFrame1;
+	private Image rightFrame2;
+	private Image upFrame1;
+	private Image upFrame2;
+	private Image downFrame1;
+	private Image downFrame2;
 
 	public WalkAnimation() {
-		try {
-			this.leftFrame1 = ImageIO.read(getClass().getResource("/textures/playerAnimation/walkAnimation/Left/playerWalkLeftTexture1.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.leftFrame2 = ImageIO.read(getClass().getResource("/textures/playerAnimation/walkAnimation/Left/playerWalkLeftTexture2.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.rightFrame1 = ImageIO.read(getClass().getResource("/textures/playerAnimation/walkAnimation/Right/playerWalkRightTexture1.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.rightFrame2 = ImageIO.read(getClass().getResource("/textures/playerAnimation/walkAnimation/Right/playerWalkRightTexture2.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.upFrame1 = ImageIO.read(getClass().getResource("/textures/playerAnimation/walkAnimation/Up/playerWalkUpTexture1.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.upFrame2 = ImageIO.read(getClass().getResource("/textures/playerAnimation/walkAnimation/Up/playerWalkUpTexture2.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.downFrame1 = ImageIO.read(getClass().getResource("/textures/playerAnimation/walkAnimation/Down/playerWalkDownTexture1.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.downFrame2 = ImageIO.read(getClass().getResource("/textures/playerAnimation/walkAnimation/Down/playerWalkDownTexture2.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		ImageLoader imageLoader = new ImageLoader();
+		this.leftFrame1 = imageLoader.loadImage("/textures/playerAnimation/walkAnimation/Left/playerWalkLeftTexture1.png");
+		this.leftFrame2 = imageLoader.loadImage("/textures/playerAnimation/walkAnimation/Left/playerWalkLeftTexture2.png");
+		this.rightFrame1 = imageLoader.loadImage("/textures/playerAnimation/walkAnimation/Right/playerWalkRightTexture1.png");
+		this.rightFrame2 = imageLoader.loadImage("/textures/playerAnimation/walkAnimation/Right/playerWalkRightTexture2.png");
+		this.upFrame1 = imageLoader.loadImage("/textures/playerAnimation/walkAnimation/Up/playerWalkUpTexture1.png");
+		this.upFrame2 = imageLoader.loadImage("/textures/playerAnimation/walkAnimation/Up/playerWalkUpTexture2.png");
+		this.downFrame1 = imageLoader.loadImage("/textures/playerAnimation/walkAnimation/Down/playerWalkDownTexture1.png");
+		this.downFrame2 = imageLoader.loadImage("/textures/playerAnimation/walkAnimation/Down/playerWalkDownTexture2.png");
 	}
 
 	private void walkUp(Player player){

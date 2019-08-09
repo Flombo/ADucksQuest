@@ -1,26 +1,18 @@
 package GameObjects.Field_like_Objects;
 
-import GameObjects.Field_like_Objects.Field;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import javafx.scene.image.Image;
 
 public class FilledHole extends Field {
 
-	private BufferedImage image;
+	private Image image;
 
 	public FilledHole() {
 		super(0, 0, "GameObjects.Field_like_Objects.FilledHole");
-		try {
-			this.image = ImageIO.read(getClass().getResource("/textures/filledHole.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.image = this.loadImage("/textures/filledHole.png");
 	}
 
 	@Override
-	public BufferedImage getCurrentImage() {
+	public Image getCurrentImage() {
 		return this.image;
 	}
 }

@@ -3,51 +3,26 @@ package Rendering.Animations.SkullAnimations;
 import GameObjects.GameObjectEnums.SkullPosition;
 import GameObjects.GameObjectEnums.SkullWalkFrames;
 import GameObjects.Enemies.Skull;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import Helper.ImageLoader;
+import javafx.scene.image.Image;
 
 public class skullWalkAnimation {
 
-	private BufferedImage leftFrame1;
-	private BufferedImage leftFrame2;
-	private BufferedImage leftFrame3;
-	private BufferedImage rightFrame1;
-	private BufferedImage rightFrame2;
-	private BufferedImage rightFrame3;
+	private Image leftFrame1;
+	private Image leftFrame2;
+	private Image leftFrame3;
+	private Image rightFrame1;
+	private Image rightFrame2;
+	private Image rightFrame3;
 
 	public skullWalkAnimation() {
-		try {
-			this.leftFrame1 = ImageIO.read(getClass().getResource("/textures/skullAnimation/skullTextureLeftWalk1.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.leftFrame2 = ImageIO.read(getClass().getResource("/textures/skullAnimation/skullTextureLeftWalk2.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.leftFrame3 = ImageIO.read(getClass().getResource("/textures/skullAnimation/skullTextureLeftWalk3.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.rightFrame1 = ImageIO.read(getClass().getResource("/textures/skullAnimation/skullTextureRightWalk1.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.rightFrame2 = ImageIO.read(getClass().getResource("/textures/skullAnimation/skullTextureRightWalk2.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.rightFrame3 = ImageIO.read(getClass().getResource("/textures/skullAnimation/skullTextureRightWalk3.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		ImageLoader imageLoader = new ImageLoader();
+		this.leftFrame1 = imageLoader.loadImage("/textures/skullAnimation/skullTextureLeftWalk1.png");
+		this.leftFrame2 = imageLoader.loadImage("/textures/skullAnimation/skullTextureLeftWalk2.png");
+		this.leftFrame3 = imageLoader.loadImage("/textures/skullAnimation/skullTextureLeftWalk3.png");
+		this.rightFrame1 = imageLoader.loadImage("/textures/skullAnimation/skullTextureRightWalk1.png");
+		this.rightFrame2 = imageLoader.loadImage("/textures/skullAnimation/skullTextureRightWalk2.png");
+		this.rightFrame3 = imageLoader.loadImage("/textures/skullAnimation/skullTextureRightWalk3.png");
 	}
 
 	private void walkRight(Skull skull){

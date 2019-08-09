@@ -3,16 +3,11 @@ package Rendering.Animations.SkullAnimations;
 import GameObjects.GameObjectEnums.SkullPosition;
 import GameObjects.Enemies.Skull;
 import Rendering.Animations.AnimationBlueprints.AnimationBlueprint;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import javafx.scene.image.Image;
 
 public class skullAttackAnimation extends AnimationBlueprint {
 
-	private BufferedImage[] frames;
-	private BufferedImage frame1;
-	private BufferedImage frame2;
+	private Image[] frames;
 	private Skull skull;
 
 	public skullAttackAnimation(Skull skull){
@@ -27,33 +22,19 @@ public class skullAttackAnimation extends AnimationBlueprint {
 
 	//inits attackframes equal to skull postion
 	private void initFrames(){
+		Image frame1;
+		Image frame2;
 		if(this.skull.getPosition().equals(SkullPosition.SKULL_RIGHT)) {
-			try {
-				this.frame1 = ImageIO.read(getClass().getResource("/textures/skullTextureRight.png"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				this.frame2 = ImageIO.read(getClass().getResource("/textures/skullAnimation/skullTextureRightWalk1.png"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			frame1 = this.skull.loadImage("/textures/skullTextureRight.png");
+			frame2 = this.skull.loadImage("/textures/skullAnimation/skullTextureRightWalk1.png");
 		}else {
-			try {
-				this.frame1 = ImageIO.read(getClass().getResource("/textures/skullTextureLeft.png"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				this.frame2 = ImageIO.read(getClass().getResource("/textures/skullAnimation/skullTextureLeftWalk1.png"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			frame1 = this.skull.loadImage("/textures/skullTextureLeft.png");
+			frame2 = this.skull.loadImage("/textures/skullAnimation/skullTextureLeftWalk1.png");
 		}
-		this.frames = new BufferedImage[60];
+		this.frames = new Image[60];
 		for(int i = 0; i < this.frames.length - 2; i += 2){
-			this.frames[i] = this.frame1;
-			this.frames[i + 1] = this.frame2;
+			this.frames[i] = frame1;
+			this.frames[i + 1] = frame2;
 		}
 	}
 

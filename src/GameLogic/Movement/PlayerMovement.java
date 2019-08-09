@@ -7,7 +7,8 @@ import GameObjects.GameObjectEnums.PlayerPosition;
 import GameObjects.Player.Player;
 import Helper.consolePrinter;
 import Rendering.View;
-import java.awt.event.KeyEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 public class PlayerMovement {
 
@@ -31,35 +32,35 @@ public class PlayerMovement {
 
 	//keylistener for player-movement
 	public void changePlayerPos(KeyEvent event){
-		int keyCode = event.getKeyCode();
+		KeyCode keyCode = event.getCode();
 
 		if (this.player.getAllowedToMove()) {
 			switch ( keyCode ) {
-				case KeyEvent.VK_DOWN:
-				case KeyEvent.VK_S:
+				case DOWN:
+				case S:
 					this.movePlayer(true, 1);
 					this.player.setPosition(PlayerPosition.PLAYER_DOWN);
 					this.playerFrameChecker.checkWalkFrameDown(this.player);
 					break;
-				case KeyEvent.VK_UP:
-				case KeyEvent.VK_W:
+				case UP:
+				case W:
 					this.movePlayer(true, -1);
 					this.player.setPosition(PlayerPosition.PLAYER_UP);
 					this.playerFrameChecker.checkWalkFrameUp(this.player);
 					break;
-				case KeyEvent.VK_RIGHT:
-				case KeyEvent.VK_D:
+				case RIGHT:
+				case D:
 					this.movePlayer(false, 1);
 					this.player.setPosition(PlayerPosition.PLAYER_RIGHT);
 					this.playerFrameChecker.checkWalkFrameRight(this.player);
 					break;
-				case KeyEvent.VK_LEFT:
-				case KeyEvent.VK_A:
+				case LEFT:
+				case A:
 					this.movePlayer(false, -1);
 					this.player.setPosition(PlayerPosition.PLAYER_LEFT);
 					this.playerFrameChecker.checkWalkFrameLeft(this.player);
 					break;
-				case KeyEvent.VK_ESCAPE:
+				case ESCAPE:
 					this.view.showGameMenu();
 					break;
 

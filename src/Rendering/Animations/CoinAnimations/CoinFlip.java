@@ -3,37 +3,22 @@ package Rendering.Animations.CoinAnimations;
 import GameLogic.ThreadHelper.ThreadWaitManager;
 import GameObjects.Collectibles.Coin;
 import GameObjects.GameObjectEnums.CoinFlipFrames;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import javafx.scene.image.Image;
 
 public class CoinFlip implements Runnable{
 
-	private BufferedImage flip1;
-	private BufferedImage flip2;
-	private BufferedImage flip3;
+	private Image flip1;
+	private Image flip2;
+	private Image flip3;
 	private Coin coin;
 	private Thread thread;
 	private boolean isRunning = false;
 	private ThreadWaitManager threadWaitManager;
 
 	public CoinFlip(Coin coin){
-		try {
-			this.flip1 = ImageIO.read(getClass().getResource("/textures/CoinAnimation/Coin_flip.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.flip2 = ImageIO.read(getClass().getResource("/textures/CoinAnimation/Coin_flip1.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.flip3 = ImageIO.read(getClass().getResource("/textures/CoinAnimation/Coin_flip2.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.flip1 = coin.loadImage("/textures/CoinAnimation/Coin_flip.png");
+		this.flip2 = coin.loadImage("/textures/CoinAnimation/Coin_flip1.png");
+		this.flip3 = coin.loadImage("/textures/CoinAnimation/Coin_flip2.png");
 		this.coin = coin;
 		this.threadWaitManager = new ThreadWaitManager();
 	}

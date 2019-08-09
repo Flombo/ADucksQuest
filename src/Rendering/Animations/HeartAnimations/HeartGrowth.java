@@ -3,30 +3,20 @@ package Rendering.Animations.HeartAnimations;
 import GameLogic.ThreadHelper.ThreadWaitManager;
 import GameObjects.Collectibles.Heart;
 import GameObjects.GameObjectEnums.HeartGrowthFrames;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import javafx.scene.image.Image;
 
 public class HeartGrowth implements Runnable {
 
-	private BufferedImage growth1;
-	private BufferedImage growth2;
+	private Image growth1;
+	private Image growth2;
 	private Heart heart;
 	private Thread thread;
 	private boolean isRunning = false;
 	private ThreadWaitManager threadWaitManager;
 
 	public HeartGrowth(Heart heart){
-		try {
-			this.growth1 = ImageIO.read(getClass().getResource("/textures/HeartAnimation/Heart1.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try {
-			this.growth2 = ImageIO.read(getClass().getResource("/textures/HeartAnimation/Heart2.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.growth1 = heart.loadImage("/textures/HeartAnimation/Heart1.png");
+		this.growth2 = heart.loadImage("/textures/HeartAnimation/Heart2.png");
 		this.heart = heart;
 		this.threadWaitManager = new ThreadWaitManager();
 	}
