@@ -7,6 +7,7 @@ import GameObjects.Field_like_Objects.Field;
 import GameObjects.GameObjectEnums.ZombiePostion;
 import GameObjects.Player.Player;
 import Rendering.View;
+import javafx.application.Platform;
 
 public class ZombieMovement implements Runnable{
 
@@ -35,7 +36,7 @@ public class ZombieMovement implements Runnable{
 		}
 
 		public void initMovement(){
-			this.start();
+			Platform.runLater(this.start());
 		}
 
 		// changes skulls position
@@ -150,11 +151,13 @@ public class ZombieMovement implements Runnable{
 		}
 
 		//start Thread
-		private synchronized void start(){
-			isRunning = true;
-			thread = new Thread(this, "ZombieMovement");
-			thread.setDaemon(true);
-			thread.start();
+		private synchronized Runnable start(){
+			return (()->{
+				isRunning = true;
+				thread = new Thread(this, "ZombieMovement");
+				thread.setDaemon(true);
+				thread.start();
+			});
 		}
 
 		//stop Thread

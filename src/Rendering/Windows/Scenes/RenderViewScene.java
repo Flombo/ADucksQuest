@@ -4,6 +4,7 @@ import GameLogic.GameInit;
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.Player.Player;
 import Rendering.Windows.Controller.RenderViewController;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -15,6 +16,7 @@ public class RenderViewScene extends Scene implements Runnable{
     private Field[][] fields;
     private Stage stage;
     private GameInit gameInit;
+    private Player player;
     private RenderViewController renderViewController;
 
     public RenderViewScene(
@@ -34,8 +36,8 @@ public class RenderViewScene extends Scene implements Runnable{
         this.setOnKeyReleased(keyEvent -> gameInit.handle(keyEvent));
     }
 
-    public void setIsRunning(boolean isRunning){
-        this.isRunning = isRunning;
+    public Runnable setIsRunning(boolean isRunning){
+        return (()-> this.isRunning = isRunning);
     }
 
     public Player getPlayer() {
@@ -55,7 +57,7 @@ public class RenderViewScene extends Scene implements Runnable{
     }
 
     //initLevel Thread
-    public synchronized void initLevel(
+    public synchronized Runnable initLevel(
             Field[][] fields,
             RenderViewController renderViewController,
             GameInit gameInit
@@ -65,10 +67,12 @@ public class RenderViewScene extends Scene implements Runnable{
         this.gameInit = gameInit;
         this.gameInit.intitPlayerMovement();
         this.gameInit.initEnemyMovement();
-        currentThread = new Thread(this, "Renderthread");
-        currentThread.start();
         this.renderViewController = renderViewController;
-        //this.renderViewController.setLabelBindings(this.getPlayer());
+        return (()-> {
+            this.player = this.getPlayer();
+            currentThread = new Thread(this, "Renderthread");
+            currentThread.start();
+        });
     }
 
     // stop currentThread by closing frame
@@ -98,6 +102,9 @@ public class RenderViewScene extends Scene implements Runnable{
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            }
+            if(this.player != null) {
+                Platform.runLater(this.renderViewController.setLabelBindings(this.player));
             }
             this.renderViewController.initRendering(this.fields);
             frames++;

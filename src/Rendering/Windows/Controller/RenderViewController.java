@@ -38,11 +38,13 @@ public class RenderViewController {
         this.renderGamefield(this.renderCanvas);
     }
 
-//    public void setLabelBindings(Player player){
-//        this.moveLabel.textProperty().bind(player.getMoves());
-//        this.liveLabel.textProperty().bind(player.getLives());
-//        this.coinLabel.textProperty().bind(player.getCoins());
-//    }
+    public Runnable setLabelBindings(Player player){
+        return (() -> {
+            moveLabel.textProperty().bind(player.getMoves());
+            liveLabel.textProperty().bind(player.getLives());
+            coinLabel.textProperty().bind(player.getCoins());
+        });
+    }
 
     private void updateSkillbar(Player player){
     }

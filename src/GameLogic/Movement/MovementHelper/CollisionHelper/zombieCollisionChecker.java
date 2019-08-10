@@ -40,7 +40,7 @@ public class zombieCollisionChecker {
 				this.zombie.attack();
 				zombie.changePostion();
 				int livesTaken = Integer.parseInt(this.player.getLives().getValue()) >= 2 ? -2 : -1;
-				this.player.setLives(livesTaken);
+				this.view.setPlayerLives(this.player, livesTaken);
 				this.player.attacked(this.view);
 				break;
 			case "GameObjects.Enemies.Skull":

@@ -16,7 +16,6 @@ import GameObjects.Target.Target;
 import Helper.consolePrinter;
 import Rendering.View;
 import javafx.scene.input.KeyEvent;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,9 +66,11 @@ public class GameInit {
 	}
 
     //pauses collectible animation
-    public void switchCollectiblesAnimation(boolean allowedToAnimate){
-		this.switchHeartAnimation(allowedToAnimate);
-		this.switchCoinAnimation(allowedToAnimate);
+    public Runnable switchCollectiblesAnimation(boolean allowedToAnimate){
+    	return (()->{
+			this.switchHeartAnimation(allowedToAnimate);
+			this.switchCoinAnimation(allowedToAnimate);
+		});
 	}
 
 	private void switchCoinAnimation(boolean allowedToAnimate){
@@ -85,9 +86,11 @@ public class GameInit {
 	}
 
     //pauses Enemy movement
-    public void switchEnemyMovement(boolean allowedToMove){
-		this.switchSkullMovement(allowedToMove);
-		this.switchZombieMovement(allowedToMove);
+    public Runnable switchEnemyMovement(boolean allowedToMove){
+    	return (()->{
+			this.switchSkullMovement(allowedToMove);
+			this.switchZombieMovement(allowedToMove);
+		});
 	}
 
 	//pauses zombie movement

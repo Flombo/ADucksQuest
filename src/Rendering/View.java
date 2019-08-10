@@ -2,6 +2,7 @@ package Rendering;
 
 import GameLogic.GameInit;
 import GameObjects.Field_like_Objects.Field;
+import GameObjects.Player.Player;
 import Rendering.Windows.Controller.RenderViewController;
 import Rendering.Windows.Scenes.*;
 import javafx.application.Application;
@@ -32,9 +33,9 @@ public class View extends Application {
     }
 
 	public void setIsRunning(boolean isRunning){
-        this.gameInit.switchEnemyMovement(isRunning);
-        this.gameInit.switchCollectiblesAnimation(isRunning);
-		this.renderViewScene.setIsRunning(isRunning);
+        Platform.runLater(this.gameInit.switchEnemyMovement(isRunning));
+        Platform.runLater(this.gameInit.switchCollectiblesAnimation(isRunning));
+        Platform.runLater(this.renderViewScene.setIsRunning(isRunning));
 	}
 
 	private FXMLLoader getFxmlloader(String path){
@@ -42,7 +43,7 @@ public class View extends Application {
 	}
 
     public void showGameMenu(){
-        this.stage.setScene(this.deathScene);
+        this.stage.setScene(this.ingameMenuScene);
     }
 
     private void loadScenes(){
@@ -125,15 +126,22 @@ public class View extends Application {
     }
 
     public void closeGame(){
+        this.setIsRunning(false);
         Platform.exit();
     }
 
     public void showDeathMenu(){
+        System.out.println("Death");
+        this.setIsRunning(false);
+        Platform.runLater(this.setDeathMenu());
+    }
 
+    private Runnable setDeathMenu(){
+        return (()-> this.stage.setScene(this.deathScene));
     }
 
     public void initLevel(){
-        this.renderViewScene.initLevel(fields, this.renderViewController, this.gameInit);
+        Platform.runLater(this.renderViewScene.initLevel(fields, this.renderViewController, this.gameInit));
         this.stage.setScene(this.renderViewScene);
     }
 
@@ -150,4 +158,7 @@ public class View extends Application {
 		launch(args);
 	}
 
+    public void setPlayerLives(Player player, int i) {
+        Platform.runLater(player.setLives(i));
+    }
 }

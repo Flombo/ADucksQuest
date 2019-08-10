@@ -104,8 +104,8 @@ public class Player extends Field {
 		return lives;
 	}
 
-	public void setLives(int lives) {
-		this.lives.setValue(Integer.toString(Integer.parseInt(this.getLives().getValue()) + lives));
+	public Runnable setLives(int lives) {
+		return (()-> this.lives.setValue(Integer.toString(Integer.parseInt(this.getLives().getValue()) + lives)));
 	}
 
 	public Image getCurrentImage() {
