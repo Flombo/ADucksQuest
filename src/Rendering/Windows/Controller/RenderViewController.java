@@ -46,17 +46,11 @@ public class RenderViewController {
         });
     }
 
-    private void updateSkillbar(Player player){
-    }
-
     //render Gamefield
     private void renderGamefield(Canvas renderCanvas){
         GraphicsContext g = renderCanvas.getGraphicsContext2D();
         for (Field[] fields : this.fields) {
             for(Field field : fields){
-                if(field instanceof Player) {
-                    this.updateSkillbar((Player) field);
-                }
                 g.drawImage(field.getCurrentImage(), field.getX() + 75, field.getY() + 90, field.getHeight(), field.getWidth());
             }
         }

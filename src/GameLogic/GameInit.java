@@ -125,7 +125,7 @@ public class GameInit {
 		this.initCoins();
 		this.initHearts();
 		this.initChest();
-		printer.printAllFields(yDimension, xDimension, fields);
+		//printer.printAllFields(yDimension, xDimension, fields);
 		return this.fields;
 	}
 
@@ -183,29 +183,33 @@ public class GameInit {
 	}
 
 	private void initZombieMovement(){
-    	this.zombieMovements = new ArrayList<>();
-    	for (Zombie zombie : this.zombies) {
-			ZombieMovement zombieMovement = new ZombieMovement(
-					this.fields,
-					zombie,
-					this.xDimension,
-					this.yDimension,
-					this.player,
-					this.view
-			);
-			zombieMovement.initMovement();
-			this.zombieMovements.add(zombieMovement);
-		}
+        if(this.zombies != null) {
+            this.zombieMovements = new ArrayList<>();
+            for (Zombie zombie : this.zombies) {
+                ZombieMovement zombieMovement = new ZombieMovement(
+                        this.fields,
+                        zombie,
+                        this.xDimension,
+                        this.yDimension,
+                        this.player,
+                        this.view
+                );
+                zombieMovement.initMovement();
+                this.zombieMovements.add(zombieMovement);
+            }
+        }
 	}
 
 	//Initialize SkullMovement
     private void initSkullMovement(){
-    	this.skullMovements = new ArrayList<>();
-    	for (Skull skull : this.skulls) {
-			SkullMovement skullMovement = new SkullMovement(this.fields, skull, this.xDimension, this.player, this.view);
-			skullMovement.initMovement();
-			this.skullMovements.add(skullMovement);
-		}
+        if(this.skulls != null) {
+            this.skullMovements = new ArrayList<>();
+            for (Skull skull : this.skulls) {
+                SkullMovement skullMovement = new SkullMovement(this.fields, skull, this.xDimension, this.player, this.view);
+                skullMovement.initMovement();
+                this.skullMovements.add(skullMovement);
+            }
+        }
 	}
 
     //Create Fields

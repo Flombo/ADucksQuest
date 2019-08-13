@@ -121,7 +121,7 @@ public class View extends Application {
         }
         if (root != null) {
             this.renderViewController = loader.getController();
-            this.renderViewScene = new RenderViewScene(fields, this.stage, root, 600, 750);
+            this.renderViewScene = new RenderViewScene(fields, root, 600, 750);
         }
     }
 
@@ -141,7 +141,7 @@ public class View extends Application {
     }
 
     public void initLevel(){
-        Platform.runLater(this.renderViewScene.initLevel(fields, this.renderViewController, this.gameInit));
+        this.renderViewScene.initLevel(fields, this.renderViewController, this.gameInit);
         this.stage.setScene(this.renderViewScene);
     }
 
@@ -158,7 +158,7 @@ public class View extends Application {
 		launch(args);
 	}
 
-    public void setPlayerLives(Player player, int i) {
-        Platform.runLater(player.setLives(i));
+    public void setPlayerLives(Player player, int lives) {
+        Platform.runLater(player.setLives(lives, this));
     }
 }

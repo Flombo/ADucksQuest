@@ -104,8 +104,15 @@ public class Player extends Field {
 		return lives;
 	}
 
-	public Runnable setLives(int lives) {
-		return (()-> this.lives.setValue(Integer.toString(Integer.parseInt(this.getLives().getValue()) + lives)));
+	public Runnable setLives(int lives, View view) {
+		Runnable runnable = null;
+		if(Integer.parseInt(this.getLives().getValue()) + lives > 0) {
+			runnable = (() -> this.lives.setValue(Integer.toString(Integer.parseInt(this.getLives().getValue()) + lives)));
+		} else {
+			view.setIsRunning(false);
+			view.showDeathMenu();
+		}
+		return runnable;
 	}
 
 	public Image getCurrentImage() {
@@ -167,7 +174,8 @@ public class Player extends Field {
 
 	//checks if player has enough lives
 	public void checkPlayersLives(View view){
-		if(Integer.parseInt(this.getLives().getValue()) <= 0) {
+		System.out.println("lives" + this.getLives().getValue());
+		if(Integer.parseInt(this.getLives().getValue()) == 0) {
 			view.setIsRunning(false);
 			view.showDeathMenu();
 		}
