@@ -98,8 +98,11 @@
             </Label>
          </HBox>
       </HBox>
-      <Button fx:id="menuButton" onMouseClicked="#menuButtonClicked" layoutX="36.0" layoutY="27.0"
-              mnemonicParsing="false" prefHeight="78.0" prefWidth="135.0"/>
+      <Button fx:id="menuButton" onMouseClicked="#menuButtonClicked"
+              onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut" layoutX="36.0" layoutY="27.0"
+              mnemonicParsing="false" style="-fx-background-image: url('/Rendering/Buttons/MenuButton.png');
+              -fx-background-size: 135px 85px; -fx-background-repeat: no-repeat; -fx-background-position: center;"
+              prefHeight="78.0" prefWidth="135.0"/>
    </Pane>
    <Canvas fx:id="renderCanvas" height="600.0" layoutX="10.0" layoutY="27.5" width="600.0"/>
    <Pane id="skillbarPane" layoutX="-11.0" layoutY="572.0" prefHeight="178.0" prefWidth="610.0"

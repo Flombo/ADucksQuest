@@ -61,7 +61,7 @@ public class PlayerMovement {
 					this.playerFrameChecker.checkWalkFrameLeft(this.player);
 					break;
 				case ESCAPE:
-					this.view.showGameMenu();
+					this.view.showIngameMenu();
 					break;
 
 			}

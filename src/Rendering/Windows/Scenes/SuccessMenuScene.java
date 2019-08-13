@@ -1,21 +1,16 @@
 package Rendering.Windows.Scenes;
 
-import GameObjects.Player.Player;
 import Rendering.View;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-public class DeathScene extends Scene {
+public class SuccessMenuScene extends Scene {
 
     private View view;
 
-    public DeathScene(Parent parent, double height, double width, View view) {
+    public SuccessMenuScene(Parent parent, double width, double height, View view) {
         super(parent, width, height);
         this.view = view;
-    }
-
-    public Player getPlayer(){
-        return this.view.getPlayer();
     }
 
     public void startNewGame(){

@@ -20,7 +20,7 @@
       </font>
    </Label>
    <VBox layoutX="51.0" layoutY="153.0" prefHeight="468.0" prefWidth="417.0" AnchorPane.topAnchor="189.0">
-      <Button onMouseClicked="#onButtonPressed" id="startGame" mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
+      <Button onMouseClicked="#onButtonPressed" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut" id="startGame" mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
               style="-fx-background-color: rgb(72,147,217);" text="Start Game" textFill="WHITE">
          <font>
             <Font name="System Bold" size="20.0"/>
@@ -29,7 +29,8 @@
             <Insets/>
          </VBox.margin>
       </Button>
-      <Button onMouseClicked="#onButtonPressed" id="Leveleditor" mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
+      <Button onMouseClicked="#onButtonPressed" id="Leveleditor" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut"
+              mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
               style="-fx-background-color: rgb(72,147,217);" text="Leveleditor" textFill="WHITE">
          <font>
             <Font name="System Bold" size="20.0"/>
@@ -41,7 +42,8 @@
             <Insets top="40.0"/>
          </VBox.margin>
       </Button>
-      <Button onMouseClicked="#onButtonPressed" id="Shop" mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
+      <Button onMouseClicked="#onButtonPressed" id="Shop" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut"
+              mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
               style="-fx-background-color: rgb(72,147,217);" text="Shop" textFill="WHITE">
          <font>
             <Font name="System Bold" size="20.0"/>
@@ -53,7 +55,8 @@
             <Insets top="40.0"/>
          </VBox.margin>
       </Button>
-      <Button onMouseClicked="#onButtonPressed" id="CustomizeChar" mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
+      <Button onMouseClicked="#onButtonPressed" id="CustomizeChar" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut"
+              mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
               style="-fx-background-color: rgb(72,147,217);" text="Customize Character" textFill="WHITE">
          <font>
             <Font name="System Bold" size="20.0"/>
@@ -65,7 +68,8 @@
             <Insets top="40.0"/>
          </VBox.margin>
       </Button>
-      <Button onMouseClicked="#onButtonPressed" id="options" mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
+      <Button onMouseClicked="#onButtonPressed" id="options" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut"
+              mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
               style="-fx-background-color: rgb(72,147,217);" text="Options" textFill="WHITE">
          <font>
             <Font name="System Bold" size="20.0"/>
@@ -77,7 +81,8 @@
             <Insets top="40.0"/>
          </VBox.margin>
       </Button>
-      <Button onMouseClicked="#onButtonPressed" id="quitGame" mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
+      <Button onMouseClicked="#onButtonPressed" id="quitGame" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut"
+              mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
               style="-fx-background-color: rgb(72,147,217);" text="Quit Game" textFill="WHITE">
          <font>
             <Font name="System Bold" size="20.0"/>

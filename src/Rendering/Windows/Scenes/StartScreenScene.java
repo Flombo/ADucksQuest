@@ -19,7 +19,7 @@ public class StartScreenScene extends Scene {
     }
 
     private void loadMainMenu(){
-        this.view.setMainMenu();
+        this.view.showMainMenu();
     }
 
 }

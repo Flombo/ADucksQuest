@@ -1,11 +1,12 @@
 package Rendering.Windows.Controller;
 
+import Rendering.Windows.ControllerHelper.HoverHelper;
 import Rendering.Windows.Scenes.MainMenuScene;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 
-public class MainMenuController{
+public class MainMenuController extends HoverHelper {
 
     @FXML
     private void onButtonPressed(Event event){

@@ -73,7 +73,7 @@ public class playerCollisionChecker {
 				break;
 			case "GameObjects.Target.Target":
 				canMove = true;
-				this.view.closeGame();
+				this.view.showSuccessMenu();
 				break;
 			case "GameObjects.Obstacles.Chest":
 				canMove = this.chestCollisionChecker.checkNextPos((Chest) this.fields[this.newPosX][this.newPosY], this.newPos);

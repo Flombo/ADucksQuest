@@ -88,8 +88,10 @@ public class GameInit {
     //pauses Enemy movement
     public Runnable switchEnemyMovement(boolean allowedToMove){
     	return (()->{
-			this.switchSkullMovement(allowedToMove);
-			this.switchZombieMovement(allowedToMove);
+    		if(this.skullMovements != null && this.zombieMovements != null) {
+				this.switchSkullMovement(allowedToMove);
+				this.switchZombieMovement(allowedToMove);
+			}
 		});
 	}
 

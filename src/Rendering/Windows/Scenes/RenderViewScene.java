@@ -3,6 +3,7 @@ package Rendering.Windows.Scenes;
 import GameLogic.GameInit;
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.Player.Player;
+import Rendering.View;
 import Rendering.Windows.Controller.RenderViewController;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
@@ -14,15 +15,16 @@ public class RenderViewScene extends Scene{
     private boolean isRunning = false;
     private Field[][] fields;
     private GameInit gameInit;
+    private View view;
 
     public RenderViewScene(
-            Field[][] fields,
             Parent root,
             float height,
-            float width
+            float width,
+            View view
     ) {
         super(root, height, width);
-        this.fields = fields;
+        this.view = view;
         this.setKeyHandler();
     }
 
@@ -32,18 +34,6 @@ public class RenderViewScene extends Scene{
 
     public Runnable setIsRunning(boolean isRunning){
         return (()-> this.isRunning = isRunning);
-    }
-
-    public Player getPlayer() {
-        Player player = null;
-        for(Field[] fields : this.fields){
-            for(Field field : fields){
-                if(field.getName().equals("GameObjects.Player.Player")){
-                    player = (Player) field;
-                }
-            }
-        }
-        return player;
     }
 
     public boolean isRunning(){
@@ -57,7 +47,7 @@ public class RenderViewScene extends Scene{
             GameInit gameInit
     ){
         this.fields = fields;
-        Player player = this.getPlayer();
+        Player player = this.view.getPlayer();
         this.gameInit = gameInit;
         this.isRunning = true;
 
@@ -77,7 +67,7 @@ public class RenderViewScene extends Scene{
         AnimationTimer animationTimer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                renderViewController.initRendering(fields);
+                renderViewController.initRendering(fields, view);
             }
         };
         animationTimer.start();

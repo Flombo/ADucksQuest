@@ -109,7 +109,10 @@ public class Player extends Field {
 		if(Integer.parseInt(this.getLives().getValue()) + lives > 0) {
 			runnable = (() -> this.lives.setValue(Integer.toString(Integer.parseInt(this.getLives().getValue()) + lives)));
 		} else {
-			view.setIsRunning(false);
+			if(Integer.parseInt(this.getLives().getValue()) + lives == 0) {
+				runnable = (() -> this.lives.setValue(Integer.toString(Integer.parseInt(this.getLives().getValue()) + lives)));
+			}
+			view.setIsRunningFalse();
 			view.showDeathMenu();
 		}
 		return runnable;
@@ -174,9 +177,8 @@ public class Player extends Field {
 
 	//checks if player has enough lives
 	public void checkPlayersLives(View view){
-		System.out.println("lives" + this.getLives().getValue());
 		if(Integer.parseInt(this.getLives().getValue()) == 0) {
-			view.setIsRunning(false);
+			view.setIsRunningFalse();
 			view.showDeathMenu();
 		}
 	}

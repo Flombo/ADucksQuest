@@ -2,6 +2,8 @@ package Rendering.Windows.Controller;
 
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.Player.Player;
+import Rendering.View;
+import Rendering.Windows.ControllerHelper.HoverHelper;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -9,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Label;
 
-public class RenderViewController {
+public class RenderViewController extends HoverHelper {
 
     public Label coinLabel;
     @FXML
@@ -27,13 +29,17 @@ public class RenderViewController {
     @FXML
     private Canvas renderCanvas;
     private Field[][] fields;
+    private View view;
 
     public void menuButtonClicked(MouseEvent mouseEvent) {
-        System.out.println("BabediBUbedi");
+        if(view != null){
+            this.view.showIngameMenu();
+        }
     }
 
     //render Gamefield and Counterpanel
-    public void initRendering(Field[][] fields){
+    public void initRendering(Field[][] fields, View view){
+        this.view = view;
         this.fields = fields;
         this.renderGamefield(this.renderCanvas);
     }
