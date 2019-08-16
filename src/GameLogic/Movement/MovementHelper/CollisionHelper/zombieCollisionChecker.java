@@ -28,41 +28,25 @@ public class zombieCollisionChecker {
 		boolean canMove = false;
 		switch (this.fields[this.newPosX][this.newPosY].getName()){
 			case "GameObjects.Obstacles.Obstacle":
+			case "GameObjects.Obstacles.Hole":
+			case "GameObjects.Enemies.Skull":
+			case "GameObjects.Target.Target":
+			case "GameObjects.Collectibles.Coin":
+			case "GameObjects.Collectibles.Heart":
+			case "GameObjects.Obstacles.Chest":
+			case "GameObjects.Enemies.Zombie":
 				zombie.changePostion();
 				break;
 			case "GameObjects.Field_like_Objects.Field":
+			case "GameObjects.Field_like_Objects.FilledHole":
 				canMove = true;
-				break;
-			case "GameObjects.Obstacles.Hole":
-				zombie.changePostion();
 				break;
 			case "GameObjects.Player.Player":
 				this.zombie.attack();
 				zombie.changePostion();
 				int livesTaken = Integer.parseInt(this.player.getLives().getValue()) >= 2 ? -2 : -1;
-				this.view.setPlayerLives(this.player, livesTaken);
 				this.player.attacked(this.view);
-				break;
-			case "GameObjects.Enemies.Skull":
-				zombie.changePostion();
-				break;
-			case "GameObjects.Target.Target":
-				zombie.changePostion();
-				break;
-			case "GameObjects.Collectibles.Coin":
-				zombie.changePostion();
-				break;
-			case "GameObjects.Collectibles.Heart":
-				zombie.changePostion();
-				break;
-			case "GameObjects.Obstacles.Chest":
-				zombie.changePostion();
-				break;
-			case "GameObjects.Field_like_Objects.FilledHole":
-				canMove = true;
-				break;
-			case "GameObjects.Enemies.Zombie":
-				zombie.changePostion();
+				this.view.setPlayerLives(this.player, livesTaken);
 				break;
 		}
 		return canMove;

@@ -43,6 +43,7 @@ public class playerCollisionChecker {
 			case "GameObjects.Obstacles.Obstacle":
 				break;
 			case "GameObjects.Field_like_Objects.Field":
+			case "GameObjects.Field_like_Objects.FilledHole":
 				canMove = true;
 				break;
 			case  "GameObjects.Obstacles.Hole":
@@ -77,9 +78,6 @@ public class playerCollisionChecker {
 				break;
 			case "GameObjects.Obstacles.Chest":
 				canMove = this.chestCollisionChecker.checkNextPos((Chest) this.fields[this.newPosX][this.newPosY], this.newPos);
-				break;
-			case "GameObjects.Field_like_Objects.FilledHole":
-				canMove = true;
 				break;
 			case "GameObjects.Enemies.Zombie":
 				this.player.setAllowedToMove(false);
