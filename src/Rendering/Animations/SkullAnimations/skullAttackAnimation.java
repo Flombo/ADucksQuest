@@ -15,9 +15,9 @@ public class skullAttackAnimation extends AnimationBlueprint {
 		this.initFrames();
 	}
 
-	//plays attack animation
+	//plays attack animate
 	public void animateAttack(){
-		this.animation(this.skull, this.frames);
+		this.animate(this.skull, this.frames, null, null);
 	}
 
 	//inits attackframes equal to skull postion
@@ -31,7 +31,7 @@ public class skullAttackAnimation extends AnimationBlueprint {
 			frame1 = this.skull.loadImage("/textures/skullTextureLeft.png");
 			frame2 = this.skull.loadImage("/textures/skullAnimation/skullTextureLeftWalk1.png");
 		}
-		this.frames = new Image[60];
+		this.frames = new Image[12];
 		for(int i = 0; i < this.frames.length - 2; i += 2){
 			this.frames[i] = frame1;
 			this.frames[i + 1] = frame2;

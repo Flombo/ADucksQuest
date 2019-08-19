@@ -1,7 +1,9 @@
 package GameObjects.Obstacles;
 
 import GameObjects.Field_like_Objects.Field;
+import GameObjects.Player.Player;
 import Rendering.Animations.HoleAnimations.PlayerFallsAnimation;
+import Rendering.View;
 import javafx.scene.image.Image;
 
 public class Hole extends Field {
@@ -26,8 +28,8 @@ public class Hole extends Field {
 		this.currentImage = defaultImage;
 	}
 
-	public void animatePlayerFall(){
-		this.playerFallsAnimation.animatePlayerFalls(this);
+	public void animatePlayerFall(Player player, View view){
+		this.playerFallsAnimation.animatePlayerFalls(this, player, view);
 	}
 
 	@Override

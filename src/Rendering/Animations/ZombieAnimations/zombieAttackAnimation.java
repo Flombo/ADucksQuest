@@ -19,7 +19,7 @@ public class zombieAttackAnimation extends AnimationBlueprint {
 	//plays attack animation
 	public void animateAttack(){
 		this.initFrames();
-		this.animation(this.zombie, this.frames);
+		this.animate(this.zombie, this.frames, null, null);
 	}
 
 	//inits attackframes equal to skull postion
@@ -45,7 +45,7 @@ public class zombieAttackAnimation extends AnimationBlueprint {
 				this.frame2 = this.frame3 = this.frame1;
 				break;
 		}
-		this.frames = new Image[60];
+		this.frames = new Image[12];
 		for(int i = 0; i < this.frames.length - 3; i += 3){
 			this.frames[i] = this.frame1;
 			this.frames[i + 1] = this.frame2;

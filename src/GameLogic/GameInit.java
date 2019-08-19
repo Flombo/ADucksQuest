@@ -44,7 +44,6 @@ public class GameInit {
         this.printer = new consolePrinter();
         this.amount = amount;
         this.view = view;
-        //this.initKeyAdapter();
     }
 
     //resumes collectible animations

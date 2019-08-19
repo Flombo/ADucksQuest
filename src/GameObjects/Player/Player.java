@@ -191,7 +191,7 @@ public class Player extends Field {
 		this.coins.setValue(Integer.toString(Integer.parseInt(this.coins.getValue()) + coins));
 	}
 
-	public Image getFieldImage() {
-		return fieldImage;
+	public void setCurrentImageToFieldImage() {
+		this.currentImage = this.fieldImage;
 	}
 }

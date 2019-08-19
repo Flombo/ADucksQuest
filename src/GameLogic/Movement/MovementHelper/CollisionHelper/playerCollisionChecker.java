@@ -47,12 +47,7 @@ public class playerCollisionChecker {
 				canMove = true;
 				break;
 			case  "GameObjects.Obstacles.Hole":
-				this.player.setAllowedToMove(false);
-				this.player.setCurrentImage(this.player.getFieldImage());
-				((Hole)this.fields[this.newPosX][this.newPosY]).animatePlayerFall();
-				this.view.setPlayerLives(this.player, -1);
-				this.player.attacked(view);
-				this.player.setAllowedToMove(true);
+				((Hole)this.fields[this.newPosX][this.newPosY]).animatePlayerFall(this.player, this.view);
 				break;
 			case "GameObjects.Enemies.Skull":
 				this.player.setAllowedToMove(false);

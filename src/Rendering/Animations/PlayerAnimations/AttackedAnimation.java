@@ -15,8 +15,8 @@ public class AttackedAnimation extends AnimationBlueprint {
 		Image frame2 = imageLoader.loadImage("/textures/playerAnimation/playerDownTextureAttacked2.png");
 		Image frame3 = imageLoader.loadImage("/textures/playerAnimation/playerDownTextureAttacked3.png");
 		Image frame4 = imageLoader.loadImage("/textures/playerDownTexture.png");
-		this.frames = new Image[60];
-		for(int i = 0; i < 60 - 3; i += 3){
+		this.frames = new Image[12];
+		for(int i = 0; i < 12 - 3; i += 3){
 			this.frames[i] = frame1;
 			this.frames[i + 1] = frame2;
 			this.frames[i + 2] = frame3;
@@ -25,6 +25,6 @@ public class AttackedAnimation extends AnimationBlueprint {
 	}
 
 	public void attacked(Player player){
-		this.animation(player, this.frames);
+		this.animate(player, this.frames, null, null);
 	}
 }

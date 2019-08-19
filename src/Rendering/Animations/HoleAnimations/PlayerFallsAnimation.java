@@ -1,8 +1,10 @@
 package Rendering.Animations.HoleAnimations;
 
 import GameObjects.Obstacles.Hole;
+import GameObjects.Player.Player;
 import Helper.ImageLoader;
 import Rendering.Animations.AnimationBlueprints.AnimationBlueprint;
+import Rendering.View;
 import javafx.scene.image.Image;
 
 public class PlayerFallsAnimation extends AnimationBlueprint {
@@ -15,8 +17,8 @@ public class PlayerFallsAnimation extends AnimationBlueprint {
 		Image frame2 = imageLoader.loadImage("/textures/playerFallsAnimation/playerFalls2.png");
 		Image frame3 = imageLoader.loadImage("/textures/playerFallsAnimation/playerFalls3.png");
 		Image frame4 = imageLoader.loadImage("/textures/playerFallsAnimation/playerFalls4.png");
-		this.frames = new Image[60];
-		for(int i = 0; i < 60 - 3; i += 3){
+		this.frames = new Image[12];
+		for(int i = 0; i < 12 - 3; i += 3){
 			this.frames[i] = frame1;
 			this.frames[i + 1] = frame2;
 			this.frames[i + 2] = frame3;
@@ -24,7 +26,7 @@ public class PlayerFallsAnimation extends AnimationBlueprint {
 		}
 	}
 
-	public void animatePlayerFalls(Hole hole){
-		this.animation(hole, this.frames);
+	public void animatePlayerFalls(Hole hole, Player player, View view){
+		this.animate(hole, this.frames, player, view);
 	}
 }
