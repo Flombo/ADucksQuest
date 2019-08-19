@@ -11,6 +11,7 @@ public class MainMenuScene extends Scene{
     public MainMenuScene(Parent parent, double width, double height, View view) {
         super(parent, width, height);
         this.view = view;
+        this.getStylesheets().add("/Rendering/Windows/Style/MainMenu.css");
     }
 
     public void initGame(){

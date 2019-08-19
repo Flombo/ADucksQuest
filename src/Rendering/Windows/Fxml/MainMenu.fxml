@@ -8,11 +8,8 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0"
-            prefWidth="600.0"
-            style="-fx-background-color: rgb(48,75,100); -fx-border-color: rgb(72,147,217); -fx-border-width: 15px;"
-            xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="Rendering.Windows.Controller.MainMenuController">
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Rendering.Windows.Controller.MainMenuController">
    <Label layoutX="56.0" layoutY="44.0" prefHeight="43.0" prefWidth="187.0" text="Mainmenu" textFill="WHITE"
           AnchorPane.topAnchor="67.0">
       <font>
@@ -21,7 +18,7 @@
    </Label>
    <VBox layoutX="51.0" layoutY="153.0" prefHeight="468.0" prefWidth="417.0" AnchorPane.topAnchor="189.0">
       <Button onMouseClicked="#onButtonPressed" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut" id="startGame" mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
-              style="-fx-background-color: rgb(72,147,217);" text="Start Game" textFill="WHITE">
+              text="Start Game" textFill="WHITE">
          <font>
             <Font name="System Bold" size="20.0"/>
          </font>
@@ -31,7 +28,7 @@
       </Button>
       <Button onMouseClicked="#onButtonPressed" id="Leveleditor" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut"
               mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
-              style="-fx-background-color: rgb(72,147,217);" text="Leveleditor" textFill="WHITE">
+              text="Leveleditor" textFill="WHITE">
          <font>
             <Font name="System Bold" size="20.0"/>
          </font>
@@ -44,7 +41,7 @@
       </Button>
       <Button onMouseClicked="#onButtonPressed" id="Shop" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut"
               mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
-              style="-fx-background-color: rgb(72,147,217);" text="Shop" textFill="WHITE">
+              text="Shop" textFill="WHITE">
          <font>
             <Font name="System Bold" size="20.0"/>
          </font>
@@ -57,7 +54,7 @@
       </Button>
       <Button onMouseClicked="#onButtonPressed" id="CustomizeChar" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut"
               mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
-              style="-fx-background-color: rgb(72,147,217);" text="Customize Character" textFill="WHITE">
+              text="Customize Character" textFill="WHITE">
          <font>
             <Font name="System Bold" size="20.0"/>
          </font>
@@ -70,7 +67,7 @@
       </Button>
       <Button onMouseClicked="#onButtonPressed" id="options" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut"
               mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
-              style="-fx-background-color: rgb(72,147,217);" text="Options" textFill="WHITE">
+              text="Options" textFill="WHITE">
          <font>
             <Font name="System Bold" size="20.0"/>
          </font>
@@ -83,7 +80,7 @@
       </Button>
       <Button onMouseClicked="#onButtonPressed" id="quitGame" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut"
               mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
-              style="-fx-background-color: rgb(72,147,217);" text="Quit Game" textFill="WHITE">
+              text="Quit Game" textFill="WHITE">
          <font>
             <Font name="System Bold" size="20.0"/>
          </font>

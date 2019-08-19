@@ -12,6 +12,7 @@ public class DeathScene extends Scene {
     public DeathScene(Parent parent, double height, double width, View view) {
         super(parent, width, height);
         this.view = view;
+        this.getStylesheets().add("/Rendering/Windows/Style/DeathMenu.css");
     }
 
     public Player getPlayer(){

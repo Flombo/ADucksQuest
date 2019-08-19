@@ -12,20 +12,20 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="Rendering.Windows.Controller.RenderViewController" maxHeight="750" maxWidth = "600" minHeight="750" minWidth = "600" prefHeight="750.0"
-        prefWidth="600.0"
-            style="-fx-background-color: rgb(48,75,100);">
-   <Pane id="counterbarpane" layoutX="-11.0" layoutY="-8.0" prefHeight="122.0" prefWidth="610.0"
-    style = "-fx-background-color: rgb(72,147,217);">
-      <HBox id="counterBar" layoutX="193.0" layoutY="28.0" maxHeight="79.0" maxWidth="404.0" minHeight="79.0" minWidth="404.0" prefHeight="79.0" prefWidth="404.0"
-       style="-fx-background-color: rgb(48, 75, 100);">
+            fx:controller="Rendering.Windows.Controller.RenderViewController"
+            maxHeight="750" maxWidth = "600" minHeight="750"
+            minWidth = "600" prefHeight="750.0" prefWidth="600.0">
+   <Pane id="counterbarpane" layoutX="-11.0" layoutY="-8.0" prefHeight="122.0" prefWidth="610.0">
+      <HBox id="counterBar" layoutX="193.0"
+            layoutY="28.0" maxHeight="79.0"
+            maxWidth="404.0" minHeight="79.0"
+            minWidth="404.0" prefHeight="79.0" prefWidth="404.0">
          <HBox id="moveBar"  maxHeight="-Infinity"
           maxWidth="-Infinity"
           minHeight="-Infinity"
           minWidth="-Infinity"
           prefHeight="59.0"
-          prefWidth="134.0"
-          style="-fx-background-color: rgb(48, 75, 100);">
+          prefWidth="134.0">
             <HBox.margin>
                <Insets left="5.0" top="10.0"/>
             </HBox.margin>
@@ -54,8 +54,7 @@
           minHeight="59"
           minWidth="134"
           prefHeight="59.0"
-          prefWidth="134.0"
-          style="-fx-background-color: rgb(48, 75, 100)">
+          prefWidth="134.0">
             <HBox.margin>
                <Insets left="-5.0" top="10.0"/>
             </HBox.margin>
@@ -75,7 +74,7 @@
             </Label>
          </HBox>
          <HBox id="coinBar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-               prefHeight="59.0" prefWidth="134.0" style="-fx-background-color: rgb(48, 75, 100);">
+               prefHeight="59.0" prefWidth="134.0">
             <HBox.margin>
                <Insets top="10.0"/>
             </HBox.margin>
@@ -99,20 +98,16 @@
          </HBox>
       </HBox>
       <Button fx:id="menuButton" onMouseClicked="#menuButtonClicked"
-              onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut" layoutX="36.0" layoutY="27.0"
-              mnemonicParsing="false" style="-fx-background-image: url('/Rendering/Buttons/MenuButton.png');
-              -fx-background-size: 135px 85px; -fx-background-repeat: no-repeat; -fx-background-position: center;"
-              prefHeight="78.0" prefWidth="135.0"/>
+              onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut"
+              layoutX="36.0" layoutY="27.0"
+              mnemonicParsing="false" prefHeight="78.0" prefWidth="135.0"/>
    </Pane>
    <Canvas fx:id="renderCanvas" height="600.0" layoutX="10.0" layoutY="27.5" width="600.0"/>
-   <Pane id="skillbarPane" layoutX="-11.0" layoutY="572.0" prefHeight="178.0" prefWidth="610.0"
-         style="-fx-background-color: rgb(72,147,217);">
+   <Pane id="skillbarPane" layoutX="-11.0" layoutY="572.0" prefHeight="178.0" prefWidth="610.0">
       <HBox id="skillBar" layoutX="27.0" layoutY="18.0" maxHeight="-Infinity" maxWidth="-Infinity"
-            minHeight="-Infinity" minWidth="-Infinity" prefHeight="144.0" prefWidth="568.0"
-            style="-fx-background-color: rgb(48, 75, 100);">
+            minHeight="-Infinity" minWidth="-Infinity" prefHeight="144.0" prefWidth="568.0">
          <Pane id="punchSkillBar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-               minWidth="-Infinity" prefHeight="110.0" prefWidth="125.0"
-               style="-fx-background-color: rgb(72,147,217);">
+               minWidth="-Infinity" prefHeight="110.0" prefWidth="125.0">
             <HBox.margin>
                <Insets left="45.0" top="15.0"/>
             </HBox.margin>
@@ -120,8 +115,7 @@
                     prefHeight="92.0" prefWidth="111.0" text="Button"/>
          </Pane>
          <Pane id="doubleCoinSkillBar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-               minWidth="-Infinity" prefHeight="110.0" prefWidth="125.0"
-               style="-fx-background-color: rgb(72,147,217);">
+               minWidth="-Infinity" prefHeight="110.0" prefWidth="125.0">
             <HBox.margin>
                <Insets left="45.0" top="15.0"/>
             </HBox.margin>
@@ -129,8 +123,7 @@
                     prefHeight="92.0" prefWidth="111.0" text="Button"/>
          </Pane>
          <Pane id="punchSkillBar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-               minWidth="-Infinity" prefHeight="110.0" prefWidth="125.0"
-               style="-fx-background-color: rgb(72,147,217);">
+               minWidth="-Infinity" prefHeight="110.0" prefWidth="125.0">
             <HBox.margin>
                <Insets left="46.0" top="15.0"/>
             </HBox.margin>

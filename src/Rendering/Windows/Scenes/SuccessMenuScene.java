@@ -11,6 +11,7 @@ public class SuccessMenuScene extends Scene {
     public SuccessMenuScene(Parent parent, double width, double height, View view) {
         super(parent, width, height);
         this.view = view;
+        this.getStylesheets().add("/Rendering/Windows/Style/SuccessMenu.css");
     }
 
     public void startNewGame(){

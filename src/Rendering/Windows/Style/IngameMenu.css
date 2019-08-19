@@ -1,0 +1,9 @@
+AnchorPane{
+    -fx-background-color: rgb(48,75,100);
+    -fx-border-color: rgb(72,147,217);
+    -fx-border-width: 15px;
+}
+
+Button{
+    -fx-background-color: rgb(72,147,217);
+}

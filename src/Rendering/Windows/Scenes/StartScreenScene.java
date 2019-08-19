@@ -12,6 +12,7 @@ public class StartScreenScene extends Scene {
         super(parent, v, v1);
         this.view = view;
         this.setEventHandler();
+        this.getStylesheets().add("/Rendering/Windows/Style/StartScreen.css");
     }
 
     private void setEventHandler(){

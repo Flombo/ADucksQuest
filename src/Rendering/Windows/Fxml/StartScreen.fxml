@@ -6,12 +6,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0"
-            prefWidth="600.0"
-            style="-fx-background-color: rgb(48,75,100); -fx-border-color: rgb(72,147,217); -fx-border-width: 15px;"
-            xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="Rendering.Windows.Controller.StartScreenController">
-   <Label layoutX="56.0" layoutY="97.0" prefHeight="43.0" prefWidth="264.0" text="A duck´ s Quest" textFill="WHITE"
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Rendering.Windows.Controller.StartScreenController">
+   <Label layoutX="56.0" layoutY="97.0"
+          prefHeight="43.0" prefWidth="264.0"
+          textFill="WHITE" text="A duck´ s Quest"
           AnchorPane.topAnchor="82.0">
       <font>
          <Font name="Microsoft PhagsPa Bold" size="35.0"/>

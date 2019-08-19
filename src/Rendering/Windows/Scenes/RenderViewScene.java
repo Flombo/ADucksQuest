@@ -26,6 +26,7 @@ public class RenderViewScene extends Scene{
         super(root, height, width);
         this.view = view;
         this.setKeyHandler();
+        this.getStylesheets().add("/Rendering/Windows/Style/RenderView.css");
     }
 
     private void setKeyHandler(){
