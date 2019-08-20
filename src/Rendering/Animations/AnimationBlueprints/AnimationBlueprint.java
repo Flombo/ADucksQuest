@@ -36,10 +36,7 @@ public class AnimationBlueprint implements Runnable{
 			this.view.setPlayerLives(this.player, -1);
 			this.player.setAllowedToMove(true);
 		}
-		this.isRunning = false;
 		this.thread.interrupt();
-		this.frames = null;
-		this.field = null;
 	}
 
 	//sets player image to field image if != null
@@ -73,6 +70,7 @@ public class AnimationBlueprint implements Runnable{
 				timer += 3500 / 60;
 			}
 		}
+		this.isRunning = false;
 	}
 
 	protected void animate(Field field, Image[] frames, Player player, View view){

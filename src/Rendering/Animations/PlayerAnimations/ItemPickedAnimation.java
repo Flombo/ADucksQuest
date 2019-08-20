@@ -15,9 +15,9 @@ public class ItemPickedAnimation extends AnimationBlueprint {
 		Image frame2 = imageLoader.loadImage("/textures/playerAnimation/itemPickAnimation/playerItemPick2.png");
 		Image frame3 = imageLoader.loadImage("/textures/playerAnimation/itemPickAnimation/playerItemPick3.png");
 
-		this.frames = new Image[12];
+		this.frames = new Image[9];
 
-		for (int i = 0; i < 12 - 2; i += 2) {
+		for (int i = 0; i < 9 - 2; i += 2) {
 			this.frames[i] = frame1;
 			this.frames[i + 1] = frame2;
 			this.frames[i + 2] = frame3;

@@ -17,8 +17,8 @@ public class PlayerFallsAnimation extends AnimationBlueprint {
 		Image frame2 = imageLoader.loadImage("/textures/playerFallsAnimation/playerFalls2.png");
 		Image frame3 = imageLoader.loadImage("/textures/playerFallsAnimation/playerFalls3.png");
 		Image frame4 = imageLoader.loadImage("/textures/playerFallsAnimation/playerFalls4.png");
-		this.frames = new Image[12];
-		for(int i = 0; i < 12 - 3; i += 3){
+		this.frames = new Image[9];
+		for(int i = 0; i < 9 - 3; i += 3){
 			this.frames[i] = frame1;
 			this.frames[i + 1] = frame2;
 			this.frames[i + 2] = frame3;

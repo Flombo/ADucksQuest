@@ -31,7 +31,7 @@ public class skullAttackAnimation extends AnimationBlueprint {
 			frame1 = this.skull.loadImage("/textures/skullTextureLeft.png");
 			frame2 = this.skull.loadImage("/textures/skullAnimation/skullTextureLeftWalk1.png");
 		}
-		this.frames = new Image[12];
+		this.frames = new Image[9];
 		for(int i = 0; i < this.frames.length - 2; i += 2){
 			this.frames[i] = frame1;
 			this.frames[i + 1] = frame2;

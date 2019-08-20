@@ -45,7 +45,7 @@ public class zombieAttackAnimation extends AnimationBlueprint {
 				this.frame2 = this.frame3 = this.frame1;
 				break;
 		}
-		this.frames = new Image[12];
+		this.frames = new Image[9];
 		for(int i = 0; i < this.frames.length - 3; i += 3){
 			this.frames[i] = this.frame1;
 			this.frames[i + 1] = this.frame2;
