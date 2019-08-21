@@ -3,7 +3,7 @@ package GameLogic.Movement;
 import GameLogic.Movement.MovementHelper.CollisionHelper.skullCollisionChecker;
 import GameLogic.ThreadHelper.ThreadWaitManager;
 import GameObjects.Field_like_Objects.Field;
-import GameObjects.GameObjectEnums.SkullPosition;
+import GameObjects.GameObjectEnums.PositionEnums.SkullPosition;
 import GameObjects.Player.Player;
 import GameObjects.Enemies.Skull;
 import Rendering.View;

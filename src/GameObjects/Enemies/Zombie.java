@@ -1,10 +1,11 @@
 package GameObjects.Enemies;
 
 import GameObjects.Field_like_Objects.Field;
-import GameObjects.GameObjectEnums.ZombiePostion;
-import GameObjects.GameObjectEnums.ZombieWalkFrames;
+import GameObjects.GameObjectEnums.PositionEnums.ZombiePostion;
+import GameObjects.GameObjectEnums.Frames.ZombieWalkFrames;
 import Rendering.Animations.ZombieAnimations.zombieAttackAnimation;
 import Rendering.Animations.ZombieAnimations.zombieWalkAnimation;
+import Sound.EnemieSounds.ZombieSound;
 import javafx.scene.image.Image;
 
 public class Zombie extends Field {
@@ -18,6 +19,7 @@ public class Zombie extends Field {
 	private ZombieWalkFrames zombieWalkFrame;
 	private zombieWalkAnimation zombieWalkAnimation;
 	private zombieAttackAnimation zombieAttackAnimation;
+	private ZombieSound zombieSound;
 
 	public Zombie() {
 		super(0, 0, "GameObjects.Enemies.Zombie");
@@ -30,6 +32,11 @@ public class Zombie extends Field {
 		this.zombieWalkFrame = ZombieWalkFrames.Zombie_Down_Default;
 		this.zombieWalkAnimation = new zombieWalkAnimation();
 		this.zombieAttackAnimation = new zombieAttackAnimation(this);
+		this.zombieSound = new ZombieSound();
+	}
+
+	public void playAttackSound(){
+		this.zombieSound.playAttackSound();
 	}
 
 	@Override

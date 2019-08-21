@@ -2,7 +2,7 @@ package Rendering.Animations.HeartAnimations;
 
 import GameLogic.ThreadHelper.ThreadWaitManager;
 import GameObjects.Collectibles.Heart;
-import GameObjects.GameObjectEnums.HeartGrowthFrames;
+import GameObjects.GameObjectEnums.Frames.HeartGrowthFrames;
 import javafx.scene.image.Image;
 
 public class HeartGrowth implements Runnable {

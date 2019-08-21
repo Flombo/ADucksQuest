@@ -1,8 +1,9 @@
 package GameObjects.Collectibles;
 
 import GameObjects.Field_like_Objects.Field;
-import GameObjects.GameObjectEnums.CoinFlipFrames;
+import GameObjects.GameObjectEnums.Frames.CoinFlipFrames;
 import Rendering.Animations.CoinAnimations.CoinFlip;
+import Sound.InteractionSounds.ItemPickedSound;
 import javafx.scene.image.Image;
 
 public class Coin extends Field {
@@ -11,6 +12,7 @@ public class Coin extends Field {
 	private Image defaultImage;
 	private CoinFlipFrames flipFrame;
 	private CoinFlip coinFlip;
+	private ItemPickedSound itemPickedSound;
 	private boolean allowedToFlip = true;
 
 	public Coin() {
@@ -18,6 +20,7 @@ public class Coin extends Field {
 		this.defaultImage = this.loadImage("/textures/CoinAnimation/Coin.png");
 		this.currentImage = defaultImage;
 		this.flipFrame = CoinFlipFrames.Coin_Default;
+		this.itemPickedSound = new ItemPickedSound();
 		this.startAnimation();
 	}
 
@@ -58,5 +61,9 @@ public class Coin extends Field {
 
 	public void setAllowedToFlip(boolean allowedToFlip) {
 		this.allowedToFlip = allowedToFlip;
+	}
+
+	public void playCoinPicked(){
+		this.itemPickedSound.playItemPicked();
 	}
 }

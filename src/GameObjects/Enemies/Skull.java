@@ -1,10 +1,11 @@
 package GameObjects.Enemies;
 
 import GameObjects.Field_like_Objects.Field;
-import GameObjects.GameObjectEnums.SkullPosition;
-import GameObjects.GameObjectEnums.SkullWalkFrames;
+import GameObjects.GameObjectEnums.PositionEnums.SkullPosition;
+import GameObjects.GameObjectEnums.Frames.SkullWalkFrames;
 import Rendering.Animations.SkullAnimations.skullAttackAnimation;
 import Rendering.Animations.SkullAnimations.skullWalkAnimation;
+import Sound.EnemieSounds.SkullSound;
 import javafx.scene.image.Image;
 
 public class Skull extends Field {
@@ -14,6 +15,7 @@ public class Skull extends Field {
 	private Image imageRight;
 	private Image imageLeft;
 	private skullWalkAnimation skullWalkAnimation;
+	private SkullSound skullSound;
 
 	public Skull() {
 		super(0, 0, "GameObjects.Enemies.Skull");
@@ -23,6 +25,7 @@ public class Skull extends Field {
 		this.walkFrame = SkullWalkFrames.Skull_Right_Default;
 		this.position = SkullPosition.SKULL_RIGHT;
 		this.skullWalkAnimation = new skullWalkAnimation();
+		this.skullSound = new SkullSound();
 	}
 
 	public SkullWalkFrames getWalkFrame() {
@@ -80,6 +83,10 @@ public class Skull extends Field {
 		}
 	}
 
+	public void playAttackSound(){
+		this.skullSound.playAttackSound();
+	}
+
 	//plays walk animiation
 	public void walk(){
 		this.skullWalkAnimation.walk(this);
@@ -95,6 +102,7 @@ public class Skull extends Field {
 
 	// plays attack animation
 	public void attack(){
+		this.playAttackSound();
 		skullAttackAnimation skullAttackAnimation = new skullAttackAnimation(this);
 		skullAttackAnimation.animateAttack();
 	}

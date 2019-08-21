@@ -1,4 +1,4 @@
-package GameObjects.GameObjectEnums;
+package GameObjects.GameObjectEnums.Frames;
 
 public enum SkullWalkFrames {
 	Skull_Left_Default, Skull_Right_Default, Skull_Left1, Skull_Left2,

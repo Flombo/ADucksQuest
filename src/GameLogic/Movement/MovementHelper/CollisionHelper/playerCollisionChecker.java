@@ -1,9 +1,14 @@
 package GameLogic.Movement.MovementHelper.CollisionHelper;
 
+import GameObjects.Collectibles.Coin;
+import GameObjects.Collectibles.Heart;
+import GameObjects.Enemies.Skull;
+import GameObjects.Enemies.Zombie;
 import GameObjects.Obstacles.Chest;
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.Obstacles.Hole;
 import GameObjects.Player.Player;
+import GameObjects.Target.Target;
 import Rendering.View;
 
 public class playerCollisionChecker {
@@ -50,31 +55,35 @@ public class playerCollisionChecker {
 				((Hole)this.fields[this.newPosX][this.newPosY]).animatePlayerFall(this.player, this.view);
 				break;
 			case "GameObjects.Enemies.Skull":
+                ((Skull)this.fields[this.newPosX][this.newPosY]).playAttackSound();
 				this.player.setAllowedToMove(false);
 				this.view.setPlayerLives(this.player, -1);
 				this.player.attacked(view);
 				this.player.setAllowedToMove(true);
 				break;
 			case "GameObjects.Collectibles.Coin":
+				((Coin)this.fields[this.newPosX][this.newPosY]).playCoinPicked();
 				this.player.setCoins(1);
 				this.player.itemPicked();
 				canMove = true;
 				break;
 			case "GameObjects.Collectibles.Heart":
-				this.player.setAllowedToMove(false);
+				((Heart)this.fields[this.newPosX][this.newPosY]).playHeartPicked();
 				this.view.setPlayerLives(this.player, 1);
 				this.player.itemPicked();
-				this.player.setAllowedToMove(true);
 				canMove = true;
 				break;
 			case "GameObjects.Target.Target":
 				canMove = true;
+				((Target)this.fields[this.newPosX][this.newPosY]).playVictorySound();
 				this.view.showSuccessMenu();
 				break;
 			case "GameObjects.Obstacles.Chest":
+				this.player.playQuak();
 				canMove = this.chestCollisionChecker.checkNextPos((Chest) this.fields[this.newPosX][this.newPosY], this.newPos);
 				break;
 			case "GameObjects.Enemies.Zombie":
+                ((Zombie)this.fields[this.newPosX][this.newPosY]).playAttackSound();
 				this.player.setAllowedToMove(false);
 				this.view.setPlayerLives(this.player, -2);
 				this.player.attacked(this.view);

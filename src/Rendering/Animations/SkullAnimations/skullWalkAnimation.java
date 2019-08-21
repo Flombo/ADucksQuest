@@ -1,7 +1,7 @@
 package Rendering.Animations.SkullAnimations;
 
-import GameObjects.GameObjectEnums.SkullPosition;
-import GameObjects.GameObjectEnums.SkullWalkFrames;
+import GameObjects.GameObjectEnums.PositionEnums.SkullPosition;
+import GameObjects.GameObjectEnums.Frames.SkullWalkFrames;
 import GameObjects.Enemies.Skull;
 import Helper.ImageLoader;
 import javafx.scene.image.Image;

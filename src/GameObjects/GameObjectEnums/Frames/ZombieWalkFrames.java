@@ -1,4 +1,4 @@
-package GameObjects.GameObjectEnums;
+package GameObjects.GameObjectEnums.Frames;
 
 public enum ZombieWalkFrames {
 	Zombie_Down_Default, Zombie_Down_1, Zombie_Down_2, Zombie_Up_Default,

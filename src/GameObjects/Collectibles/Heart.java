@@ -1,8 +1,9 @@
 package GameObjects.Collectibles;
 
 import GameObjects.Field_like_Objects.Field;
-import GameObjects.GameObjectEnums.HeartGrowthFrames;
+import GameObjects.GameObjectEnums.Frames.HeartGrowthFrames;
 import Rendering.Animations.HeartAnimations.HeartGrowth;
+import Sound.InteractionSounds.ItemPickedSound;
 import javafx.scene.image.Image;
 
 public class Heart extends Field {
@@ -10,19 +11,23 @@ public class Heart extends Field {
 	private Image defaultImage;
 	private HeartGrowthFrames growthFrame;
 	private HeartGrowth heartGrowth;
-	private boolean allowedToGrow = true;
+	private ItemPickedSound itemPickedSound;
 
 	public Heart() {
 		super(0, 0, "GameObjects.Collectibles.Heart");
 		this.defaultImage = this.loadImage("/textures/HeartAnimation/Heart.png");
+		this.itemPickedSound = new ItemPickedSound();
 		this.currentImage = defaultImage;
 		this.growthFrame = HeartGrowthFrames.Heart_Default;
 		this.startAnimation();
 	}
 
+	public void playHeartPicked(){
+		this.itemPickedSound.playItemPicked();
+	}
+
 	//starts animation
 	public void startAnimation(){
-		this.allowedToGrow = true;
 		this.heartGrowth = new HeartGrowth(this);
 		this.growth();
 	}

@@ -1,4 +1,4 @@
-package GameObjects.GameObjectEnums;
+package GameObjects.GameObjectEnums.Frames;
 
 public enum PlayerWalkFrames {
 	Player_Default_Up, Player_Default_Down, Player_Default_Right, Player_Default_Left,

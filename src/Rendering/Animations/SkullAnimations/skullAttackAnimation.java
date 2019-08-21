@@ -1,6 +1,6 @@
 package Rendering.Animations.SkullAnimations;
 
-import GameObjects.GameObjectEnums.SkullPosition;
+import GameObjects.GameObjectEnums.PositionEnums.SkullPosition;
 import GameObjects.Enemies.Skull;
 import Rendering.Animations.AnimationBlueprints.AnimationBlueprint;
 import javafx.scene.image.Image;

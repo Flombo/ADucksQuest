@@ -2,7 +2,7 @@ package Rendering.Animations.CoinAnimations;
 
 import GameLogic.ThreadHelper.ThreadWaitManager;
 import GameObjects.Collectibles.Coin;
-import GameObjects.GameObjectEnums.CoinFlipFrames;
+import GameObjects.GameObjectEnums.Frames.CoinFlipFrames;
 import javafx.scene.image.Image;
 
 public class CoinFlip implements Runnable{

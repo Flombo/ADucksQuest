@@ -1,7 +1,7 @@
 package Rendering.Animations.ZombieAnimations;
 
 import GameObjects.Enemies.Zombie;
-import GameObjects.GameObjectEnums.ZombieWalkFrames;
+import GameObjects.GameObjectEnums.Frames.ZombieWalkFrames;
 import Helper.ImageLoader;
 import javafx.scene.image.Image;
 

@@ -1,6 +1,6 @@
 package Rendering.Animations.PlayerAnimations;
 
-import GameObjects.GameObjectEnums.PlayerWalkFrames;
+import GameObjects.GameObjectEnums.Frames.PlayerWalkFrames;
 import GameObjects.Player.Player;
 import Helper.ImageLoader;
 import javafx.scene.image.Image;

@@ -4,7 +4,7 @@ import GameLogic.Movement.MovementHelper.CollisionHelper.zombieCollisionChecker;
 import GameLogic.ThreadHelper.ThreadWaitManager;
 import GameObjects.Enemies.Zombie;
 import GameObjects.Field_like_Objects.Field;
-import GameObjects.GameObjectEnums.ZombiePostion;
+import GameObjects.GameObjectEnums.PositionEnums.ZombiePostion;
 import GameObjects.Player.Player;
 import Rendering.View;
 import javafx.application.Platform;

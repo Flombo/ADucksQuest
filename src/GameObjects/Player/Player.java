@@ -1,12 +1,13 @@
 package GameObjects.Player;
 
 import GameObjects.Field_like_Objects.Field;
-import GameObjects.GameObjectEnums.PlayerPosition;
-import GameObjects.GameObjectEnums.PlayerWalkFrames;
+import GameObjects.GameObjectEnums.PositionEnums.PlayerPosition;
+import GameObjects.GameObjectEnums.Frames.PlayerWalkFrames;
 import Rendering.Animations.PlayerAnimations.AttackedAnimation;
 import Rendering.Animations.PlayerAnimations.ItemPickedAnimation;
 import Rendering.Animations.PlayerAnimations.WalkAnimation;
 import Rendering.View;
+import Sound.PlayerSounds.PlayerSounds;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 
@@ -28,6 +29,7 @@ public class Player extends Field {
 	private AttackedAnimation attackedAnimation;
 	private ItemPickedAnimation itemPickedAnimation;
 	private boolean allowedToMove;
+	private PlayerSounds playerSounds;
 
 	public Player(){
 		super(0, 0, "GameObjects.Player.Player");
@@ -43,6 +45,7 @@ public class Player extends Field {
 		this.walkAnimation = new WalkAnimation();
 		this.attackedAnimation = new AttackedAnimation();
 		this.itemPickedAnimation = new ItemPickedAnimation();
+		this.playerSounds = new PlayerSounds();
 		this.fieldImage = this.loadImage("/textures/fieldTexture.png");
 	}
 
@@ -112,6 +115,7 @@ public class Player extends Field {
 			if(Integer.parseInt(this.getLives().getValue()) + lives == 0) {
 				runnable = (() -> this.lives.setValue(Integer.toString(Integer.parseInt(this.getLives().getValue()) + lives)));
 			}
+			this.playerSounds.playDamageSound();
 			view.setIsRunningFalse();
 			view.showDeathMenu();
 		}
@@ -147,6 +151,10 @@ public class Player extends Field {
 				break;
 		}
 		return this.currentImage;
+	}
+
+	public void playQuak(){
+		this.playerSounds.playQuak();
 	}
 
 	public void attacked(View view){

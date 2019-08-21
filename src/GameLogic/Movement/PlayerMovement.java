@@ -3,7 +3,7 @@ package GameLogic.Movement;
 import GameLogic.Movement.MovementHelper.CollisionHelper.playerCollisionChecker;
 import GameLogic.Movement.MovementHelper.playerFrameChecker;
 import GameObjects.Field_like_Objects.Field;
-import GameObjects.GameObjectEnums.PlayerPosition;
+import GameObjects.GameObjectEnums.PositionEnums.PlayerPosition;
 import GameObjects.Player.Player;
 import Helper.consolePrinter;
 import Rendering.View;
