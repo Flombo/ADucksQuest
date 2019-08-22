@@ -170,8 +170,10 @@ public class View extends Application {
 
     private Runnable setSuccessMenu(){
         return (() -> {
+            Player player = this.getPlayer();
+            player.setEarnedCoins();
             stage.setScene(successMenuScene);
-            successMenuController.setLabelBindings(this.getPlayer());
+            successMenuController.setLabelBindings(player);
         });
     }
 

@@ -7,6 +7,7 @@ public class PlayerSounds extends SoundBlueprint {
 
     private Media damagedSound;
     private Media quak;
+    private Media fallingSound;
 
     public PlayerSounds(){
         this.damagedSound = new Media(
@@ -14,6 +15,9 @@ public class PlayerSounds extends SoundBlueprint {
         );
         this.quak = new Media(
                 "file:///C:/Users/flori/IdeaProjects/PuzzleGame_proto/src/Sound/soundeffects/player/quak.wav"
+        );
+        this.fallingSound = new Media(
+                "file:///C:/Users/flori/IdeaProjects/PuzzleGame_proto/src/Sound/soundeffects/player/fallingSound.wav"
         );
     }
 
@@ -23,6 +27,10 @@ public class PlayerSounds extends SoundBlueprint {
 
     public void playQuak(){
         this.playSound(this.quak);
+    }
+
+    public void playFallingSound(){
+        this.playSound(this.fallingSound);
     }
 
 }

@@ -52,6 +52,7 @@ public class playerCollisionChecker {
 				canMove = true;
 				break;
 			case  "GameObjects.Obstacles.Hole":
+				this.player.playFallingSound();
 				((Hole)this.fields[this.newPosX][this.newPosY]).animatePlayerFall(this.player, this.view);
 				break;
 			case "GameObjects.Enemies.Skull":

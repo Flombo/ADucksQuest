@@ -34,7 +34,7 @@ public class SuccessMenuController extends HoverHelper {
         this.lives.textProperty().bind(player.getLives());
         this.moves.textProperty().bind(player.getMoves());
         this.score.textProperty().bind(player.getScore());
-        this.earnedCoins.textProperty().bind(player.getCoins());
+        this.earnedCoins.textProperty().bind(player.getEarnedCoins());
     }
 
 }

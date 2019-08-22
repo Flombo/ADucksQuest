@@ -17,6 +17,7 @@ public class Player extends Field {
 	private SimpleStringProperty score;
 	private SimpleStringProperty lives;
 	private SimpleStringProperty coins;
+	private SimpleStringProperty earnedCoins;
 	private Image currentImage;
 	private Image downImage;
 	private Image upImage;
@@ -31,13 +32,14 @@ public class Player extends Field {
 	private boolean allowedToMove;
 	private PlayerSounds playerSounds;
 
-	public Player(){
+	public Player() {
 		super(0, 0, "GameObjects.Player.Player");
 		this.initDefaultFrames();
 		this.moves = new SimpleStringProperty("0");
 		this.lives = new SimpleStringProperty("3");
 		this.coins = new SimpleStringProperty("0");
 		this.score = new SimpleStringProperty("100");
+		this.earnedCoins = new SimpleStringProperty("0");
 		this.allowedToMove = true;
 		this.position = PlayerPosition.PLAYER_DOWN;
 		this.currentImage = this.downImage;
@@ -49,35 +51,6 @@ public class Player extends Field {
 		this.fieldImage = this.loadImage("/textures/fieldTexture.png");
 	}
 
-	public boolean getAllowedToMove(){
-		return this.allowedToMove;
-	}
-
-	public void setAllowedToMove(boolean allowedToMove){
-		this.allowedToMove = allowedToMove;
-	}
-
-	public void setImageToDefault() {
-		switch (this.position) {
-			case PLAYER_DOWN:
-				this.currentImage = downImage;
-				this.walkFrame = PlayerWalkFrames.Player_Default_Down;
-				break;
-			case PLAYER_UP:
-				this.currentImage = upImage;
-				this.walkFrame = PlayerWalkFrames.Player_Default_Up;
-				break;
-			case PLAYER_LEFT:
-				this.currentImage = leftImage;
-				this.walkFrame = PlayerWalkFrames.Player_Default_Left;
-				break;
-			case PLAYER_RIGHT:
-				this.currentImage = rightImage;
-				this.walkFrame = PlayerWalkFrames.Player_Default_Right;
-				break;
-		}
-	}
-
 	//init the defaultFrames for every Up,Down,Left,Right
 	private void initDefaultFrames(){
 		this.downImage = this.loadImage("/textures/playerDownTexture.png");
@@ -86,50 +59,120 @@ public class Player extends Field {
 		this.rightImage = this.loadImage("/textures/playerRightTexture.png");
 	}
 
-	public SimpleStringProperty getMoves() {
-		return moves;
+	//shows death menu, stops renderloop and plays death sound
+	private void showDeathMenu(View view){
+		this.playerSounds.playDamageSound();
+		view.setIsRunningFalse();
+		view.showDeathMenu();
 	}
 
-	public void setMoves(int moves) {
-		this.moves.setValue(Integer.toString(Integer.parseInt(this.getMoves().getValue()) + moves));
-		this.setScore();
-	}
-
-	public SimpleStringProperty getScore() {
-		return score;
-	}
-
-	private void setScore() {
-		this.score.setValue(Integer.toString(Integer.parseInt(this.score.getValue()) - Integer.parseInt(this.getMoves().getValue()) / 2));
-	}
-
-	public SimpleStringProperty getLives(){
-		return lives;
-	}
-
-	public Runnable setLives(int lives, View view) {
+	//checks if lives are equal to zero
+	private Runnable checkIfLivesAreZero(int lives){
 		Runnable runnable = null;
-		if(Integer.parseInt(this.getLives().getValue()) + lives > 0) {
-			runnable = (() -> this.lives.setValue(Integer.toString(Integer.parseInt(this.getLives().getValue()) + lives)));
-		} else {
-			if(Integer.parseInt(this.getLives().getValue()) + lives == 0) {
-				runnable = (() -> this.lives.setValue(Integer.toString(Integer.parseInt(this.getLives().getValue()) + lives)));
-			}
-			this.playerSounds.playDamageSound();
-			view.setIsRunningFalse();
-			view.showDeathMenu();
+		if(Integer.parseInt(this.getLives().getValue()) + lives == 0) {
+			runnable = setLivesInCheckPlayerLivesForView(lives);
 		}
 		return runnable;
 	}
 
+	//checks lives for view
+	private Runnable checkPlayerLivesForView(View view, int lives){
+		Runnable runnable;
+		if(Integer.parseInt(this.getLives().getValue()) + lives > 0) {
+			runnable = setLivesInCheckPlayerLivesForView(lives);
+		} else {
+			runnable = this.checkIfLivesAreZero(lives);
+			this.showDeathMenu(view);
+		}
+		return runnable;
+	}
+
+	//plays sound when player is falling down a hole
+	public void playFallingSound(){
+		this.playerSounds.playFallingSound();
+	}
+
+	//quak!
+	public void playQuak(){
+		this.playerSounds.playQuak();
+	}
+
+	//plays animation when player is attacked
+	public void attacked(View view){
+		this.attackedAnimation.attacked(this);
+		this.checkPlayersLives(view);
+	}
+
+	//play item picked animation
+	public void itemPicked(){
+		this.itemPickedAnimation.animateItemPicked(this);
+	}
+
+	//plays walk animation
+	public void walk(){
+		this.walkAnimation.walk(this);
+	}
+
+	//checks if player has enough lives
+	public void checkPlayersLives(View view){
+		if(Integer.parseInt(this.getLives().getValue()) == 0) {
+			view.setIsRunningFalse();
+			view.showDeathMenu();
+		}
+	}
+
+	//sets postion
+	public void setPosition(PlayerPosition position) {
+		this.position = position;
+		this.setCurrentImage(this.getPlayerTextureByPosition(this.position));
+	}
+
+	//gets coins
+	public SimpleStringProperty getCoins() {
+		return coins;
+	}
+
+	//sets coins
+	public void setCoins(int coins) {
+		this.coins.setValue(Integer.toString(Integer.parseInt(this.coins.getValue()) + coins));
+	}
+
+	//gets earned coins
+	public SimpleStringProperty getEarnedCoins() {
+		return earnedCoins;
+	}
+
+	//calculates the earned coins
+	public void setEarnedCoins() {
+		this.earnedCoins.setValue(Integer.toString(Integer.parseInt(this.getScore().getValue())/15));
+	}
+
+	//sets current image to field image
+	public void setCurrentImageToFieldImage() {
+		this.currentImage = this.fieldImage;
+	}
+
+	//gets walkframe
+	public PlayerWalkFrames getWalkFrame() {
+		return walkFrame;
+	}
+
+	//sets walkframe
+	public void setWalkFrame(PlayerWalkFrames walkFrame) {
+		this.walkFrame = walkFrame;
+	}
+
+	//gets current image
 	public Image getCurrentImage() {
 		return currentImage;
 	}
 
+	//sets current image
 	public void setCurrentImage(Image currentImage) {
 		this.currentImage = currentImage;
 	}
 
+	//gets current position
 	public PlayerPosition getPosition() {
 		return position;
 	}
@@ -153,53 +196,98 @@ public class Player extends Field {
 		return this.currentImage;
 	}
 
-	public void playQuak(){
-		this.playerSounds.playQuak();
+	public SimpleStringProperty getMoves() {
+		return moves;
 	}
 
-	public void attacked(View view){
-		this.attackedAnimation.attacked(this);
-		this.checkPlayersLives(view);
+	public void setMoves(int moves) {
+		this.moves.setValue(Integer.toString(Integer.parseInt(this.getMoves().getValue()) + moves));
 	}
 
-	public void itemPicked(){
-		this.itemPickedAnimation.animateItemPicked(this);
+	public SimpleStringProperty getScore() {
+		return score;
 	}
 
-	public void setPosition(PlayerPosition position) {
-		this.position = position;
-		this.setCurrentImage(this.getPlayerTextureByPosition(this.position));
+	//sets score
+	private void setScore() {
+		this.score.setValue(this.calculateScore());
 	}
 
-	public PlayerWalkFrames getWalkFrame() {
-		return walkFrame;
+	//parses score to int
+	private int parseScoreToInt(){
+		return Integer.parseInt(this.score.getValue());
 	}
 
-	public void setWalkFrame(PlayerWalkFrames walkFrame) {
-		this.walkFrame = walkFrame;
+	//parses lives to int
+	private int parseLivesToInt(){
+		return Integer.parseInt(this.getLives().getValue());
 	}
 
-	public void walk(){
-		this.walkAnimation.walk(this);
+	//parses moves to int
+	private int parseMovesToInt(){
+		return Integer.parseInt(this.getMoves().getValue());
 	}
 
-	//checks if player has enough lives
-	public void checkPlayersLives(View view){
-		if(Integer.parseInt(this.getLives().getValue()) == 0) {
-			view.setIsRunningFalse();
-			view.showDeathMenu();
+	//parses coins to int
+	private int parseCoinsToInt(){
+		return Integer.parseInt(this.getCoins().getValue());
+	}
+
+	//calculates score
+	private String calculateScore(){
+		return Integer.toString(
+				this.parseScoreToInt()
+						- this.parseMovesToInt()
+						+ this.parseLivesToInt() * 5
+						+ this.parseCoinsToInt() * 10
+		);
+	}
+
+	//returns lives
+	public SimpleStringProperty getLives(){
+		return lives;
+	}
+
+	//sets lives
+	public Runnable setLives(int lives, View view) {
+		Runnable runnable;
+		runnable = this.checkPlayerLivesForView(view, lives);
+		this.setScore();
+		return runnable;
+	}
+
+	//sets lives for View
+	private Runnable setLivesInCheckPlayerLivesForView(int lives){
+		return (() -> this.lives.setValue(Integer.toString(Integer.parseInt(this.getLives().getValue()) + lives)));
+	}
+
+	public boolean getAllowedToMove(){
+		return this.allowedToMove;
+	}
+
+	public void setAllowedToMove(boolean allowedToMove){
+		this.allowedToMove = allowedToMove;
+	}
+
+	//set image to default image
+	public void setImageToDefault() {
+		switch (this.position) {
+			case PLAYER_DOWN:
+				this.currentImage = downImage;
+				this.walkFrame = PlayerWalkFrames.Player_Default_Down;
+				break;
+			case PLAYER_UP:
+				this.currentImage = upImage;
+				this.walkFrame = PlayerWalkFrames.Player_Default_Up;
+				break;
+			case PLAYER_LEFT:
+				this.currentImage = leftImage;
+				this.walkFrame = PlayerWalkFrames.Player_Default_Left;
+				break;
+			case PLAYER_RIGHT:
+				this.currentImage = rightImage;
+				this.walkFrame = PlayerWalkFrames.Player_Default_Right;
+				break;
 		}
-	}
-
-	public SimpleStringProperty getCoins() {
-		return coins;
-	}
-
-	public void setCoins(int coins) {
-		this.coins.setValue(Integer.toString(Integer.parseInt(this.coins.getValue()) + coins));
-	}
-
-	public void setCurrentImageToFieldImage() {
-		this.currentImage = this.fieldImage;
 	}
 }

@@ -71,6 +71,7 @@ public class AnimationBlueprint implements Runnable{
 			}
 		}
 		this.isRunning = false;
+		this.counter = 0;
 	}
 
 	protected void animate(Field field, Image[] frames, Player player, View view){
