@@ -1,0 +1,18 @@
+AnchorPane{
+    -fx-background-color: rgb(48,75,100);
+}
+
+Pane{
+    -fx-background-color: rgb(72,147,217);
+}
+
+HBox{
+    -fx-background-color: rgb(48, 75, 100);
+}
+
+#menuButton{
+    -fx-background-image: url('/Rendering/Buttons/MenuButton.png');
+    -fx-background-size: 135px 85px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}

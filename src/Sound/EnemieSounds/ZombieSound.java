@@ -10,10 +10,10 @@ public class ZombieSound extends SoundBlueprint {
 
     public ZombieSound(){
         this.attackSound = new Media(
-                "file:///C:/Users/flori/IdeaProjects/PuzzleGame_proto/src/Sound/soundeffects/enemies/Zombie/zombieAttack.wav"
+                getClass().getResource("/Sound/soundeffects/enemies/Zombie/zombieAttack.wav").toExternalForm()
         );
         this.changeDirectionSound = new Media(
-                "file:///C:/Users/flori/IdeaProjects/PuzzleGame_proto/src/Sound/soundeffects/enemies/Zombie/zombieChangeDirection.wav"
+                getClass().getResource("/Sound/soundeffects/enemies/Zombie/zombieChangeDirection.wav").toExternalForm()
         );
     }
 

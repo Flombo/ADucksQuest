@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.image.Image?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="Rendering.Windows.Controller.SuccessMenuController">
+    <VBox layoutX="108.0" layoutY="535.0" prefHeight="120.0" prefWidth="400.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="553.0">
+        <Button fx:id="startButton" mnemonicParsing="false"
+                onMouseClicked="#onButtonClicked" onMouseEntered="#onHoverIn"
+                onMouseExited="#onHoverOut" prefHeight="26.0"
+                prefWidth="412.0" text="Start new run" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="19.0" />
+            </font>
+        </Button>
+        <Button fx:id="mainMenuButton" mnemonicParsing="false"
+                onMouseClicked="#onButtonClicked" onMouseEntered="#onHoverIn"
+                onMouseExited="#onHoverOut" prefHeight="50.0"
+                prefWidth="400.0" text="Go to menu" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="17.0" />
+            </font>
+            <VBox.margin>
+                <Insets top="25.0" />
+            </VBox.margin>
+        </Button>
+    </VBox>
+    <Pane layoutX="87.0" layoutY="36.0" prefHeight="498.0" prefWidth="526.0" AnchorPane.rightAnchor="21.399999999999977">
+        <Label alignment="TOP_CENTER" layoutX="172.0" layoutY="39.0" prefHeight="51.0" prefWidth="205.0" text="You did it!" textFill="#ffac53">
+            <font>
+                <Font name="Microsoft PhagsPa Bold" size="41.0" />
+            </font>
+        </Label>
+        <GridPane layoutX="47.0" layoutY="99.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                  minWidth="-Infinity" prefHeight="350.0" prefWidth="449.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <ImageView id="moveImg" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                <GridPane.margin>
+                    <Insets left="50.0"/>
+                </GridPane.margin>
+                <Image url="/textures/playerAnimation/walkAnimation/Left/playerWalkLeftTexture1.png"/>
+            </ImageView>
+            <ImageView id="livesImg" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true"
+                       GridPane.rowIndex="1">
+                <GridPane.margin>
+                    <Insets left="50.0"/>
+                </GridPane.margin>
+                <Image url="/textures/HeartAnimation/Heart2.png"/>
+            </ImageView>
+            <ImageView id="coinsImg" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true"
+                       GridPane.rowIndex="2">
+                <GridPane.margin>
+                    <Insets left="50.0"/>
+                </GridPane.margin>
+                <Image url="/textures/CoinAnimation/Coin.png"/>
+            </ImageView>
+            <ImageView id="earnedCoinsImg" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true"
+                       GridPane.rowIndex="4">
+                <GridPane.margin>
+                    <Insets left="50.0"/>
+                </GridPane.margin>
+                <Image url="/textures/CoinAnimation/Coin.png"/>
+            </ImageView>
+            <Label id="scoreImg" text="Score" textFill="WHITE" GridPane.rowIndex="3">
+                <font>
+                    <Font name="Microsoft PhagsPa" size="40.0"/>
+                </font>
+                <GridPane.margin>
+                    <Insets left="50.0"/>
+                </GridPane.margin>
+            </Label>
+            <Label fx:id="moves" textFill="WHITE" GridPane.columnIndex="1">
+                <font>
+                    <Font size="25.0"/>
+                </font>
+                <opaqueInsets>
+                    <Insets/>
+                </opaqueInsets>
+            </Label>
+            <Label fx:id="lives" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <font>
+                    <Font size="25.0"/>
+                </font>
+                <opaqueInsets>
+                    <Insets/>
+                </opaqueInsets>
+            </Label>
+            <Label fx:id="coins" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <font>
+                    <Font size="25.0"/>
+                </font>
+                <opaqueInsets>
+                    <Insets/>
+                </opaqueInsets>
+            </Label>
+            <Label fx:id="score" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <font>
+                    <Font size="25.0"/>
+                </font>
+                <opaqueInsets>
+                    <Insets/>
+                </opaqueInsets>
+            </Label>
+            <Label fx:id="earnedCoins" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                <font>
+                    <Font size="25.0"/>
+                </font>
+                <opaqueInsets>
+                    <Insets/>
+                </opaqueInsets>
+            </Label>
+        </GridPane>
+    </Pane>
+</AnchorPane>

@@ -11,10 +11,10 @@ public class SkullSound extends SoundBlueprint {
 
     public SkullSound(){
         this.attackSound = new Media(
-                "file:///C:/Users/flori/IdeaProjects/PuzzleGame_proto/src/Sound/soundeffects/enemies/Skull/skullAttack.wav"
+                getClass().getResource("/Sound/soundeffects/enemies/Skull/skullAttack.wav").toExternalForm()
         );
         this.changeDirectionSound = new Media(
-                "file:///C:/Users/flori/IdeaProjects/PuzzleGame_proto/src/Sound/soundeffects/enemies/Skull/skullChangeDirection.mp3"
+                getClass().getResource("/Sound/soundeffects/enemies/Skull/skullChangeDirection.mp3").toExternalForm()
         );
     }
 

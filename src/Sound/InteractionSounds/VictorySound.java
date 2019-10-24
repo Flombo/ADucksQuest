@@ -3,13 +3,15 @@ package Sound.InteractionSounds;
 import Sound.SoundBlueprint;
 import javafx.scene.media.Media;
 
+import java.io.File;
+
 public class VictorySound extends SoundBlueprint {
 
     private Media victorySound;
 
     public VictorySound(){
         this.victorySound = new Media(
-                "file:///C:/Users/flori/IdeaProjects/PuzzleGame_proto/src/Sound/soundeffects/interactions/stairsachieved.wav"
+                getClass().getResource("/Sound/soundeffects/interactions/stairsachieved.wav").toExternalForm()
         );
     }
 

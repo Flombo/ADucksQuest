@@ -9,7 +9,7 @@ public class ItemPickedSound extends SoundBlueprint {
 
     public ItemPickedSound(){
         this.itemPicked = new Media(
-        "file:///C:/Users/flori/IdeaProjects/PuzzleGame_proto/src/Sound/soundeffects/interactions/itemPickup.wav"
+                getClass().getResource("/Sound/soundeffects/interactions/itemPickup.wav").toExternalForm()
         );
     }
 

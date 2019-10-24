@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:controller="Rendering.Windows.Controller.IngameMenuController"
+            maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="750.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <Label layoutX="56.0" layoutY="97.0" prefHeight="43.0" prefWidth="230.0" text="Game Paused" textFill="WHITE"
+          AnchorPane.topAnchor="67.0">
+      <font>
+         <Font name="Microsoft PhagsPa Bold" size="35.0"/>
+      </font>
+   </Label>
+   <VBox layoutX="51.0" layoutY="153.0" prefHeight="468.0" prefWidth="417.0" AnchorPane.leftAnchor="75.0"
+         AnchorPane.topAnchor="468.0">
+      <Button fx:id="resume" onMouseClicked="#onClick"
+              onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut"
+              mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
+              text="Resume Game" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="20.0"/>
+         </font>
+         <VBox.margin>
+            <Insets/>
+         </VBox.margin>
+      </Button>
+      <Button fx:id="options" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut"
+              mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
+              text="Options" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="20.0"/>
+         </font>
+         <opaqueInsets>
+            <Insets/>
+         </opaqueInsets>
+         <VBox.margin>
+            <Insets top="40.0"/>
+         </VBox.margin>
+      </Button>
+      <Button fx:id="goToMenu" onMouseClicked="#onClick" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut"
+              mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
+              text="Go to Menu" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="20.0"/>
+         </font>
+         <opaqueInsets>
+            <Insets/>
+         </opaqueInsets>
+         <VBox.margin>
+            <Insets top="40.0"/>
+         </VBox.margin>
+      </Button>
+   </VBox>
+</AnchorPane>

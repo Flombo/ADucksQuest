@@ -3,6 +3,8 @@ package Sound.PlayerSounds;
 import Sound.SoundBlueprint;
 import javafx.scene.media.Media;
 
+import java.io.File;
+
 public class PlayerSounds extends SoundBlueprint {
 
     private Media damagedSound;
@@ -11,13 +13,13 @@ public class PlayerSounds extends SoundBlueprint {
 
     public PlayerSounds(){
         this.damagedSound = new Media(
-                "file:///C:/Users/flori/IdeaProjects/PuzzleGame_proto/src/Sound/soundeffects/player/damagedSound.wav"
+                getClass().getResource("/Sound/soundeffects/player/damagedSound.wav").toExternalForm()
         );
         this.quak = new Media(
-                "file:///C:/Users/flori/IdeaProjects/PuzzleGame_proto/src/Sound/soundeffects/player/quak.wav"
+                getClass().getResource("/Sound/soundeffects/player/quak.wav").toExternalForm()
         );
         this.fallingSound = new Media(
-                "file:///C:/Users/flori/IdeaProjects/PuzzleGame_proto/src/Sound/soundeffects/player/fallingSound.wav"
+                getClass().getResource("/Sound/soundeffects/player/fallingSound.wav").toExternalForm()
         );
     }
 
