@@ -19,6 +19,9 @@ public class MainMenuController extends HoverHelper {
             case ("quitGame"):
                 scene.closeGame();
                 break;
+            case ("Leveleditor"):
+                scene.showLeveleditor();
+                break;
         }
     }
 

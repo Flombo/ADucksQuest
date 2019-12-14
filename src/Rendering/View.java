@@ -4,6 +4,7 @@ import GameLogic.GameInit;
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.Player.Player;
 import Rendering.Windows.Controller.DeathMenuController;
+import Rendering.Windows.Controller.LeveleditorController;
 import Rendering.Windows.Controller.RenderViewController;
 import Rendering.Windows.Controller.SuccessMenuController;
 import Rendering.Windows.Scenes.*;
@@ -24,13 +25,15 @@ public class View extends Application {
 	private MainMenuScene mainMenuScene;
 	private IngameMenuScene ingameMenuScene;
 	private SuccessMenuScene successMenuScene;
+    private SuccessMenuController successMenuController;
 	private StartScreenScene startScreenScene;
 	private DeathScene deathScene;
+    private DeathMenuController deathMenuController;
+	private LeveleditorScene leveleditorScene;
+	private LeveleditorController leveleditorController;
 	private Field[][] fields;
 	private double height;
 	private double width;
-    private DeathMenuController deathMenuController;
-    private SuccessMenuController successMenuController;
 
     public View(){
         this.height = 750;
@@ -55,6 +58,34 @@ public class View extends Application {
         this.initRenderScene();
         this.initDeathScene();
         this.initSuccessMenuScene();
+        this.initLeveleditorScene();
+    }
+
+    //gets player out of fields
+    public Player getPlayer(){
+        Player player = null;
+        for(Field[] fields : this.fields){
+            for(Field field : fields){
+                if(field.getName().equals("GameObjects.Player.Player")){
+                    player = (Player) field;
+                }
+            }
+        }
+        return player;
+    }
+
+    private void initLeveleditorScene(){
+        FXMLLoader loader = this.getFxmlloader("Windows/Fxml/Leveleditor.fxml");
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (root != null) {
+            this.leveleditorController = loader.getController();
+            this.leveleditorScene = new LeveleditorScene(root, this.height, this.width, this);
+        }
     }
 
     //loads deathscene
@@ -70,19 +101,6 @@ public class View extends Application {
             this.deathMenuController = loader.getController();
             this.deathScene = new DeathScene(root, this.height, this.width, this);
         }
-    }
-
-    //gets player out of fields
-    public Player getPlayer(){
-        Player player = null;
-        for(Field[] fields : this.fields){
-            for(Field field : fields){
-                if(field.getName().equals("GameObjects.Player.Player")){
-                    player = (Player) field;
-                }
-            }
-        }
-        return player;
     }
 
     //loads ingamemenu
@@ -186,6 +204,10 @@ public class View extends Application {
     //shows mainmenu
     public void showMainMenu(){
         this.stage.setScene(this.mainMenuScene);
+    }
+
+    public void showLeveleditor(){
+        this.stage.setScene(this.leveleditorScene);
     }
 
     //shows deathmenu

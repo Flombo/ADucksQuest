@@ -21,4 +21,8 @@ public class MainMenuScene extends Scene{
     public void closeGame(){
         this.view.closeGame();
     }
+
+    public void showLeveleditor(){
+        this.view.showLeveleditor();
+    }
 }

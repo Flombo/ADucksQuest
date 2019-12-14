@@ -1,0 +1,191 @@
+#anchor{
+    -fx-background-color: white;
+}
+
+#controlPanel{
+    -fx-background-color: rgb(72,147,217);
+}
+
+#levelPane{
+    -fx-background-color: white;
+}
+
+#sliderPanel{
+    -fx-background-color: rgb(48,75,100);
+}
+
+#backButton{
+    -fx-background-color: rgb(48,75,100);
+}
+
+#clearButton{
+    -fx-background-color: rgb(150,50,30);
+}
+
+#elementsButton{
+    -fx-background-color: rgb(120, 80, 10);
+}
+
+#backDialog{
+    -fx-background-color: rgb(48,75,100);
+    -fx-border-color: rgb(72,147,217);
+    -fx-border-width: 10px;
+    -fx-min-height: 200;
+    -fx-min-width: 400;
+}
+
+#saveDialog{
+    -fx-background-color: rgb(48,75,100);
+    -fx-border-color: rgb(72,147,217);
+    -fx-border-width: 10px;
+    -fx-min-height: 275;
+    -fx-min-width: 400;
+}
+
+#elementsDialog{
+    -fx-border-color: rgb(72,147,217);
+    -fx-background-color: rgb(48,75,100);
+    -fx-border-width: 10px;
+    -fx-min-height: 400;
+    -fx-min-width: 400;
+}
+
+#elementsDialog, label{
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Roboto Light';
+    -fx-text-fill: white;
+}
+
+#saveButton{
+    -fx-background-color: rgb(50,150,50);
+    -fx-min-width: 75;
+    -fx-min-height: 30;
+}
+
+#discardButton{
+    -fx-background-color: rgb(120, 80, 10);
+    -fx-min-width: 75;
+    -fx-min-height: 30;
+}
+
+#cancelButton{
+    -fx-background-color: rgb(150,50,30);
+    -fx-min-width: 75;
+    -fx-min-height: 30;
+}
+
+#errorMsg{
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Roboto Light';
+    -fx-text-fill: red;
+}
+
+#backText{
+    -fx-font-size: 16;
+    -fx-font-family: 'Roboto Light';
+    -fx-text-fill: white;
+}
+
+#saveText{
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Roboto Light';
+    -fx-text-fill: white;
+}
+
+#levelNameLabel{
+    -fx-font-size: 16;
+    -fx-font-family: 'Roboto Light';
+    -fx-text-fill: white;
+}
+
+#levelTagsLabel{
+    -fx-font-size: 16;
+    -fx-font-family: 'Roboto Light';
+    -fx-text-fill: white;
+}
+
+/*elements styling*/
+#obstacle{
+    -fx-background-image: url('/textures/obstacleTexture.png');
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-min-width: 30;
+    -fx-min-height: 30;
+}
+
+#hole{
+    -fx-background-image: url('/textures/holeTexture.png');
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-min-width: 30;
+    -fx-min-height: 30;
+}
+
+#target{
+    -fx-background-image: url('/textures/targetTexture.png');
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-min-width: 30;
+    -fx-min-height: 30;
+}
+
+#chest{
+    -fx-background-image: url('/textures/chest.png');
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-min-width: 30;
+    -fx-min-height: 30;
+}
+
+#coin{
+    -fx-background-image: url('/textures/CoinAnimation/Coin.png');
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-min-width: 30;
+    -fx-min-height: 30;
+}
+
+#heart{
+    -fx-background-image: url('/textures/HeartAnimation/Heart.png');
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-pref-width: 30;
+    -fx-pref-height: 30;
+    -fx-min-height: 30;
+    -fx-min-width: 30;
+}
+
+#field{
+    -fx-background-image: url('/textures/fieldTexture.png');
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-min-width: 30;
+    -fx-min-height: 30;
+}
+
+#player{
+    -fx-background-image: url('/textures/playerDownTexture.png');
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-min-width: 30;
+    -fx-min-height: 30;
+}
+
+#zombie{
+    -fx-background-image: url('/textures/zombieTextures/down/zombie_down.png');
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-min-width: 30;
+    -fx-min-height: 30;
+}
+
+#skull{
+    -fx-background-image: url('/textures/skullTextureLeft.png');
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-min-width: 30;
+    -fx-min-height: 30;
+}
