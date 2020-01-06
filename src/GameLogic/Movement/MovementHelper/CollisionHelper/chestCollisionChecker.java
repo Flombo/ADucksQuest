@@ -89,7 +89,9 @@ class chestCollisionChecker {
 
 	//changes hole into filledhole
 	private void fillHole(Chest chest, int newPosX, int newPosY){
-		this.fields[chest.getXPos()][chest.getYPos()] = new Field(chest.getX(), chest.getY(), "GameObjects.Field_like_Objects.Field");
+		this.fields[chest.getXPos()][chest.getYPos()] = new Field("GameObjects.Field_like_Objects.Field");
+		this.fields[chest.getXPos()][chest.getYPos()].setX(chest.getX());
+		this.fields[chest.getXPos()][chest.getYPos()].setY(chest.getY());
 		FilledHole filledHole = new FilledHole();
 		filledHole.setY(newPosY * 30);
 		filledHole.setX(newPosX * 30);
@@ -98,7 +100,9 @@ class chestCollisionChecker {
 
 	//moves chest
 	private void moveChest(Chest chest, int newPosX, int newPosY){
-		this.fields[chest.getXPos()][chest.getYPos()] = new Field(chest.getX(), chest.getY(), "GameObjects.Field_like_Objects.Field");
+		this.fields[chest.getXPos()][chest.getYPos()] = new Field("GameObjects.Field_like_Objects.Field");
+		this.fields[chest.getXPos()][chest.getYPos()].setX(chest.getX());
+		this.fields[chest.getXPos()][chest.getYPos()].setY(chest.getY());
 		chest.setX(newPosX * 30);
 		chest.setY(newPosY * 30);
 		this.fields[chest.getXPos()][chest.getYPos()] = chest;

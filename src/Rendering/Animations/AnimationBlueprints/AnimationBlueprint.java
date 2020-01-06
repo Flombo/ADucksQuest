@@ -23,14 +23,14 @@ public class AnimationBlueprint implements Runnable{
 	}
 
 
-	private synchronized void start(){
+	private void start(){
 		this.thread = new Thread(this, "AnimationBlueprint");
 		this.thread.setDaemon(true);
 		this.thread.start();
 		this.isRunning = true;
 	}
 
-	private synchronized void stop(){
+	private void stop(){
 		if(this.player != null){
 			this.player.attacked(view);
 			this.view.setPlayerLives(this.player, -1);

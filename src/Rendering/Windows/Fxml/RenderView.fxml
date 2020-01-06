@@ -103,33 +103,4 @@
               mnemonicParsing="false" prefHeight="78.0" prefWidth="135.0"/>
    </Pane>
    <Canvas fx:id="renderCanvas" height="600.0" layoutX="10.0" layoutY="27.5" width="600.0"/>
-   <Pane id="skillbarPane" layoutX="-11.0" layoutY="572.0" prefHeight="178.0" prefWidth="610.0">
-      <HBox id="skillBar" layoutX="27.0" layoutY="18.0" maxHeight="-Infinity" maxWidth="-Infinity"
-            minHeight="-Infinity" minWidth="-Infinity" prefHeight="144.0" prefWidth="568.0">
-         <Pane id="punchSkillBar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-               minWidth="-Infinity" prefHeight="110.0" prefWidth="125.0">
-            <HBox.margin>
-               <Insets left="45.0" top="15.0"/>
-            </HBox.margin>
-            <Button fx:id="punchSkillButton" layoutX="6.0" layoutY="8.0" mnemonicParsing="false"
-                    prefHeight="92.0" prefWidth="111.0" text="Button"/>
-         </Pane>
-         <Pane id="doubleCoinSkillBar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-               minWidth="-Infinity" prefHeight="110.0" prefWidth="125.0">
-            <HBox.margin>
-               <Insets left="45.0" top="15.0"/>
-            </HBox.margin>
-            <Button fx:id="doubleCoinSkillButton" layoutX="7.0" layoutY="9.0" mnemonicParsing="false"
-                    prefHeight="92.0" prefWidth="111.0" text="Button"/>
-         </Pane>
-         <Pane id="punchSkillBar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-               minWidth="-Infinity" prefHeight="110.0" prefWidth="125.0">
-            <HBox.margin>
-               <Insets left="46.0" top="15.0"/>
-            </HBox.margin>
-            <Button fx:id="rageSkillButton" layoutX="7.0" layoutY="9.0" mnemonicParsing="false"
-                    prefHeight="92.0" prefWidth="111.0" text="Button"/>
-         </Pane>
-      </HBox>
-   </Pane>
 </AnchorPane>

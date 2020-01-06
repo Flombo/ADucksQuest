@@ -9,15 +9,13 @@ public class skullCollisionChecker  {
 
 	private Skull skull;
 	private int newPosX;
-	private int newPosY;
 	private Field[][] fields;
 	private Player player;
 	private View view;
 
-	public skullCollisionChecker(int newPosX, int newPosY, Field[][] fields, Skull skull, Player player, View view){
+	public skullCollisionChecker(int newPosX, Field[][] fields, Skull skull, Player player, View view){
 		this.fields = fields;
 		this.newPosX = newPosX;
-		this.newPosY = newPosY;
 		this.skull = skull;
 		this.player = player;
 		this.view = view;
@@ -26,7 +24,7 @@ public class skullCollisionChecker  {
 	//checks the next GameObject that would collide with player
 	public boolean checkNextGameObject(){
 		boolean canMove = false;
-		switch (this.fields[this.newPosX][this.newPosY].getName()){
+		switch (this.fields[this.newPosX][this.skull.getYPos()].getName()){
 			case "GameObjects.Obstacles.Obstacle":
 			case "GameObjects.Obstacles.Hole":
 			case "GameObjects.Enemies.Skull":
@@ -49,6 +47,26 @@ public class skullCollisionChecker  {
 				break;
 		}
 		return canMove;
+	}
+
+	public void setNewPosX(int newPosX){
+		this.newPosX = newPosX;
+	}
+
+	public void setSkull(Skull skull) {
+		this.skull = skull;
+	}
+
+	public void setFields(Field[][] fields) {
+		this.fields = fields;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	public void setView(View view) {
+		this.view = view;
 	}
 
 }

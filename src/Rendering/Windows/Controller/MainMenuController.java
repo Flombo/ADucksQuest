@@ -14,7 +14,7 @@ public class MainMenuController extends HoverHelper {
         MainMenuScene scene = (MainMenuScene) source.getScene();
         switch (((Node) event.getSource()).getId()){
             case ("startGame"):
-                scene.initGame();
+                scene.showLevelSelection();
                 break;
             case ("quitGame"):
                 scene.closeGame();

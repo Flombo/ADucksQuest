@@ -33,7 +33,7 @@ public class Player extends Field {
 	private PlayerSounds playerSounds;
 
 	public Player() {
-		super(0, 0, "GameObjects.Player.Player");
+		super("GameObjects.Player.Player");
 		this.initDefaultFrames();
 		this.moves = new SimpleStringProperty("0");
 		this.lives = new SimpleStringProperty("3");
@@ -47,7 +47,7 @@ public class Player extends Field {
 		this.walkAnimation = new WalkAnimation();
 		this.attackedAnimation = new AttackedAnimation();
 		this.itemPickedAnimation = new ItemPickedAnimation();
-		this.playerSounds = new PlayerSounds();
+		//this.playerSounds = new PlayerSounds();
 		this.fieldImage = this.loadImage("/textures/fieldTexture.png");
 	}
 
@@ -59,18 +59,14 @@ public class Player extends Field {
 		this.rightImage = this.loadImage("/textures/playerRightTexture.png");
 	}
 
-	//shows death menu, stops renderloop and plays death sound
-	private void showDeathMenu(View view){
-		this.playerSounds.playDamageSound();
-		view.setIsRunningFalse();
-		view.showDeathMenu();
-	}
-
 	//checks if lives are equal to zero
-	private Runnable checkIfLivesAreZero(int lives){
+	public Runnable checkIfLivesAreZero(int lives, View view){
 		Runnable runnable = null;
 		if(Integer.parseInt(this.getLives().getValue()) + lives == 0) {
+			//this.playerSounds.playDamageSound();
 			runnable = setLivesInCheckPlayerLivesForView(lives);
+			view.setIsRunningFalse();
+			view.showDeathMenu();
 		}
 		return runnable;
 	}
@@ -81,8 +77,7 @@ public class Player extends Field {
 		if(Integer.parseInt(this.getLives().getValue()) + lives > 0) {
 			runnable = setLivesInCheckPlayerLivesForView(lives);
 		} else {
-			runnable = this.checkIfLivesAreZero(lives);
-			this.showDeathMenu(view);
+			runnable = this.checkIfLivesAreZero(lives, view);
 		}
 		return runnable;
 	}
@@ -115,10 +110,7 @@ public class Player extends Field {
 
 	//checks if player has enough lives
 	public void checkPlayersLives(View view){
-		if(Integer.parseInt(this.getLives().getValue()) == 0) {
-			view.setIsRunningFalse();
-			view.showDeathMenu();
-		}
+		this.checkPlayerLivesForView(view, Integer.parseInt(this.getLives().getValue()));
 	}
 
 	//sets postion
@@ -209,7 +201,7 @@ public class Player extends Field {
 	}
 
 	//sets score
-	private void setScore() {
+	private synchronized void setScore() {
 		this.score.setValue(this.calculateScore());
 	}
 
@@ -257,7 +249,7 @@ public class Player extends Field {
 	}
 
 	//sets lives for View
-	private Runnable setLivesInCheckPlayerLivesForView(int lives){
+	private synchronized Runnable setLivesInCheckPlayerLivesForView(int lives){
 		return (() -> this.lives.setValue(Integer.toString(Integer.parseInt(this.getLives().getValue()) + lives)));
 	}
 
@@ -265,7 +257,7 @@ public class Player extends Field {
 		return this.allowedToMove;
 	}
 
-	public void setAllowedToMove(boolean allowedToMove){
+	public synchronized void setAllowedToMove(boolean allowedToMove){
 		this.allowedToMove = allowedToMove;
 	}
 

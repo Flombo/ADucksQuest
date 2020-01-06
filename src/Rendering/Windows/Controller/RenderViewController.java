@@ -7,9 +7,8 @@ import Rendering.Windows.ControllerHelper.HoverHelper;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Paint;
 
 public class RenderViewController extends HoverHelper {
 
@@ -19,19 +18,11 @@ public class RenderViewController extends HoverHelper {
     @FXML
     private Label liveLabel;
     @FXML
-    private Button menuButton;
-    @FXML
-    private Button punchSkillButton;
-    @FXML
-    private Button doubleCoinSkillButton;
-    @FXML
-    private Button rageSkillButton;
-    @FXML
     private Canvas renderCanvas;
     private Field[][] fields;
     private View view;
 
-    public void menuButtonClicked(MouseEvent mouseEvent) {
+    public void menuButtonClicked() {
         if(view != null){
             this.view.showIngameMenu();
         }
@@ -50,6 +41,11 @@ public class RenderViewController extends HoverHelper {
             liveLabel.textProperty().bind(player.getLives());
             coinLabel.textProperty().bind(player.getCoins());
         });
+    }
+
+    public void clearCanvas(){
+        GraphicsContext g = renderCanvas.getGraphicsContext2D();
+        g.clearRect(10, 27.5, 600, 600);
     }
 
     //render Gamefield

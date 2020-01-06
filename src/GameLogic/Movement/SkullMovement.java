@@ -7,6 +7,7 @@ import GameObjects.GameObjectEnums.PositionEnums.SkullPosition;
 import GameObjects.Player.Player;
 import GameObjects.Enemies.Skull;
 import Rendering.View;
+import javafx.application.Platform;
 
 public class SkullMovement implements Runnable{
 
@@ -18,6 +19,7 @@ public class SkullMovement implements Runnable{
 	private Skull skull;
 	private int xDimension;
 	private Player player;
+	private skullCollisionChecker skullCollisionChecker;
 
 	public SkullMovement(Field[][] fields, Skull skull, int xDimension, Player player, View view){
 		this.fields = fields;
@@ -28,35 +30,47 @@ public class SkullMovement implements Runnable{
 		this.threadWaitManager = new ThreadWaitManager();
 	}
 
-	public void setIsRunning(boolean isRunning){
+	public synchronized void setIsRunning(boolean isRunning){
 		this.isRunning = isRunning;
 	}
 
 	public void initMovement(){
-		this.start();
+		Platform.runLater(this.start());
 	}
 
 	// changes skulls position
 	private void changeSkullPos(int newPos){
 		this.skull.setX((this.skull.getXPos() + newPos) * 30);
-		this.skull.setY(this.skull.getYPos() * 30);
+		this.skull.setY(this.skull.getY());
 		this.fields[this.skull.getXPos()][this.skull.getYPos()] = this.skull;
 	}
 
 	// checks if next field is an obstacle
 	private void checkNextField(int newPos){
-		skullCollisionChecker skullCollisionChecker = new skullCollisionChecker(
-				this.skull.getXPos() + newPos,
-				this.skull.getYPos(),
-				this.fields,
-				this.skull,
-				this.player,
-				this.view
-		);
+		this.initCollisionChecker(newPos);
 		if(skullCollisionChecker.checkNextGameObject()) {
-			this.fields[this.skull.getXPos()][this.skull.getYPos()] = new Field(this.skull.getXPos() * 30, this.skull.getYPos() * 30, "GameObjects.Field_like_Objects.Field");
+			this.fields[this.skull.getXPos()][this.skull.getYPos()] = new Field("GameObjects.Field_like_Objects.Field");
+			this.fields[this.skull.getXPos()][this.skull.getYPos()].setY(this.skull.getYPos() * 30);
+			this.fields[this.skull.getXPos()][this.skull.getYPos()].setX(this.skull.getXPos() * 30);
 			this.changeSkullPos(newPos);
 			this.skull.walk();
+		}
+	}
+
+	private void initCollisionChecker(int newPos){
+		if(this.skullCollisionChecker == null) {
+			this.skullCollisionChecker = new skullCollisionChecker(
+					this.skull.getXPos() + newPos,
+					this.fields,
+					this.skull,
+					this.player,
+					this.view
+			);
+		} else {
+			this.skullCollisionChecker.setNewPosX(this.skull.getXPos() + newPos);
+			this.skullCollisionChecker.setPlayer(this.player);
+			this.skullCollisionChecker.setFields(this.fields);
+			this.skullCollisionChecker.setView(this.view);
 		}
 	}
 
@@ -88,11 +102,13 @@ public class SkullMovement implements Runnable{
 	}
 
 	//start Thread
-	private synchronized void start(){
-		isRunning = true;
-		thread = new Thread(this, "SkullMovement");
-		thread.setDaemon(true);
-		thread.start();
+	private synchronized Runnable start(){
+		return (()-> {
+			isRunning = true;
+			thread = new Thread(this, "SkullMovement");
+			thread.setDaemon(true);
+			thread.start();
+		});
 	}
 
 	//stop Thread
@@ -106,9 +122,9 @@ public class SkullMovement implements Runnable{
 	public void run() {
 		long timer = System.currentTimeMillis();
 		while(isRunning) {
-			if (System.currentTimeMillis() - timer >= 1000 / 60) {
+			if (System.currentTimeMillis() - timer >= 7000 / 60) {
 				timer += 4000 / 60;
-				this.threadWaitManager.pauseThread(4500 / 60);
+				this.threadWaitManager.pauseThread(7000 / 60);
 				this.controllSkulls();
 			}
 		}

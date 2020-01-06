@@ -24,7 +24,7 @@ public class AttackedAnimation extends AnimationBlueprint {
 		}
 	}
 
-	public void attacked(Player player){
+	public synchronized void attacked(Player player){
 		this.animate(player, this.frames, null, null);
 	}
 }

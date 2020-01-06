@@ -14,8 +14,8 @@ public class MainMenuScene extends Scene{
         this.getStylesheets().add("/Rendering/Windows/Style/MainMenu.css");
     }
 
-    public void initGame(){
-        this.view.initLevel();
+    public void showLevelSelection(){
+        this.view.showLevelSelection();
     }
 
     public void closeGame(){

@@ -8,7 +8,7 @@ public class Chest extends Field {
 	private Image image;
 
 	public Chest() {
-		super(0, 0, "GameObjects.Obstacles.Chest");
+		super("GameObjects.Obstacles.Chest");
 		this.image = this.loadImage("/textures/chest.png");
 	}
 

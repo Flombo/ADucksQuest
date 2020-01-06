@@ -19,6 +19,7 @@ import javafx.scene.input.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 public class GameInit {
 
@@ -26,23 +27,19 @@ public class GameInit {
     private int xDimension;
     private int yDimension;
     private Player player;
-    private Skull[] skulls;
-    private Zombie[] zombies;
+    private ArrayList<Skull> skulls = new ArrayList<>();
+    private ArrayList<Zombie> zombies = new ArrayList<>();
     private PlayerMovement playerMovement;
-    private ArrayList <ZombieMovement> zombieMovements;
-    private ArrayList <SkullMovement> skullMovements;
-    private ArrayList <Coin> coins;
-    private ArrayList <Heart> hearts;
+    private ArrayList <ZombieMovement> zombieMovements = new ArrayList<>();
+    private ArrayList <SkullMovement> skullMovements = new ArrayList<>();
+    private ArrayList <Coin> coins = new ArrayList<>();
+    private ArrayList <Heart> hearts = new ArrayList<>();
     private View view;
     private consolePrinter printer;
-    private int amount;
 
 	//Constructor takes height and width for JFrame
-    public GameInit(int xDimension, int yDimension, int amount, View view){
-        this.xDimension = xDimension;
-        this.yDimension = yDimension;
+    public GameInit(View view){
         this.printer = new consolePrinter();
-        this.amount = amount;
         this.view = view;
     }
 
@@ -85,27 +82,31 @@ public class GameInit {
 	}
 
     //pauses Enemy movement
-    public Runnable switchEnemyMovement(boolean allowedToMove){
+    public synchronized Runnable switchEnemyMovement(boolean allowedToMove){
     	return (()->{
-    		if(this.skullMovements != null && this.zombieMovements != null) {
-				this.switchSkullMovement(allowedToMove);
+    		if(!this.zombieMovements.isEmpty()) {
 				this.switchZombieMovement(allowedToMove);
+			}
+    		if(!this.skullMovements.isEmpty()){
+				this.switchSkullMovement(allowedToMove);
 			}
 		});
 	}
 
 	//pauses zombie movement
-	private void switchZombieMovement(boolean allowedToMove){
+	private synchronized void switchZombieMovement(boolean allowedToMove){
 		for (ZombieMovement zombieMovement : this.zombieMovements){
 			zombieMovement.setIsRunning(allowedToMove);
 		}
 	}
 
 	//pauses skull movement
-	private void switchSkullMovement(boolean allowedToMove){
+	private synchronized void switchSkullMovement(boolean allowedToMove){
     	for (SkullMovement skullMovement : this.skullMovements){
     		skullMovement.setIsRunning(allowedToMove);
 		}
+    	this.skullMovements = new ArrayList<>();
+    	this.skulls = new ArrayList<>();
 	}
 
 	//inits KeyHandler
@@ -115,36 +116,121 @@ public class GameInit {
 	}
 
     //initialize Level
-    public Field[][] initLevel(){
-		this.initFields();
-		this.initTarget();
-		this.initPlayer();
-		this.initObstacle(this.amount);
-		this.initHoles();
-		this.initSkulls();
-		this.initZombies();
-		this.initCoins();
-		this.initHearts();
-		this.initChest();
+    public Field[][] initLevel(String levelcode, int xDimension, int yDimension){
+    	this.xDimension = xDimension;
+    	this.yDimension = yDimension;
+    	this.decodeLevelCode(levelcode);
 		//printer.printAllFields(yDimension, xDimension, fields);
 		return this.fields;
 	}
 
+	private void decodeLevelCode(String levelCode){
+		ArrayList<Field> tmp = new ArrayList<>();
+		StringTokenizer tokenizer = new StringTokenizer(levelCode, "/");
+		while (tokenizer.hasMoreTokens()){
+			switch (tokenizer.nextToken()){
+				case "p":
+					this.player = new Player();
+					tmp.add(this.player);
+					break;
+				case "f":
+					tmp.add(new Field("GameObjects.Field_like_Objects.Field"));
+					break;
+				case "h":
+					tmp.add(new Hole());
+					break;
+				case "o":
+					tmp.add(new Obstacle());
+					break;
+				case "t":
+					tmp.add(new Target());
+					break;
+				case "sk":
+					Skull skull = new Skull();
+					this.skulls.add(skull);
+					tmp.add(skull);
+					break;
+				case "c":
+					Coin coin = new Coin();
+					this.coins.add(coin);
+					tmp.add(coin);
+					break;
+				case "chest":
+					tmp.add(new Chest());
+					break;
+				case "ht":
+					Heart heart = new Heart();
+					this.hearts.add(heart);
+					tmp.add(heart);
+					break;
+				case "z":
+					Zombie zombie = new Zombie();
+					this.zombies.add(zombie);
+					tmp.add(zombie);
+					break;
+			}
+		}
+		this.buildLevel(tmp);
+	}
+
+	private void buildLevel(ArrayList<Field> tmp){
+    	int index = 0;
+    	this.fields = new Field[xDimension][yDimension];
+    	for(int y = 0; y < yDimension; y++){
+    		for(int x = 0; x < xDimension; x++){
+				this.fields[x][y] = tmp.get(index);
+				this.fields[x][y].setY(y * 30);
+				this.fields[x][y].setX(x * 30);
+				index++;
+			}
+		}
+	}
+
+	public void resumeEnemyMovement(){
+    	this.resumeSkullMovement();
+    	this.resumeZombieMovement();
+	}
+
+	private void resumeSkullMovement(){
+		for (Skull skull : this.skulls) {
+			SkullMovement skullMovement = new SkullMovement(this.fields, skull, this.xDimension, this.player, this.view);
+			skullMovement.initMovement();
+			this.skullMovements.add(skullMovement);
+		}
+	}
+
+	private void resumeZombieMovement(){
+		for (Zombie zombie : this.zombies) {
+			ZombieMovement zombieMovement = new ZombieMovement(
+					this.fields,
+					zombie,
+					this.xDimension,
+					this.yDimension,
+					this.player,
+					this.view
+			);
+			zombieMovement.initMovement();
+			this.zombieMovements.add(zombieMovement);
+		}
+	}
+
     //inits enemyMovement
-    public void initEnemyMovement(){
+    public synchronized void initEnemyMovement(){
 		this.initSkullMovement();
 		this.initZombieMovement();
     }
 
-    public void intitPlayerMovement(){
-		this.playerMovement = new PlayerMovement(
-				this.printer,
-				this.xDimension,
-				this.yDimension,
-				this.view,
-				this.fields,
-				this.player
-		);
+    public void initPlayerMovement(){
+    	if(this.playerMovement == null) {
+			this.playerMovement = new PlayerMovement(
+					this.printer,
+					this.xDimension,
+					this.yDimension,
+					this.view,
+					this.fields,
+					this.player
+			);
+		}
 	}
 
 	//gets certain gameObject by name
@@ -160,32 +246,8 @@ public class GameInit {
     	return gameObjects;
 	}
 
-	private void initChest(){
-    	Chest chest = new Chest();
-    	this.setGameObjectPosition(chest);
-	}
-
-	private void initHearts(){
-    	this.hearts = new ArrayList<>();
-    	for(int i = 0; i < 3; i++){
-    		Heart heart = new Heart();
-    		this.setGameObjectPosition(heart);
-    		this.hearts.add(heart);
-		}
-	}
-
-    private void initCoins(){
-    	this.coins = new ArrayList<>();
-    	for(int i = 0; i < 3; i++) {
-			Coin coin = new Coin();
-			this.setGameObjectPosition(coin);
-			this.coins.add(coin);
-		}
-	}
-
 	private void initZombieMovement(){
-        if(this.zombies != null) {
-            this.zombieMovements = new ArrayList<>();
+        if(!this.zombies.isEmpty() && this.zombieMovements.isEmpty()) {
             for (Zombie zombie : this.zombies) {
                 ZombieMovement zombieMovement = new ZombieMovement(
                         this.fields,
@@ -203,8 +265,7 @@ public class GameInit {
 
 	//Initialize SkullMovement
     private void initSkullMovement(){
-        if(this.skulls != null) {
-            this.skullMovements = new ArrayList<>();
+        if(!this.skulls.isEmpty() && this.skullMovements.isEmpty()) {
             for (Skull skull : this.skulls) {
                 SkullMovement skullMovement = new SkullMovement(this.fields, skull, this.xDimension, this.player, this.view);
                 skullMovement.initMovement();
@@ -213,104 +274,19 @@ public class GameInit {
         }
 	}
 
-    //Create Fields
-    private void initFields(){
-		this.fields = new Field[xDimension][yDimension];
-        for(int i = 0; i < this.yDimension; i++){
-            for(int j = 0; j < this.xDimension; j++){
-                this.fields[j][i] = new Field(j * 30, i * 30, "GameObjects.Field_like_Objects.Field");
-            }
-        }
-    }
-
-    //Returns random Position
-    private int randomPos(){
-        return (int) ( 1 * Math.random() * this.fields.length );
-    }
-
-    //Initialize GameObjects.Target.Target
-    private void initTarget(){
-        int targetPosX = this.randomPos();
-        int targetPosY = this.randomPos();
-
-        Target target = new Target();
-        target.setX(targetPosX * 30);
-        target.setY(targetPosY * 30);
-        this.fields[targetPosX][targetPosY] = target;
-    }
-
-    //Initialize GameObjects.Player.Player
-    private void initPlayer() {
-		this.player = new Player();
-		this.player.setX(this.randomPos() * 30);
-		this.player.setY(this.randomPos() * 30);
-		this.fields[this.player.getXPos()][this.player.getYPos()] = this.player;
-
-        //generate new position until it isn´t target´s position
-        while(this.fields[this.player.getXPos()][this.player.getYPos()] instanceof Target){
-            this.player.setX(this.randomPos() * 30);
-            this.player.setY(this.randomPos() * 30);
-        }
-    }
-
-    //set random GameObjectPos
-    private void setGameObjectPosition(Field field){
-		Map<String, Integer> map = this.checkFieldPostions();
-		int randomX = map.get("randomX");
-		int randomY = map.get("randomY");
-		field.setX(randomX * 30);
-		field.setY(randomY * 30);
-
-		this.fields[randomX][randomY] = field;
-	}
-
-	// init Obstacle
-    private void initObstacle(int amount){
-        for(int i = 0; i <= amount; i++){
-            Obstacle obstacle = new Obstacle();
-			this.setGameObjectPosition(obstacle);
-        }
-    }
-
-    //init Hole
-    private void initHoles(){
-		for(int i = 0; i <= 3; i++){
-			Hole hole = new Hole();
-			this.setGameObjectPosition(hole);
+	public void resetRessources() {
+    	if(!this.zombies.isEmpty() && !this.zombieMovements.isEmpty()) {
+			this.zombieMovements = new ArrayList<>();
+			this.zombies = new ArrayList<>();
 		}
-	}
-
-	private void initZombies(){
-    	this.zombies = new Zombie[2];
-    	for (int i = 0; i < 2; i++){
-    		Zombie zombie = new Zombie();
-    		this.setGameObjectPosition(zombie);
-    		this.zombies[i] = zombie;
+    	if(!this.skulls.isEmpty() && !this.skullMovements.isEmpty()){
+    		this.skulls = new ArrayList<>();
+    		this.skullMovements = new ArrayList<>();
 		}
+		this.playerMovement = null;
+    	this.fields = null;
+    	this.player = null;
+    	this.hearts = new ArrayList<>();
+    	this.coins = new ArrayList<>();
 	}
-
-	private void initSkulls(){
-		this.skulls = new Skull[2];
-    	for (int i = 0; i < 2; i++) {
-			Skull skull = new Skull();
-			this.setGameObjectPosition(skull);
-			this.skulls[i] = skull;
-		}
-	}
-
-	//checks if randomPos of Object isn´t taken by target or Player
-	private Map<String, Integer> checkFieldPostions(){
-		Map<String, Integer> map = new HashMap<>();
-		int randomX = this.randomPos();
-		int randomY = this.randomPos();
-
-		while(this.fields[randomX][randomY] instanceof Target || this.fields[randomX][randomY] instanceof Player){
-			randomX = this.randomPos();
-			randomY = this.randomPos();
-		}
-		map.put("randomX", randomX);
-		map.put( "randomY", randomY);
-		return map;
-	}
-
 }

@@ -1,22 +1,29 @@
-package Rendering.Windows.ControllerHelper;
+package Rendering.Windows.ControllerHelper.Builder;
 
+import Rendering.Windows.Controller.LeveleditorController;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-
 import java.util.ArrayList;
 
-public class LeveleditorHelper {
+public class LevelEditorMapBuilder {
 
     private ArrayList<Pane> fields = new ArrayList<>();
     private boolean playerPlaced = false;
     private boolean targetPlaced = false;
     private String currentEditorElement = "field";
+    private LeveleditorController controller;
+
+    public LevelEditorMapBuilder(LeveleditorController controller){
+        this.controller = controller;
+    }
 
     public void onDrag(Pane levelPane, Slider xSlider, Slider ySlider){
         int xMax = (int) xSlider.getValue();
         int yMax = (int) ySlider.getValue();
+        levelPane.setMaxSize(xMax * 30, yMax * 30);
         fields.clear();
         playerPlaced = false;
         targetPlaced = false;
@@ -28,7 +35,7 @@ public class LeveleditorHelper {
         for(int y = 0; y < yMax; y++){
             for(int x = 0; x < xMax; x++){
                 Pane field = new Pane();
-                this.addClickHandler(field);
+                this.addEventListeners(field);
                 this.styleFieldPane(field, x, y);
                 fields.add(field);
                 levelPane.getChildren().add(field);
@@ -36,24 +43,51 @@ public class LeveleditorHelper {
         }
     }
 
+    private void addEventListeners(Pane field){
+        this.onHover(field);
+        this.addClickHandler(field);
+    }
+
+    private void onHover(Pane field){
+        field.addEventFilter(MouseEvent.MOUSE_ENTERED_TARGET, controller::onHoverInElement);
+        field.addEventFilter(MouseEvent.MOUSE_EXITED_TARGET, controller::onHoverOutElement);
+    }
+
     private void addClickHandler(Pane field){
         field.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
             if(event.getButton().equals(MouseButton.PRIMARY)) {
                 setFieldID(currentEditorElement, field);
             } else {
+                this.checkIfTargetORPlayer(event);
                 setFieldID("field", field);
             }
         });
     }
 
+    private void checkIfTargetORPlayer(MouseEvent event){
+        if(((Pane)event.getSource()).getId().equals("player")){
+            this.playerPlaced = false;
+        }else if(((Pane)event.getSource()).getId().equals("target")){
+            this.targetPlaced = false;
+        }
+    }
+
     private void styleFieldPane(Pane field, int x, int y){
         this.setFieldID("field", field);
+        Tooltip tooltip = this.buildMapTooltip();
         field.setMaxSize(30,30);
         field.setPrefSize(30,30);
         field.setMinSize(30,30);
         field.setLayoutX(30 * x);
         field.setLayoutY(30 * y);
         field.setVisible(true);
+        Tooltip.install(field, tooltip);
+    }
+
+    private Tooltip buildMapTooltip(){
+        Tooltip tooltip = new Tooltip();
+        tooltip.setText("Place elements on this map by left-click these fields. With right-click you can delete elements");
+        return tooltip;
     }
 
     private void setFieldID(String fieldID, Pane field){

@@ -1,0 +1,69 @@
+AnchorPane{
+    -fx-background-color: rgb(48,75,100);
+    -fx-pref-height: 750.0;
+    -fx-pref-width: 600;
+}
+
+#scrollPane{
+    -fx-border-width: 5px; -fx-border-color: rgb(72,147,217);
+    -fx-max-width: 543;
+    -fx-min-height: 530;
+    -fx-max-height: 530;
+}
+
+#scrollAnchor{
+    -fx-background-color: rgb(72,147,217);
+    -fx-min-height: 530;
+    -fx-min-width: 540;
+    -fx-pref-width: 540;
+    -fx-max-width: 540;
+}
+
+TilePane{
+    -fx-background-color: rgb(72, 147, 217);
+    -fx-max-width: 540;
+}
+
+#levelLabel{
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+}
+
+Pane{
+    -fx-border-color: white;
+    -fx-border-width: 5px;
+    -fx-background-color: rgb(48,75,100);
+    -fx-max-width: 200;
+    -fx-max-height: 200;
+}
+
+#backButton{
+    -fx-background-color: rgb(72,147,217);
+    -fx-max-width: 200;
+    -fx-max-height: 300;
+}
+
+#levelDialog{
+    -fx-background-color: rgb(48,75,100);
+}
+
+Label{
+    -fx-text-fill: white;
+}
+
+#closeButton{
+    -fx-background-color: red;
+    -fx-max-height: 30;
+    -fx-max-width: 100;
+}
+
+#startButton{
+    -fx-background-color: lightgreen;
+    -fx-max-height: 30;
+    -fx-max-width: 100;
+}
+
+#levelDialogTile{
+    -fx-max-width: 380;
+    -fx-max-height: 200;
+}

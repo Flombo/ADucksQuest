@@ -1,5 +1,5 @@
 #anchor{
-    -fx-background-color: white;
+    -fx-background-color: rgb(48,75,100);
 }
 
 #controlPanel{
@@ -7,11 +7,23 @@
 }
 
 #levelPane{
-    -fx-background-color: white;
+    -fx-background-color: rgb(48,75,100);
 }
 
 #sliderPanel{
     -fx-background-color: rgb(48,75,100);
+}
+
+.slider .track{
+    -fx-control-inner-background: rgb(72,147,217);
+}
+
+.slider .axis {
+    -fx-tick-label-fill: white;
+}
+
+.slider .axis .axis-tick-mark, .slider .axis .axis-minor-tick-mark {
+    -fx-stroke: white;
 }
 
 #backButton{
@@ -46,8 +58,8 @@
     -fx-border-color: rgb(72,147,217);
     -fx-background-color: rgb(48,75,100);
     -fx-border-width: 10px;
-    -fx-min-height: 400;
-    -fx-min-width: 400;
+    -fx-min-height: 410;
+    -fx-min-width: 410;
 }
 
 #elementsDialog, label{

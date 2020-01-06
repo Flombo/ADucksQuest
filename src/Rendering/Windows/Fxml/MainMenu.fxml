@@ -18,7 +18,7 @@
    </Label>
    <VBox layoutX="51.0" layoutY="153.0" prefHeight="468.0" prefWidth="417.0" AnchorPane.topAnchor="189.0">
       <Button onMouseClicked="#onButtonPressed" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut" id="startGame" mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
-              text="Start Game" textFill="WHITE">
+              text="Play" textFill="WHITE">
          <font>
             <Font name="System Bold" size="20.0"/>
          </font>

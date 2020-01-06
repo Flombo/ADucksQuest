@@ -20,6 +20,7 @@ public class ZombieMovement implements Runnable{
 		private int yDimension;
 		private Player player;
 		private ThreadWaitManager threadWaitManager;
+		private zombieCollisionChecker zombieCollisionChecker;
 
 		public ZombieMovement(Field[][] fields, Zombie zombie, int xDimension, int yDimension, Player player, View view){
 			this.fields = fields;
@@ -40,7 +41,7 @@ public class ZombieMovement implements Runnable{
 		}
 
 		// changes skulls position
-		private void changeZombiePos(int newPos){
+		private synchronized void changeZombiePos(int newPos){
 			if(this.zombie.getPostion().equals(ZombiePostion.Zombie_Right) || this.zombie.getPostion().equals(ZombiePostion.Zombie_Left)) {
 				this.zombie.setX((this.zombie.getXPos() + newPos) * 30);
 				this.zombie.setY(this.zombie.getYPos() * 30);
@@ -52,46 +53,39 @@ public class ZombieMovement implements Runnable{
 			}
 		}
 
-		private zombieCollisionChecker initZombieCollision(int newPos){
-			zombieCollisionChecker zombieCollisionChecker = null;
+		private synchronized void initZombieCollision(int newPos){
 			switch (this.zombie.getPostion()) {
 				case Zombie_Right:
 				case Zombie_Left:
-					zombieCollisionChecker = new zombieCollisionChecker(
-							this.zombie.getXPos() + newPos,
-							this.zombie.getYPos(),
-							this.fields,
-							this.zombie,
-							this.player,
-							this.view
-					);
+					zombieCollisionChecker = new zombieCollisionChecker();
+					this.setZombieCollisionCheckerParameters(this.zombie.getXPos() + newPos, this.zombie.getYPos());
 					break;
 				case Zombie_Down:
 				case Zombie_Up:
-					zombieCollisionChecker = new zombieCollisionChecker(
-							this.zombie.getXPos(),
-							this.zombie.getYPos() + newPos,
-							this.fields,
-							this.zombie,
-							this.player,
-							this.view
-					);
+					zombieCollisionChecker = new zombieCollisionChecker();
+					this.setZombieCollisionCheckerParameters(this.zombie.getXPos(), this.zombie.getYPos() + newPos);
 					break;
 			}
-			return zombieCollisionChecker;
+		}
+
+		private synchronized void setZombieCollisionCheckerParameters(int x, int y){
+			zombieCollisionChecker.setPlayer(this.player);
+			zombieCollisionChecker.setFields(this.fields);
+			zombieCollisionChecker.setView(this.view);
+			zombieCollisionChecker.setZombie(this.zombie);
+			zombieCollisionChecker.setNewPosX(x);
+			zombieCollisionChecker.setNewPosY(y);
 		}
 
 		// checks if next field is an obstacle
-		private void checkNextField(int newPos){
-			zombieCollisionChecker zombieCollisionChecker = this.initZombieCollision(newPos);
+		private synchronized void checkNextField(int newPos){
+			this.initZombieCollision(newPos);
 			if(zombieCollisionChecker != null) {
 				if (zombieCollisionChecker.checkNextGameObject()) {
 					this.fields[this.zombie.getXPos()][this.zombie.getYPos()] =
-							new Field(
-									this.zombie.getXPos() * 30,
-									this.zombie.getYPos() * 30,
-									"GameObjects.Field_like_Objects.Field"
-							);
+							new Field("GameObjects.Field_like_Objects.Field");
+					this.fields[this.zombie.getXPos()][this.zombie.getYPos()].setX(this.zombie.getXPos() * 30);
+					this.fields[this.zombie.getXPos()][this.zombie.getYPos()].setY(this.zombie.getYPos() * 30);
 					this.changeZombiePos(newPos);
 					this.zombie.walk();
 				}
@@ -99,7 +93,7 @@ public class ZombieMovement implements Runnable{
 		}
 
 		// moves Skull in y-direction
-		private void moveZombieLeft(){
+		private synchronized void moveZombieLeft(){
 			if (this.zombie.getXPos() - 1 >= 0){
 				this.checkNextField(-1);
 			} else {
@@ -108,7 +102,7 @@ public class ZombieMovement implements Runnable{
 		}
 
 		// moves Skull in x-direction
-		private void moveZombieRight(){
+		private synchronized void moveZombieRight(){
 			if (this.zombie.getXPos() + 1 < xDimension) {
 				this.checkNextField(1);
 			} else {
@@ -116,7 +110,7 @@ public class ZombieMovement implements Runnable{
 			}
 		}
 
-		private void moveZombieUp(){
+		private synchronized void moveZombieUp(){
 			if (this.zombie.getYPos() -1 >= 0){
 				this.checkNextField( - 1);
 			} else {
@@ -124,7 +118,7 @@ public class ZombieMovement implements Runnable{
 			}
 		}
 
-		private void moveZombieDown(){
+		private synchronized void moveZombieDown(){
 			if (this.zombie.getYPos() + 1 < yDimension) {
 				this.checkNextField(1);
 			} else {
@@ -133,7 +127,7 @@ public class ZombieMovement implements Runnable{
 		}
 
 		//calls vor every Skull the moveSkull method
-		private void controllZombies(){
+		private synchronized void controllZombies(){
 			switch (this.zombie.getPostion()){
 				case Zombie_Right:
 					this.moveZombieRight();
@@ -151,7 +145,7 @@ public class ZombieMovement implements Runnable{
 		}
 
 		//start Thread
-		private synchronized Runnable start(){
+		private  Runnable start(){
 			return (()->{
 				isRunning = true;
 				thread = new Thread(this, "ZombieMovement");
@@ -168,12 +162,12 @@ public class ZombieMovement implements Runnable{
 
 		//calls the movement method every second
 		@Override
-		public void run() {
+		public synchronized void run() {
 			long timer = System.currentTimeMillis();
 			while(isRunning) {
-				if (System.currentTimeMillis() - timer >= 6000 / 60) {
-					timer += 3000 / 60;
-					this.threadWaitManager.pauseThread(6000 / 60);
+				if (System.currentTimeMillis() - timer >= 7000 / 60) {
+					timer += 4000 / 60;
+					this.threadWaitManager.pauseThread(7000 / 60);
 					this.controllZombies();
 				}
 			}

@@ -3,8 +3,6 @@ package Sound.InteractionSounds;
 import Sound.SoundBlueprint;
 import javafx.scene.media.Media;
 
-import java.io.File;
-
 public class VictorySound extends SoundBlueprint {
 
     private Media victorySound;

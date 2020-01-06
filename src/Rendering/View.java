@@ -3,17 +3,13 @@ package Rendering;
 import GameLogic.GameInit;
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.Player.Player;
-import Rendering.Windows.Controller.DeathMenuController;
-import Rendering.Windows.Controller.LeveleditorController;
-import Rendering.Windows.Controller.RenderViewController;
-import Rendering.Windows.Controller.SuccessMenuController;
+import Rendering.Windows.Controller.*;
 import Rendering.Windows.Scenes.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class View extends Application {
@@ -30,17 +26,21 @@ public class View extends Application {
 	private DeathScene deathScene;
     private DeathMenuController deathMenuController;
 	private LeveleditorScene leveleditorScene;
-	private LeveleditorController leveleditorController;
+	private LevelSelectionScene levelSelectionScene;
+	private LevelSelectionController levelSelectionController;
 	private Field[][] fields;
 	private double height;
 	private double width;
+    private String currentLevelCode;
+    private int levelXAxis;
+    private int levelYAxis;
 
     public View(){
         this.height = 750;
         this.width = 600;
     }
 
-	public void setIsRunningFalse(){
+	public synchronized void setIsRunningFalse(){
         Platform.runLater(this.gameInit.switchEnemyMovement(false));
         Platform.runLater(this.gameInit.switchCollectiblesAnimation(false));
         Platform.runLater(this.renderViewScene.setIsRunning(false));
@@ -59,6 +59,7 @@ public class View extends Application {
         this.initDeathScene();
         this.initSuccessMenuScene();
         this.initLeveleditorScene();
+        this.initLevelSelectionScene();
     }
 
     //gets player out of fields
@@ -74,6 +75,22 @@ public class View extends Application {
         return player;
     }
 
+    private void initLevelSelectionScene(){
+        FXMLLoader loader = this.getFxmlloader("Windows/Fxml/Levelselection.fxml");
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (root != null) {
+            if(this.levelSelectionController == null){
+                this.levelSelectionController = loader.getController();
+            }
+            this.levelSelectionScene = new LevelSelectionScene(root, this.width, this.height, this, this.levelSelectionController);
+        }
+    }
+
     private void initLeveleditorScene(){
         FXMLLoader loader = this.getFxmlloader("Windows/Fxml/Leveleditor.fxml");
         Parent root = null;
@@ -83,7 +100,6 @@ public class View extends Application {
             e.printStackTrace();
         }
         if (root != null) {
-            this.leveleditorController = loader.getController();
             this.leveleditorScene = new LeveleditorScene(root, this.height, this.width, this);
         }
     }
@@ -210,9 +226,15 @@ public class View extends Application {
         this.stage.setScene(this.leveleditorScene);
     }
 
+    public void showLevelSelection(){
+        this.fields = null;
+        this.levelSelectionScene.buildLevels();
+        this.stage.setScene(this.levelSelectionScene);
+    }
+
     //shows deathmenu
     public void showDeathMenu(){
-        this.setIsRunningFalse();
+        //this.setIsRunningFalse();
         Platform.runLater(this.setDeathMenu());
     }
 
@@ -227,13 +249,15 @@ public class View extends Application {
     //resumes game
     public void resumeGame(){
         this.stage.setScene(this.renderViewScene);
-        this.gameInit.resumeCollectibleAnimations();
-        this.renderViewScene.initLevel(this.fields, this.renderViewController, this.gameInit);
+        this.renderViewScene.resumeLevel(this.fields, this.renderViewController, this.gameInit);
     }
 
     //inits level
-    public void initLevel(){
-        this.fields = this.gameInit.initLevel();
+    public void initLevel(String levelCode, int x, int y){
+        this.currentLevelCode = levelCode;
+        this.levelXAxis = x;
+        this.levelYAxis = y;
+        this.fields = this.gameInit.initLevel(levelCode, x, y);
         this.renderViewScene.initLevel(fields, this.renderViewController, this.gameInit);
         this.stage.setScene(this.renderViewScene);
     }
@@ -241,7 +265,7 @@ public class View extends Application {
 	@Override
 	public void start(Stage stage) {
 		this.stage = stage;
-		this.gameInit = new GameInit(15, 15, 20, this);
+		this.gameInit = new GameInit(this);
         this.loadScenes();
         this.stage.setScene(this.startScreenScene);
         this.stage.show();
@@ -252,7 +276,23 @@ public class View extends Application {
 	}
 
 	//has to be here because changes to gui must be in javafx thread
-    public void setPlayerLives(Player player, int lives) {
+    public synchronized void setPlayerLives(Player player, int lives) {
         Platform.runLater(player.setLives(lives, this));
+    }
+
+    public void resetRessources() {
+        this.gameInit.resetRessources();
+    }
+
+    public String getCurrentLevelCode() {
+        return currentLevelCode;
+    }
+
+    public int getLevelXAxis() {
+        return levelXAxis;
+    }
+
+    public int getLevelYAxis() {
+        return levelYAxis;
     }
 }

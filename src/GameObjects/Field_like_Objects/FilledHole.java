@@ -7,7 +7,7 @@ public class FilledHole extends Field {
 	private Image image;
 
 	public FilledHole() {
-		super(0, 0, "GameObjects.Field_like_Objects.FilledHole");
+		super("GameObjects.Field_like_Objects.FilledHole");
 		this.image = this.loadImage("/textures/filledHole.png");
 	}
 

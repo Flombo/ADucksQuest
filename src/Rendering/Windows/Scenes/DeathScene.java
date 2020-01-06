@@ -19,11 +19,14 @@ public class DeathScene extends Scene {
         return this.view.getPlayer();
     }
 
-    public void startNewGame(){
-        this.view.initLevel();
+    public void retry(){
+        this.view.resetRessources();
+        this.view.initLevel(this.view.getCurrentLevelCode(), this.view.getLevelXAxis(), this.view.getLevelYAxis());
     }
 
     public void goToMenu(){
+        this.view.resetRessources();
         this.view.showMainMenu();
     }
+
 }

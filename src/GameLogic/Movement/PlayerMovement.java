@@ -144,6 +144,9 @@ public class PlayerMovement {
 
 	//creates field on old player postion
 	private Field createFieldOnOldPlayerPos() {
-		return new Field(this.player.getXPos() * 30, this.player.getYPos() * 30, "GameObjects.Field_like_Objects.Field");
+		Field field = new Field("GameObjects.Field_like_Objects.Field");
+		field.setX(this.player.getXPos() * 30);
+		field.setY(this.player.getYPos() * 30);
+		return field;
 	}
 }

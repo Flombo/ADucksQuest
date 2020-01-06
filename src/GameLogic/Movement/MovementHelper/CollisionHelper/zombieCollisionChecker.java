@@ -14,17 +14,8 @@ public class zombieCollisionChecker {
 	private Player player;
 	private View view;
 
-	public zombieCollisionChecker(int newPosX, int newPosY, Field[][] fields, Zombie zombie, Player player, View view){
-		this.fields = fields;
-		this.newPosX = newPosX;
-		this.newPosY = newPosY;
-		this.zombie = zombie;
-		this.player = player;
-		this.view = view;
-	}
-
 	//checks the next GameObject that would collide with player
-	public boolean checkNextGameObject(){
+	public synchronized boolean checkNextGameObject(){
 		boolean canMove = false;
 		switch (this.fields[this.newPosX][this.newPosY].getName()){
 			case "GameObjects.Obstacles.Obstacle":
@@ -42,7 +33,7 @@ public class zombieCollisionChecker {
 				canMove = true;
 				break;
 			case "GameObjects.Player.Player":
-				this.zombie.playAttackSound();
+				//this.zombie.playAttackSound();
 				this.zombie.attack();
 				zombie.changePostion();
 				int livesTaken = Integer.parseInt(this.player.getLives().getValue()) >= 2 ? -2 : -1;
@@ -51,6 +42,30 @@ public class zombieCollisionChecker {
 				break;
 		}
 		return canMove;
+	}
+
+	public synchronized void setZombie(Zombie zombie) {
+		this.zombie = zombie;
+	}
+
+	public synchronized void setNewPosX(int newPosX) {
+		this.newPosX = newPosX;
+	}
+
+	public synchronized void setNewPosY(int newPosY) {
+		this.newPosY = newPosY;
+	}
+
+	public synchronized void setFields(Field[][] fields) {
+		this.fields = fields;
+	}
+
+	public synchronized void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	public synchronized void setView(View view) {
+		this.view = view;
 	}
 
 }

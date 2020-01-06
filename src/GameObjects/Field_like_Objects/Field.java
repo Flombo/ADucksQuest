@@ -13,9 +13,7 @@ public class Field {
     private Image currentImage;
     private Image defaultImage;
 
-    public Field(int x, int y, String name){
-        this.x = x;
-        this.y = y;
+    public Field(String name){
         this.height = 30;
         this.width = 30;
         this.name = name;

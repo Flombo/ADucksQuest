@@ -23,7 +23,7 @@
           AnchorPane.topAnchor="553.0">
         <Button fx:id="startButton" onMouseClicked="#onButtonClicked"
                 onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut"
-                mnemonicParsing="false" text="Start new run"
+                mnemonicParsing="false" text="Retry"
                 prefHeight="26.0" prefWidth="412.0"
                 textFill="WHITE">
             <font>

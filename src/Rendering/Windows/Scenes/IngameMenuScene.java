@@ -20,6 +20,7 @@ public class IngameMenuScene extends Scene {
 
     public void goToMenu(){
         this.view.showMainMenu();
+        this.view.resetRessources();
     }
 
 }

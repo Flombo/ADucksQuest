@@ -18,14 +18,14 @@ public class Skull extends Field {
 	private SkullSound skullSound;
 
 	public Skull() {
-		super(0, 0, "GameObjects.Enemies.Skull");
+		super("GameObjects.Enemies.Skull");
 		this.imageRight = this.loadImage("/textures/skullTextureRight.png");
 		this.imageLeft = this.loadImage("/textures/skullTextureLeft.png");
 		this.currentImage = imageRight;
 		this.walkFrame = SkullWalkFrames.Skull_Right_Default;
 		this.position = SkullPosition.SKULL_RIGHT;
 		this.skullWalkAnimation = new skullWalkAnimation();
-		this.skullSound = new SkullSound();
+		//this.skullSound = new SkullSound();
 	}
 
 	public SkullWalkFrames getWalkFrame() {
@@ -102,7 +102,7 @@ public class Skull extends Field {
 
 	// plays attack animation
 	public void attack(){
-		this.playAttackSound();
+		//this.playAttackSound();
 		skullAttackAnimation skullAttackAnimation = new skullAttackAnimation(this);
 		skullAttackAnimation.animateAttack();
 	}

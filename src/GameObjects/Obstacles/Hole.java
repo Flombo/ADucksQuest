@@ -12,7 +12,7 @@ public class Hole extends Field {
 	private PlayerFallsAnimation playerFallsAnimation;
 
 	public Hole() {
-		super(0, 0, "GameObjects.Obstacles.Hole");
+		super("GameObjects.Obstacles.Hole");
 		this.defaultImage = this.loadImage("/textures/holeTexture.png");
 		this.currentImage = defaultImage;
 		this.playerFallsAnimation = new PlayerFallsAnimation();

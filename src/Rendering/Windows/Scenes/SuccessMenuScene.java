@@ -15,10 +15,12 @@ public class SuccessMenuScene extends Scene {
     }
 
     public void startNewGame(){
-        this.view.initLevel();
+        this.view.resetRessources();
+        this.view.showLevelSelection();
     }
 
     public void goToMenu(){
         this.view.showMainMenu();
+        this.view.resetRessources();
     }
 }

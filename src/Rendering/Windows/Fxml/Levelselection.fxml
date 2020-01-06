@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="anchor" fx:controller="Rendering.Windows.Controller.LevelSelectionController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ScrollPane fx:id="scrollPane" layoutX="27.0" layoutY="185.0">
+        <content>
+          <AnchorPane fx:id="scrollAnchor" />
+        </content>
+      </ScrollPane>
+      <Button fx:id="backButton" onMouseClicked="#onClick" onMouseEntered="#onHoverIn" minHeight="30" minWidth="200" onMouseExited="#onHoverOut" layoutX="25" layoutY="125.0" mnemonicParsing="false" text="Back to menu" />
+      <Label layoutX="212.0" layoutY="25" text="Levels" textFill="WHITE">
+         <font>
+            <Font size="35.0" name="Roboto Bold"/>
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

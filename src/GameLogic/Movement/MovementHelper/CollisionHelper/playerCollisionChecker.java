@@ -42,7 +42,7 @@ public class playerCollisionChecker {
 	}
 
 	//checks the next GameObject that would colide with player
-	public boolean checkNextGameObject(){
+	public synchronized boolean checkNextGameObject(){
 		boolean canMove = false;
 		switch (this.fields[this.newPosX][this.newPosY].getName()){
 			case "GameObjects.Obstacles.Obstacle":
@@ -52,39 +52,39 @@ public class playerCollisionChecker {
 				canMove = true;
 				break;
 			case  "GameObjects.Obstacles.Hole":
-				this.player.playFallingSound();
+				//this.player.playFallingSound();
 				((Hole)this.fields[this.newPosX][this.newPosY]).animatePlayerFall(this.player, this.view);
 				break;
 			case "GameObjects.Enemies.Skull":
-                ((Skull)this.fields[this.newPosX][this.newPosY]).playAttackSound();
+                //((Skull)this.fields[this.newPosX][this.newPosY]).playAttackSound();
 				this.player.setAllowedToMove(false);
 				this.view.setPlayerLives(this.player, -1);
 				this.player.attacked(view);
 				this.player.setAllowedToMove(true);
 				break;
 			case "GameObjects.Collectibles.Coin":
-				((Coin)this.fields[this.newPosX][this.newPosY]).playCoinPicked();
+				//((Coin)this.fields[this.newPosX][this.newPosY]).playCoinPicked();
 				this.player.setCoins(1);
 				this.player.itemPicked();
 				canMove = true;
 				break;
 			case "GameObjects.Collectibles.Heart":
-				((Heart)this.fields[this.newPosX][this.newPosY]).playHeartPicked();
+				//((Heart)this.fields[this.newPosX][this.newPosY]).playHeartPicked();
 				this.view.setPlayerLives(this.player, 1);
 				this.player.itemPicked();
 				canMove = true;
 				break;
 			case "GameObjects.Target.Target":
 				canMove = true;
-				((Target)this.fields[this.newPosX][this.newPosY]).playVictorySound();
+				//((Target)this.fields[this.newPosX][this.newPosY]).playVictorySound();
 				this.view.showSuccessMenu();
 				break;
 			case "GameObjects.Obstacles.Chest":
-				this.player.playQuak();
+				//this.player.playQuak();
 				canMove = this.chestCollisionChecker.checkNextPos((Chest) this.fields[this.newPosX][this.newPosY], this.newPos);
 				break;
 			case "GameObjects.Enemies.Zombie":
-                ((Zombie)this.fields[this.newPosX][this.newPosY]).playAttackSound();
+                //((Zombie)this.fields[this.newPosX][this.newPosY]).playAttackSound();
 				this.player.setAllowedToMove(false);
 				this.view.setPlayerLives(this.player, -2);
 				this.player.attacked(this.view);

@@ -33,7 +33,7 @@ public class DeathMenuController extends HoverHelper {
         if(source.getId().equals("mainMenuButton")){
             deathScene.goToMenu();
         } else {
-            deathScene.startNewGame();
+            deathScene.retry();
         }
     }
 

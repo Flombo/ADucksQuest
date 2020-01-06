@@ -22,7 +22,7 @@ public class Zombie extends Field {
 	private ZombieSound zombieSound;
 
 	public Zombie() {
-		super(0, 0, "GameObjects.Enemies.Zombie");
+		super("GameObjects.Enemies.Zombie");
 		this.downImage = this.loadImage("/textures/zombieTextures/down/zombie_down.png");
 		this.upImage = this.loadImage("/textures/zombieTextures/up/zombie_up.png");
 		this.leftImage = this.loadImage("/textures/zombieTextures/left/zombie_left.png");
@@ -32,7 +32,7 @@ public class Zombie extends Field {
 		this.zombieWalkFrame = ZombieWalkFrames.Zombie_Down_Default;
 		this.zombieWalkAnimation = new zombieWalkAnimation();
 		this.zombieAttackAnimation = new zombieAttackAnimation(this);
-		this.zombieSound = new ZombieSound();
+		//this.zombieSound = new ZombieSound();
 	}
 
 	public void playAttackSound(){
@@ -100,7 +100,7 @@ public class Zombie extends Field {
 		}
 	}
 
-	public ZombiePostion getPostion() {
+	public synchronized ZombiePostion getPostion() {
 		return zombiePostion;
 	}
 

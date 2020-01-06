@@ -8,7 +8,7 @@ public class Obstacle extends Field {
 	private Image image;
 
 	public Obstacle(){
-		super(0, 0, "GameObjects.Obstacles.Obstacle");
+		super("GameObjects.Obstacles.Obstacle");
 		this.image = this.loadImage("/textures/obstacleTexture.png");
 	}
 
