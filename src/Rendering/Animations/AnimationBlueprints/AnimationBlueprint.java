@@ -31,12 +31,12 @@ public class AnimationBlueprint implements Runnable{
 	}
 
 	private void stop(){
-		if(this.player != null){
-			this.player.attacked(view);
-			this.view.setPlayerLives(this.player, -1);
-			this.player.setAllowedToMove(true);
-		}
 		this.thread.interrupt();
+		if(this.player != null) {
+			this.player.setAllowedToMove(true);
+			this.player.setImageToDefault();
+		}
+		this.field.setImageToDefault();
 	}
 
 	//sets player image to field image if != null
@@ -53,7 +53,6 @@ public class AnimationBlueprint implements Runnable{
 		this.counter = 0;
 		while (this.isRunning) {
 			this.frameSetterLoop();
-			field.setImageToDefault();
 			this.isRunning = false;
 		}
 		this.stop();
@@ -80,5 +79,9 @@ public class AnimationBlueprint implements Runnable{
 		this.player = player;
 		this.view = view;
 		this.start();
+	}
+
+	public void setIsRunning(boolean run){
+		this.isRunning = run;
 	}
 }

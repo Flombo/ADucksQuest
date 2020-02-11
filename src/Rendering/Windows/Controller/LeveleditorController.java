@@ -2,6 +2,7 @@ package Rendering.Windows.Controller;
 
 import Rendering.Windows.ControllerHelper.Builder.LevelEditorBackDialogBuilder;
 import Rendering.Windows.ControllerHelper.Builder.LeveleditorSaveDialogBuilder;
+import Rendering.Windows.ControllerHelper.DragHelper;
 import Rendering.Windows.ControllerHelper.HoverHelper;
 import Rendering.Windows.ControllerHelper.Builder.LevelEditorElementsDialogBuilder;
 import Rendering.Windows.ControllerHelper.Builder.LevelEditorMapBuilder;
@@ -17,8 +18,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -26,10 +27,17 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.Observable;
 import java.util.ResourceBundle;
 
 public class LeveleditorController extends HoverHelper implements Initializable{
 
+    public AnchorPane anchor;
+    public Pane controlPanel;
+    public Button backButton;
+    public Button clearButton;
+    public Button saveButton;
+    public Pane sliderPanel;
     @FXML
     Button elementsButton;
     @FXML
@@ -41,6 +49,7 @@ public class LeveleditorController extends HoverHelper implements Initializable{
     private Pane elementsDialog;
     private Pane backDialog;
     private Pane saveDialog;
+    private Pane successDialog;
     private LevelEditorMapBuilder levelEditorMapBuilder;
     private boolean elementButtonActive = false;
     private boolean levelIsSaved = false;
@@ -50,6 +59,47 @@ public class LeveleditorController extends HoverHelper implements Initializable{
         levelEditorMapBuilder = new LevelEditorMapBuilder(this);
         addSliderListener(ySlider);
         addSliderListener(xSlider);
+        this.setElementsLayout();
+    }
+
+    private void setElementsLayout(){
+        this.anchor.widthProperty().addListener((observable -> reLayout()));
+        this.anchor.heightProperty().addListener((observable -> reLayout()));
+        this.levelPane.heightProperty().addListener((observable -> reLayout()));
+    }
+
+    public void reLayout(){
+        this.layoutControllPanel();
+        this.layoutSliderPanel();
+        this.layoutButtons();
+    }
+
+    private void layoutButtons() {
+        this.elementsButton.setMinWidth(this.controlPanel.getWidth() - this.sliderPanel.getWidth()-50);
+        this.clearButton.setMinWidth(this.controlPanel.getWidth() - this.sliderPanel.getWidth()-50);
+        this.saveButton.setMinWidth(this.controlPanel.getWidth() - this.sliderPanel.getWidth()-50);
+        this.backButton.setMinWidth(this.controlPanel.getWidth() - this.sliderPanel.getWidth()-50);
+    }
+
+    private void layoutSliderPanel() {
+        this.sliderPanel.setPrefWidth(this.controlPanel.getWidth() * 0.75);
+        double sliderLayoutX = this.controlPanel.getWidth() - this.sliderPanel.getWidth() - 10;
+        if(sliderLayoutX > this.backButton.getWidth() + this.backButton.getLayoutX() + 10) {
+            this.sliderPanel.setLayoutX(sliderLayoutX);
+        }
+        this.ySlider.setPrefWidth(this.sliderPanel.getWidth() * 0.75);
+        this.xSlider.setPrefWidth(this.sliderPanel.getWidth() * 0.75);
+    }
+
+    private void layoutControllPanel() {
+        double layoutY = this.anchor.getHeight() - this.controlPanel.getHeight();
+        if(layoutY > this.levelPane.getHeight() + this.levelPane.getLayoutY() + 10) {
+            this.controlPanel.setLayoutY(this.anchor.getHeight() - this.controlPanel.getHeight());
+        } else {
+            this.controlPanel.setLayoutY(this.levelPane.getHeight() + this.levelPane.getLayoutY() + 10);
+        }
+        this.controlPanel.setPrefWidth(this.anchor.getWidth());
+        this.controlPanel.setPrefHeight(this.anchor.getHeight() - this.levelPane.getHeight() - this.levelPane.getLayoutY());
     }
 
     private void addSliderListener(Slider slider){
@@ -59,10 +109,6 @@ public class LeveleditorController extends HoverHelper implements Initializable{
             elementsDialog = null;
             this.resetElementsButton();
         }));
-    }
-
-    public boolean isLevelIsSaved() {
-        return levelIsSaved;
     }
 
     public void setLevelIsSaved(boolean levelIsSaved) {
@@ -122,6 +168,42 @@ public class LeveleditorController extends HoverHelper implements Initializable{
         }
     }
 
+    public void showSuccessDialog(){
+        this.buildSuccessPane();
+        Label success = this.buildSuccessLabel();
+        Button closeButton = this.buildCloseButton(success);
+        this.successDialog.getChildren().add(success);
+        this.successDialog.getChildren().add(closeButton);
+        DragHelper dragHelper = new DragHelper();
+        dragHelper.addHandler(this.successDialog);
+        this.levelPane.getChildren().add(this.successDialog);
+    }
+    private Button buildCloseButton(Label success){
+        Button closeButton = new Button("close");
+        closeButton.setId("closeButton");
+        closeButton.setLayoutX(success.getLayoutX());
+        closeButton.setLayoutY(this.successDialog.prefHeightProperty().getValue() / 2);
+        closeButton.addEventFilter(MouseEvent.MOUSE_ENTERED, this::onHoverIn);
+        closeButton.addEventFilter(MouseEvent.MOUSE_EXITED, this::onHoverOut);
+        closeButton.addEventFilter(MouseEvent.MOUSE_CLICKED, (Observable-> this.levelPane.getChildren().remove(this.successDialog)));
+        return closeButton;
+    }
+
+    private Label buildSuccessLabel(){
+        Label success = new Label("The level was successfully saved!");
+        success.setPrefWidth(success.getText().length() * 10);
+        success.setLayoutX((this.successDialog.prefWidthProperty().getValue() - success.prefWidthProperty().getValue()));
+        success.setLayoutY(this.successDialog.prefHeightProperty().getValue() / 4);
+        return success;
+    }
+
+    private void buildSuccessPane(){
+        this.successDialog = new Pane();
+        this.successDialog.setId("successDialog");
+        this.successDialog.setPrefWidth(400);
+        this.successDialog.setPrefHeight(200);
+    }
+
     private byte[] getSnapshot(){
         WritableImage img = new WritableImage((int)this.levelPane.widthProperty().get(), (int)this.levelPane.heightProperty().get());
         this.levelPane.snapshot(new SnapshotParameters(), img);
@@ -170,7 +252,7 @@ public class LeveleditorController extends HoverHelper implements Initializable{
         }
     }
 
-    public void removeElementsDialog(){
+    private void removeElementsDialog(){
         if(elementsDialog != null){
             this.levelPane.getChildren().remove(elementsDialog);
             elementsDialog = null;
@@ -201,5 +283,4 @@ public class LeveleditorController extends HoverHelper implements Initializable{
         levelEditorMapBuilder.setCurrentEditorElement("field");
         levelEditorMapBuilder.onDrag(levelPane, xSlider, ySlider);
     }
-
 }

@@ -32,7 +32,7 @@ public class Zombie extends Field {
 		this.zombieWalkFrame = ZombieWalkFrames.Zombie_Down_Default;
 		this.zombieWalkAnimation = new zombieWalkAnimation();
 		this.zombieAttackAnimation = new zombieAttackAnimation(this);
-		//this.zombieSound = new ZombieSound();
+		this.zombieSound = new ZombieSound();
 	}
 
 	public void playAttackSound(){

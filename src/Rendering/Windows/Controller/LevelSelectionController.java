@@ -27,18 +27,60 @@ public class LevelSelectionController extends HoverHelper {
     private ArrayList<Level> levels;
     private Pane levelDialog;
     private DragHelper dragHelper;
+    private TilePane levelTile;
+
+    public void initHandling(){
+        this.anchor.widthProperty().addListener((Observable -> this.resizeElements()));
+        this.anchor.heightProperty().addListener((Observable -> this.resizeElements()));
+    }
 
     public void buildLevels(DatabaseHelper databaseHelper){
         this.databaseHelper = databaseHelper;
         this.dragHelper = new DragHelper();
         this.scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         levels = this.databaseHelper.selectAll();
-        TilePane tilePane = new TilePane();
-        tilePane.setLayoutX(10);
-        for (Level level: levels) {
-            tilePane.getChildren().add(this.buildLevelPane(level, levels.indexOf(level)));
+        this.levelTile = new TilePane();
+        this.addLevelsToTilePane();
+        this.scrollAnchor.getChildren().add(this.levelTile);
+        this.initHandling();
+    }
+
+    private void addLevelsToTilePane() {
+        if(!levels.isEmpty()) {
+            for (Level level : levels) {
+                this.levelTile.getChildren().add(this.buildLevelPane(level, levels.indexOf(level)));
+            }
+        } else {
+            Label label = new Label("There were no levels found!");
+            label.setStyle("-fx-font-size: 20; -fx-text-fill: darkorange; -fx-font-weight: bold;");
+            this.levelTile.getChildren().add(label);
         }
-        this.scrollAnchor.getChildren().add(tilePane);
+    }
+
+    private void resizeElements() {
+        this.scrollPane.setPrefHeight(this.anchor.heightProperty().getValue()/1.2);
+        this.scrollPane.setPrefWidth(this.anchor.widthProperty().getValue()/1.2);
+        this.setScrollPaneLayouts();
+        this.scrollAnchor.setPrefHeight(this.scrollPane.heightProperty().getValue() - 5);
+        this.scrollAnchor.setPrefWidth(this.scrollPane.widthProperty().getValue() - 5);
+        this.levelTile.setPrefWidth(this.scrollPane.widthProperty().getValue());
+        this.levelTile.setPrefHeight(this.scrollPane.heightProperty().getValue());
+        System.out.println(this.levelTile.widthProperty().getValue());
+    }
+
+    private void setScrollPaneLayouts() {
+        double scrollPaneLayoutX = (this.anchor.widthProperty().getValue() - this.scrollPane.widthProperty().getValue()) / 2;
+        double scrollPaneLayoutY = (this.anchor.heightProperty().getValue()
+                + this.backButton.getLayoutY()
+                + this.backButton.heightProperty().getValue()
+                - this.scrollPane.heightProperty().getValue()
+        ) / 2;
+        if(scrollPaneLayoutX < 300 && scrollPaneLayoutX > this.backButton.getLayoutX()) {
+            this.scrollPane.setLayoutX(scrollPaneLayoutX);
+        }
+        if(scrollPaneLayoutY > this.backButton.getLayoutY() + this.backButton.heightProperty().getValue() + 10 && scrollPaneLayoutY < 590){
+            this.scrollPane.setLayoutY(scrollPaneLayoutY);
+        }
     }
 
     private Pane buildLevelPane(Level level, int index){
@@ -64,12 +106,12 @@ public class LevelSelectionController extends HoverHelper {
                 this.anchor.getChildren().remove(this.levelDialog);
                 this.levelDialog = null;
             }
-            this.buildLevelDialog(index);
+            this.buildLevelDialog(index, levelPane.getLayoutX(), levelPane.getLayoutY());
         });
         return levelPane;
     }
 
-    private void buildLevelDialog(int index){
+    private void buildLevelDialog(int index, double xLayout, double yLayout){
         Level level = this.levels.get(index);
         int x = level.getX();
         int y = level.getY();
@@ -81,19 +123,29 @@ public class LevelSelectionController extends HoverHelper {
         Button close = buildLevelDialogButton("close", "closeButton", level.getLevelcode(), x, y);
         VBox vbox = new VBox();
         vbox.getChildren().addAll(levelname, tags, start, close);
+        double dialogLayoutX = xLayout + this.scrollPane.getLayoutX() - 10;
+        double dialogLayoutY = yLayout + this.scrollPane.getLayoutY() - 10;
+        this.buildLevelDialogPane(this.buildLevelDialogTile(vbox, view), dialogLayoutX, dialogLayoutY);
+        this.anchor.getChildren().add(levelDialog);
+    }
+
+    private TilePane buildLevelDialogTile(VBox vbox, ImageView view){
         TilePane tile = new TilePane();
         tile.getChildren().addAll(view, vbox);
         tile.setId("levelDialogTile");
         tile.setLayoutY(25);
         tile.setLayoutX(10);
+        return tile;
+    }
+
+    private void buildLevelDialogPane(TilePane tile, double layoutX, double layoutY){
         levelDialog = new Pane(tile);
         levelDialog.setId("levelDialog");
-        levelDialog.setLayoutX(200);
-        levelDialog.setLayoutY(300);
+        levelDialog.setLayoutX(layoutX);
+        levelDialog.setLayoutY(layoutY);
         levelDialog.setMinSize(400, 200);
         levelDialog.setMaxHeight(200);
         this.dragHelper.addHandler(this.levelDialog);
-        this.anchor.getChildren().add(levelDialog);
     }
 
     private Button buildLevelDialogButton(String label, String id, String levelCode, int x, int y){

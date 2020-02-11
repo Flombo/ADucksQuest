@@ -39,23 +39,37 @@
 }
 
 #backDialog{
-    -fx-background-color: rgb(48,75,100);
-    -fx-border-color: rgb(72,147,217);
+    -fx-background-color: rgb(72,147,217);
+    -fx-border-color: rgb(0, 0, 0);
     -fx-border-width: 10px;
     -fx-min-height: 200;
     -fx-min-width: 400;
 }
 
 #saveDialog{
-    -fx-background-color: rgb(48,75,100);
-    -fx-border-color: rgb(72,147,217);
+    -fx-background-color: rgb(72,147,217);
+    -fx-border-color: rgb(0, 0, 0);
     -fx-border-width: 10px;
     -fx-min-height: 275;
     -fx-min-width: 400;
 }
 
+#successDialog{
+    -fx-background-color: rgb(72,147,217);
+    -fx-border-color: rgb(0, 0, 0);
+    -fx-border-width: 10px;
+    -fx-min-height: 200;
+    -fx-min-width: 400;
+}
+
+#successDialog Label{
+    -fx-text-fill: Lightgreen;
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+}
+
 #elementsDialog{
-    -fx-border-color: rgb(72,147,217);
+    -fx-border-color: rgb(0, 0, 0);
     -fx-background-color: rgb(48,75,100);
     -fx-border-width: 10px;
     -fx-min-height: 410;
@@ -82,6 +96,12 @@
 }
 
 #cancelButton{
+    -fx-background-color: rgb(150,50,30);
+    -fx-min-width: 75;
+    -fx-min-height: 30;
+}
+
+#closeButton{
     -fx-background-color: rgb(150,50,30);
     -fx-min-width: 75;
     -fx-min-height: 30;

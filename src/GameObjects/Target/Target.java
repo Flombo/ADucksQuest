@@ -12,7 +12,7 @@ public class Target extends Field {
 	public Target(){
 		super("GameObjects.Target.Target");
 		this.image = this.loadImage("/textures/targetTexture.png");
-		//this.victorySound = new VictorySound();
+		this.victorySound = new VictorySound();
 	}
 
 	public void playVictorySound(){

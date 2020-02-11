@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchor" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Rendering.Windows.Controller.OptionsController">
+   <children>
+      <Label fx:id="options" layoutX="279.0" layoutY="48.0" prefHeight="43.0" prefWidth="142.0" text="Options" textFill="WHITE">
+         <font>
+            <Font name="Microsoft PhagsPa Bold" size="35.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="windowmodeCheck" layoutX="83.0" layoutY="140.0" mnemonicParsing="false" onMouseClicked="#onCheck" prefHeight="17.0" prefWidth="196.0" selected="true" text="Window Mode" textFill="WHITE">
+         <font>
+            <Font name="Microsoft PhagsPa Bold" size="18.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="fullscreenCheck" layoutX="83.0" layoutY="193.0" mnemonicParsing="false" onMouseClicked="#onCheck" prefHeight="17.0" prefWidth="196.0" text="Fullscreen" textFill="WHITE">
+         <font>
+            <Font name="Microsoft PhagsPa Bold" size="18.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="muteCheck" layoutX="83.0" layoutY="253.0" mnemonicParsing="false" onMouseClicked="#onCheck" prefHeight="17.0" prefWidth="196.0" text="Mute" textFill="WHITE">
+         <font>
+            <Font name="Microsoft PhagsPa Bold" size="18.0" />
+         </font>
+      </CheckBox>
+      <Button fx:id="back" layoutX="40.0" layoutY="655.0" mnemonicParsing="false" onMouseClicked="#onClick" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut" prefHeight="39.0" prefWidth="170.0" text="Back">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="defaultButton" layoutX="240.0" layoutY="655.0" mnemonicParsing="false" onMouseClicked="#onClick" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut" prefHeight="39.0" prefWidth="177.0" text="Default">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="save" layoutX="440.0" layoutY="655.0" mnemonicParsing="false" onMouseClicked="#onClick" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut" prefHeight="39.0" prefWidth="150.0" text="Save">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <TextField fx:id="widthField" layoutX="83.0" layoutY="322.0" promptText="Width" />
+      <TextField fx:id="heightField" layoutX="83.0" layoutY="373.0" promptText="Height" />
+   </children>
+</AnchorPane>

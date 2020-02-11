@@ -1,0 +1,28 @@
+AnchorPane{
+    -fx-background-color: rgb(48,75,100);
+    -fx-border-color: rgb(72,147,217);
+    -fx-border-width: 15px;
+    -fx-pref-width: 700;
+    -fx-pref-height: 750;
+}
+
+#back{
+    -fx-background-color: rgb(72,147,217);
+}
+
+#defaultButton{
+    -fx-background-color: rgb(150,50,30);
+}
+
+#save{
+    -fx-background-color: rgb(50,150,50);
+}
+
+#options{
+    -fx-font-size: 35;
+}
+Label{
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}

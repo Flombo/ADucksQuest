@@ -47,7 +47,7 @@ public class Player extends Field {
 		this.walkAnimation = new WalkAnimation();
 		this.attackedAnimation = new AttackedAnimation();
 		this.itemPickedAnimation = new ItemPickedAnimation();
-		//this.playerSounds = new PlayerSounds();
+		this.playerSounds = new PlayerSounds();
 		this.fieldImage = this.loadImage("/textures/fieldTexture.png");
 	}
 
@@ -63,7 +63,7 @@ public class Player extends Field {
 	public Runnable checkIfLivesAreZero(int lives, View view){
 		Runnable runnable = null;
 		if(Integer.parseInt(this.getLives().getValue()) + lives == 0) {
-			//this.playerSounds.playDamageSound();
+			this.playerSounds.playDamageSound();
 			runnable = setLivesInCheckPlayerLivesForView(lives);
 			view.setIsRunningFalse();
 			view.showDeathMenu();
@@ -94,12 +94,14 @@ public class Player extends Field {
 
 	//plays animation when player is attacked
 	public void attacked(View view){
+		this.attackedAnimation.setIsRunning(false);
 		this.attackedAnimation.attacked(this);
 		this.checkPlayersLives(view);
 	}
 
 	//play item picked animation
 	public void itemPicked(){
+		this.itemPickedAnimation.setIsRunning(false);
 		this.itemPickedAnimation.animateItemPicked(this);
 	}
 

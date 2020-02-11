@@ -20,7 +20,7 @@ public class Coin extends Field {
 		this.defaultImage = this.loadImage("/textures/CoinAnimation/Coin.png");
 		this.currentImage = defaultImage;
 		this.flipFrame = CoinFlipFrames.Coin_Default;
-		//this.itemPickedSound = new ItemPickedSound();
+		this.itemPickedSound = new ItemPickedSound();
 		this.startAnimation();
 	}
 

@@ -25,4 +25,8 @@ public class MainMenuScene extends Scene{
     public void showLeveleditor(){
         this.view.showLeveleditor();
     }
+
+    public void showOptions() {
+        this.view.showOptions();
+    }
 }

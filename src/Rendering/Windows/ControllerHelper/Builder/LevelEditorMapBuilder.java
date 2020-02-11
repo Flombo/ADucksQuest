@@ -23,7 +23,7 @@ public class LevelEditorMapBuilder {
     public void onDrag(Pane levelPane, Slider xSlider, Slider ySlider){
         int xMax = (int) xSlider.getValue();
         int yMax = (int) ySlider.getValue();
-        levelPane.setMaxSize(xMax * 30, yMax * 30);
+        levelPane.setPrefSize(xMax * 30, yMax * 30);
         fields.clear();
         playerPlaced = false;
         targetPlaced = false;

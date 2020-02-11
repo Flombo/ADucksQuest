@@ -3,6 +3,7 @@ package Rendering;
 import GameLogic.GameInit;
 import GameObjects.Field_like_Objects.Field;
 import GameObjects.Player.Player;
+import Rendering.Windows.Config.ConfigManager;
 import Rendering.Windows.Controller.*;
 import Rendering.Windows.Scenes.*;
 import javafx.application.Application;
@@ -10,6 +11,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import java.io.IOException;
 
 public class View extends Application {
@@ -28,7 +30,9 @@ public class View extends Application {
 	private LeveleditorScene leveleditorScene;
 	private LevelSelectionScene levelSelectionScene;
 	private LevelSelectionController levelSelectionController;
-	private Field[][] fields;
+	private OptionsScene optionsScene;
+    private OptionsController optionsController;
+    private Field[][] fields;
 	private double height;
 	private double width;
     private String currentLevelCode;
@@ -36,8 +40,9 @@ public class View extends Application {
     private int levelYAxis;
 
     public View(){
-        this.height = 750;
-        this.width = 600;
+        ConfigManager configManager = new ConfigManager();
+        this.height = configManager.getHeight();
+        this.width = configManager.getWidth();
     }
 
 	public synchronized void setIsRunningFalse(){
@@ -60,6 +65,7 @@ public class View extends Application {
         this.initSuccessMenuScene();
         this.initLeveleditorScene();
         this.initLevelSelectionScene();
+        this.initOptionsScene();
     }
 
     //gets player out of fields
@@ -100,7 +106,8 @@ public class View extends Application {
             e.printStackTrace();
         }
         if (root != null) {
-            this.leveleditorScene = new LeveleditorScene(root, this.height, this.width, this);
+            LeveleditorController leveleditorController = loader.getController();
+            this.leveleditorScene = new LeveleditorScene(root, this.height, this.width, this, leveleditorController);
         }
     }
 
@@ -115,7 +122,7 @@ public class View extends Application {
         }
         if (root != null) {
             this.deathMenuController = loader.getController();
-            this.deathScene = new DeathScene(root, this.height, this.width, this);
+            this.deathScene = new DeathScene(root, this.width, this.height, this);
         }
     }
 
@@ -144,7 +151,8 @@ public class View extends Application {
             e.printStackTrace();
         }
         if (root != null) {
-            this.ingameMenuScene = new IngameMenuScene(root, this.width, this.height, this);
+            IngameMenuController ingameMenuController = loader.getController();
+            this.ingameMenuScene = new IngameMenuScene(root, this.width, this.height, this, ingameMenuController);
         }
     }
 
@@ -172,7 +180,7 @@ public class View extends Application {
             e.printStackTrace();
         }
         if (root != null) {
-            this.startScreenScene = new StartScreenScene(root, 600, 750, this);
+            this.startScreenScene = new StartScreenScene(root, this.width, this.height, this);
         }
     }
 
@@ -187,7 +195,21 @@ public class View extends Application {
         }
         if (root != null) {
             this.renderViewController = loader.getController();
-            this.renderViewScene = new RenderViewScene(root, 600, 750, this);
+            this.renderViewScene = new RenderViewScene(root, this.width, this.height, this);
+        }
+    }
+
+    private void initOptionsScene(){
+        FXMLLoader loader = this.getFxmlloader("Windows/Fxml/Options.fxml");
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (root != null) {
+            this.optionsController = loader.getController();
+            this.optionsScene = new OptionsScene(root, this.width, this.height, this, this.optionsController);
         }
     }
 
@@ -208,6 +230,7 @@ public class View extends Application {
             player.setEarnedCoins();
             stage.setScene(successMenuScene);
             successMenuController.setLabelBindings(player);
+            successMenuController.initHandling();
         });
     }
 
@@ -215,6 +238,7 @@ public class View extends Application {
     public void showIngameMenu(){
         this.setIsRunningFalse();
         this.stage.setScene(this.ingameMenuScene);
+        this.ingameMenuScene.resize();
     }
 
     //shows mainmenu
@@ -224,6 +248,7 @@ public class View extends Application {
 
     public void showLeveleditor(){
         this.stage.setScene(this.leveleditorScene);
+        this.leveleditorScene.resize();
     }
 
     public void showLevelSelection(){
@@ -234,8 +259,12 @@ public class View extends Application {
 
     //shows deathmenu
     public void showDeathMenu(){
-        //this.setIsRunningFalse();
         Platform.runLater(this.setDeathMenu());
+    }
+
+    public void showOptions() {
+        this.stage.setScene(this.optionsScene);
+        this.optionsScene.resize();
     }
 
     //sets deathmenu to stage
@@ -243,13 +272,14 @@ public class View extends Application {
         return (() -> {
             stage.setScene(deathScene);
             deathMenuController.setLabels();
+            deathMenuController.initHandling();
         });
     }
 
     //resumes game
     public void resumeGame(){
         this.stage.setScene(this.renderViewScene);
-        this.renderViewScene.resumeLevel(this.fields, this.renderViewController, this.gameInit);
+        this.renderViewScene.resumeLevel(this.fields, this.renderViewController, this.gameInit, this.levelXAxis, this.levelYAxis);
     }
 
     //inits level
@@ -258,7 +288,7 @@ public class View extends Application {
         this.levelXAxis = x;
         this.levelYAxis = y;
         this.fields = this.gameInit.initLevel(levelCode, x, y);
-        this.renderViewScene.initLevel(fields, this.renderViewController, this.gameInit);
+        this.renderViewScene.initLevel(fields, this.renderViewController, this.gameInit, x, y);
         this.stage.setScene(this.renderViewScene);
     }
 
@@ -268,6 +298,7 @@ public class View extends Application {
 		this.gameInit = new GameInit(this);
         this.loadScenes();
         this.stage.setScene(this.startScreenScene);
+        this.stage.initStyle(StageStyle.UTILITY);
         this.stage.show();
 	}
 
@@ -294,5 +325,16 @@ public class View extends Application {
 
     public int getLevelYAxis() {
         return levelYAxis;
+    }
+
+    public void setFullScreen(boolean scale) {
+        this.stage.setFullScreen(scale);
+    }
+
+    public void setSize(double height, double width) {
+        this.height = height;
+        this.width = width;
+        this.stage.setWidth(width);
+        this.stage.setHeight(height);
     }
 }

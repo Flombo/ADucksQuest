@@ -54,9 +54,10 @@ public class playerCollisionChecker {
 			case  "GameObjects.Obstacles.Hole":
 				//this.player.playFallingSound();
 				((Hole)this.fields[this.newPosX][this.newPosY]).animatePlayerFall(this.player, this.view);
+				view.setPlayerLives(player, -1);
 				break;
 			case "GameObjects.Enemies.Skull":
-                //((Skull)this.fields[this.newPosX][this.newPosY]).playAttackSound();
+                ((Skull)this.fields[this.newPosX][this.newPosY]).playAttackSound();
 				this.player.setAllowedToMove(false);
 				this.view.setPlayerLives(this.player, -1);
 				this.player.attacked(view);
@@ -76,7 +77,7 @@ public class playerCollisionChecker {
 				break;
 			case "GameObjects.Target.Target":
 				canMove = true;
-				//((Target)this.fields[this.newPosX][this.newPosY]).playVictorySound();
+				((Target)this.fields[this.newPosX][this.newPosY]).playVictorySound();
 				this.view.showSuccessMenu();
 				break;
 			case "GameObjects.Obstacles.Chest":
@@ -84,7 +85,7 @@ public class playerCollisionChecker {
 				canMove = this.chestCollisionChecker.checkNextPos((Chest) this.fields[this.newPosX][this.newPosY], this.newPos);
 				break;
 			case "GameObjects.Enemies.Zombie":
-                //((Zombie)this.fields[this.newPosX][this.newPosY]).playAttackSound();
+                ((Zombie)this.fields[this.newPosX][this.newPosY]).playAttackSound();
 				this.player.setAllowedToMove(false);
 				this.view.setPlayerLives(this.player, -2);
 				this.player.attacked(this.view);

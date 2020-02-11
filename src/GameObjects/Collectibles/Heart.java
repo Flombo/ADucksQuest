@@ -16,7 +16,7 @@ public class Heart extends Field {
 	public Heart() {
 		super("GameObjects.Collectibles.Heart");
 		this.defaultImage = this.loadImage("/textures/HeartAnimation/Heart.png");
-		//this.itemPickedSound = new ItemPickedSound();
+		this.itemPickedSound = new ItemPickedSound();
 		this.currentImage = defaultImage;
 		this.growthFrame = HeartGrowthFrames.Heart_Default;
 		this.startAnimation();

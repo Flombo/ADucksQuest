@@ -14,13 +14,12 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane fx:controller="Rendering.Windows.Controller.DeathMenuController"
+<AnchorPane fx:id="anchor" fx:controller="Rendering.Windows.Controller.DeathMenuController"
             maxHeight="-Infinity" maxWidth="-Infinity"
             minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="750.0" prefWidth="600.0"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <VBox layoutX="108.0" layoutY="535.0" prefHeight="120.0" prefWidth="400.0" AnchorPane.rightAnchor="80.0"
-          AnchorPane.topAnchor="553.0">
+    <VBox fx:id="buttonContainer">
         <Button fx:id="startButton" onMouseClicked="#onButtonClicked"
                 onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut"
                 mnemonicParsing="false" text="Retry"
@@ -42,9 +41,7 @@
             </VBox.margin>
         </Button>
     </VBox>
-    <Pane layoutX="87.0" layoutY="36.0"
-          prefHeight="498.0" prefWidth="526.0"
-          AnchorPane.rightAnchor="21.399999999999977">
+    <Pane fx:id="scoreContainer">
         <Label alignment="TOP_CENTER" layoutX="172.0" layoutY="39.0" prefHeight="51.0" prefWidth="194.0"
                text="You died!" textFill="#5c2222">
             <font>

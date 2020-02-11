@@ -92,8 +92,17 @@ public class LeveleditorSaveDialogBuilder {
     private void saveLevel(String levelCode, String name, String tags, byte[] thumbnail, int x, int y){
         if(levelCode != null) {
             if (name.length() < 50 && tags.length() < 100 && levelCode.length() < 1000 && name.length() >= 5 && tags.length() >= 5) {
-                databaseHelper.insertLevel(name, tags, levelCode, thumbnail, x, y);
-                controller.removeSaveDialog();
+                if (thumbnail.length < 60000) {
+                    databaseHelper.insertLevel(name, tags, levelCode, thumbnail, x, y);
+                    controller.removeSaveDialog();
+                    controller.showSuccessDialog();
+                } else {
+                    try {
+                        throw new Exception("Thumbnail too big!");
+                    } catch (Exception e){
+                        controller.displayErrorMsg(e.getLocalizedMessage());
+                    }
+                }
             } else {
                 try {
                     throw new Exception("Levelname has to be around 5 and 50 characters. Tags have to be around 5 and 100 characters");

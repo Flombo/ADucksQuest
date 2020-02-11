@@ -25,7 +25,7 @@ public class Skull extends Field {
 		this.walkFrame = SkullWalkFrames.Skull_Right_Default;
 		this.position = SkullPosition.SKULL_RIGHT;
 		this.skullWalkAnimation = new skullWalkAnimation();
-		//this.skullSound = new SkullSound();
+		this.skullSound = new SkullSound();
 	}
 
 	public SkullWalkFrames getWalkFrame() {
@@ -102,7 +102,7 @@ public class Skull extends Field {
 
 	// plays attack animation
 	public void attack(){
-		//this.playAttackSound();
+		this.playAttackSound();
 		skullAttackAnimation skullAttackAnimation = new skullAttackAnimation(this);
 		skullAttackAnimation.animateAttack();
 	}

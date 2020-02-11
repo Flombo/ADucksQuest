@@ -13,15 +13,13 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.image.Image?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
-            minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
+<AnchorPane fx:id="anchor" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="Rendering.Windows.Controller.SuccessMenuController">
-    <VBox layoutX="108.0" layoutY="535.0" prefHeight="120.0" prefWidth="400.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="553.0">
+    <VBox fx:id="buttonContainer">
         <Button fx:id="startButton" mnemonicParsing="false"
                 onMouseClicked="#onButtonClicked" onMouseEntered="#onHoverIn"
                 onMouseExited="#onHoverOut" prefHeight="26.0"
-                prefWidth="412.0" text="Play next level" textFill="WHITE">
+                prefWidth="415.0" text="Play next level" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="19.0" />
             </font>
@@ -29,7 +27,7 @@
         <Button fx:id="mainMenuButton" mnemonicParsing="false"
                 onMouseClicked="#onButtonClicked" onMouseEntered="#onHoverIn"
                 onMouseExited="#onHoverOut" prefHeight="50.0"
-                prefWidth="400.0" text="Go to menu" textFill="WHITE">
+                prefWidth="415.0" text="Go to menu" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="17.0" />
             </font>
@@ -38,7 +36,7 @@
             </VBox.margin>
         </Button>
     </VBox>
-    <Pane layoutX="87.0" layoutY="36.0" prefHeight="498.0" prefWidth="526.0" AnchorPane.rightAnchor="21.399999999999977">
+    <Pane fx:id="scoreContainer" layoutX="87.0" layoutY="36.0" prefHeight="498.0" prefWidth="526.0">
         <Label alignment="TOP_CENTER" layoutX="172.0" layoutY="39.0" prefHeight="51.0" prefWidth="205.0" text="You did it!" textFill="#ffac53">
             <font>
                 <Font name="Microsoft PhagsPa Bold" size="41.0" />

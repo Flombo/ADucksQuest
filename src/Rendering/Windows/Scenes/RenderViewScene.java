@@ -21,11 +21,11 @@ public class RenderViewScene extends Scene{
 
     public RenderViewScene(
             Parent root,
-            float height,
-            float width,
+            double width,
+            double height,
             View view
     ) {
-        super(root, height, width);
+        super(root, width, height);
         this.view = view;
         this.setKeyHandler();
         this.getStylesheets().add("/Rendering/Windows/Style/RenderView.css");
@@ -39,8 +39,10 @@ public class RenderViewScene extends Scene{
         return (()-> {
             this.isRunning = isRunning;
             if(!this.isRunning){
-                this.renderViewController.clearCanvas();
-                this.animationTimer.stop();
+                if(this.renderViewController != null && this.animationTimer != null) {
+                    this.renderViewController.clearCanvas();
+                    this.animationTimer.stop();
+                }
             }
             this.resetRessources();
         });
@@ -54,7 +56,9 @@ public class RenderViewScene extends Scene{
     public void initLevel(
             Field[][] fields,
             RenderViewController renderViewController,
-            GameInit gameInit
+            GameInit gameInit,
+            int x,
+            int y
     ){
         this.fields = null;
         this.renderViewController = renderViewController;
@@ -64,7 +68,7 @@ public class RenderViewScene extends Scene{
         this.isRunning = true;
         this.gameInit.initPlayerMovement();
         this.gameInit.initEnemyMovement();
-        this.initRenderLoop(renderViewController);
+        this.initRenderLoop(renderViewController, x, y);
         this.initLabelBinding(player, renderViewController);
     }
 
@@ -74,11 +78,11 @@ public class RenderViewScene extends Scene{
         }
     }
 
-    private void initRenderLoop(RenderViewController renderViewController){
+    private void initRenderLoop(RenderViewController renderViewController, int x, int y){
         this.animationTimer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                renderViewController.initRendering(fields, view);
+                renderViewController.initRendering(fields, view, x, y);
             }
         };
         this.animationTimer.start();
@@ -90,7 +94,7 @@ public class RenderViewScene extends Scene{
         this.animationTimer = null;
     }
 
-    public void resumeLevel(Field[][] fields, RenderViewController renderViewController, GameInit gameInit) {
+    public void resumeLevel(Field[][] fields, RenderViewController renderViewController, GameInit gameInit, int x, int y) {
         this.fields = fields;
         Player player = this.view.getPlayer();
         this.gameInit = gameInit;
@@ -98,7 +102,11 @@ public class RenderViewScene extends Scene{
         this.gameInit.resumeCollectibleAnimations();
         this.gameInit.initPlayerMovement();
         this.gameInit.resumeEnemyMovement();
-        this.initRenderLoop(renderViewController);
+        this.initRenderLoop(renderViewController, x, y);
         this.initLabelBinding(player, renderViewController);
+    }
+
+    public void setSize() {
+        this.view.setSize(this.getHeight(), this.getWidth());
     }
 }

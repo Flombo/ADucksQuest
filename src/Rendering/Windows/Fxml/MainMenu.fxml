@@ -8,15 +8,15 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane fx:id="anchor" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="Rendering.Windows.Controller.MainMenuController">
-   <Label layoutX="56.0" layoutY="44.0" prefHeight="43.0" prefWidth="187.0" text="Mainmenu" textFill="WHITE"
+   <Label fx:id="mainMenuLabel" prefHeight="43.0" prefWidth="187.0" text="Mainmenu" textFill="WHITE"
           AnchorPane.topAnchor="67.0">
       <font>
          <Font name="Microsoft PhagsPa Bold" size="35.0"/>
       </font>
    </Label>
-   <VBox layoutX="51.0" layoutY="153.0" prefHeight="468.0" prefWidth="417.0" AnchorPane.topAnchor="189.0">
+   <VBox fx:id="buttonContainer" prefHeight="468.0" prefWidth="417.0" AnchorPane.topAnchor="189.0">
       <Button onMouseClicked="#onButtonPressed" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut" id="startGame" mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
               text="Play" textFill="WHITE">
          <font>

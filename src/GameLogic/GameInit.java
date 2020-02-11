@@ -155,7 +155,7 @@ public class GameInit {
 					this.coins.add(coin);
 					tmp.add(coin);
 					break;
-				case "chest":
+				case "ch":
 					tmp.add(new Chest());
 					break;
 				case "ht":

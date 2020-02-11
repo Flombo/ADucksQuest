@@ -9,7 +9,7 @@ public class DeathScene extends Scene {
 
     private View view;
 
-    public DeathScene(Parent parent, double height, double width, View view) {
+    public DeathScene(Parent parent, double width, double height, View view) {
         super(parent, width, height);
         this.view = view;
         this.getStylesheets().add("/Rendering/Windows/Style/DeathMenu.css");
@@ -29,4 +29,7 @@ public class DeathScene extends Scene {
         this.view.showMainMenu();
     }
 
+    public void setSize() {
+        this.view.setSize(this.getHeight(), this.getWidth());
+    }
 }

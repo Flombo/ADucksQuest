@@ -7,18 +7,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:controller="Rendering.Windows.Controller.IngameMenuController"
-            maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="750.0" prefWidth="600.0"
+<AnchorPane fx:id="anchor" fx:controller="Rendering.Windows.Controller.IngameMenuController"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <Label layoutX="56.0" layoutY="97.0" prefHeight="43.0" prefWidth="230.0" text="Game Paused" textFill="WHITE"
-          AnchorPane.topAnchor="67.0">
+   <Label fx:id="resumeLabel" layoutX="56.0" layoutY="97.0" prefHeight="43.0" prefWidth="230.0" text="Game Paused" textFill="WHITE">
       <font>
          <Font name="Microsoft PhagsPa Bold" size="35.0"/>
       </font>
    </Label>
-   <VBox layoutX="51.0" layoutY="153.0" prefHeight="468.0" prefWidth="417.0" AnchorPane.leftAnchor="75.0"
-         AnchorPane.topAnchor="468.0">
+   <VBox fx:id="buttonContainer">
       <Button fx:id="resume" onMouseClicked="#onClick"
               onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut"
               mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
@@ -30,7 +26,7 @@
             <Insets/>
          </VBox.margin>
       </Button>
-      <Button fx:id="options" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut"
+      <Button fx:id="options" onMouseClicked="#onClick" onMouseEntered="#onHoverIn" onMouseExited="#onHoverOut"
               mnemonicParsing="false" prefHeight="26.0" prefWidth="412.0"
               text="Options" textFill="WHITE">
          <font>
